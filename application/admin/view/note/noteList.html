@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__ADMIN_CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN_CSS__/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN_CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/animate.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>所有笔记</h5>
+                        
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row m-b-sm m-t-sm">
+                            <div class="col-md-1">
+                                <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> 刷新</button>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="input-group">
+                                    <input type="text" placeholder="请输入项目名称" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                     <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> 刷新</button>
+                                 </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control m-b" name="account">
+                                        <option>全部课程</option>
+                                        <option>前端开发</option>
+                                        <option>&emsp;|--PHP</option>
+                                        <option>&emsp;|--JAVA</option>
+                                        <option>&emsp;|--CSS</option>
+                                        <option>&emsp;|--JS</option>
+                                        <option>后端开发</option>
+                                        <option>移动开发</option>
+                                        <option>数据库开发</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control m-b" name="account">
+                                        <option>全部课程</option>
+                                        <option>正常</option>
+                                        <option>停止</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-sm">查询</button>
+                            </div>  
+
+
+
+                        <div class="project-list">
+
+                            <table class="table table-hover">
+                            	<thead>
+                                    <tr>
+                                        <th class="col-sm-2">用户</th>
+                                        <th class="col-sm-3">内容</th>
+                                        <th class="col-sm-2">方向</th>
+                                        <th class="col-sm-1">点击量</th>
+                                        <th class="col-sm-1">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	<tr>
+	                                    <td>
+	                                        <div class="feed-element">
+	                                            <a href="profile.html#" class="pull-left">
+	                                                <img alt="image" class="img-circle" src="__ADMIN_IMG__/a1.jpg">
+	                                            </a>
+	                                            <div class="media-body ">
+	                                                <strong>奔波儿灞</strong>
+	                                                <br>
+	                                                <small class="text-muted">54分钟前 来自 皮皮时光机</small> 
+	                                            </div>
+	                                        </div>
+	                                    </td>
+	                                    
+	                                    <td>
+	                                        <div style="height:18px;overflow:hidden;">
+	                                            老师你好老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q
+	                                        </div> 
+	                                        
+	                                    </td>
+	                                    <td>
+	                                        <div style="height:18px;overflow: hidden;">
+	                                            PHP
+	                                        </div> 
+	                                    </td>
+	                                    <td>
+	                                      100
+	                                    </td>
+	                                    <td>
+	                                        <p class="small">
+	                                            <a href="noteDetail.html" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+	                                           
+	                                        </p>
+	                                    </td>
+	                                </tr>
+                                    <tr>
+	                                    <td>
+	                                        <div class="feed-element">
+	                                            <a href="profile.html#" class="pull-left">
+	                                                <img alt="image" class="img-circle" src="__ADMIN_IMG__/a1.jpg">
+	                                            </a>
+	                                            <div class="media-body ">
+	                                                <strong>奔波儿灞</strong>
+	                                                <br>
+	                                                <small class="text-muted">54分钟前 来自 皮皮时光机</small> 
+	                                            </div>
+	                                        </div>
+	                                    </td>
+	                                    
+	                                    <td>
+	                                        <div style="height:18px;overflow:hidden;">
+	                                            老师你好老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老
+	                                        </div> 
+	                                        
+	                                    </td>
+	                                    <td>
+	                                        <div style="height:18px;overflow: hidden;">
+	                                            PHP
+	                                        </div> 
+	                                    </td>
+	                                    <td>
+	                                      100
+	                                    </td>
+	                                    <td>
+	                                        <p class="small">
+	                                            <a href="noteDetail.html" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+	                                           
+	                                        </p>
+	                                    </td>
+	                                </tr>
+
+                                   
+                                   
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         </div>
+    </div>
+</body>
+
+
+

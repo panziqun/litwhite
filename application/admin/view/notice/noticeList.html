@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__ADMIN_CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN_CSS__/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN_CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet"> 
+    <link href="__ADMIN_CSS__/animate.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>通知列表</h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-2">ID</th>
+                                    <th class="col-sm-3">标题</th>
+                                    <th class="col-sm-3">发送时间</th>
+                                    <th class="col-sm-3">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-sm-2">1</td>
+                                    <td class="col-sm-3">
+                                        <a data-toggle="modal" data-target="#myModal2">
+                                            <b>20号网站关闭</b>
+                                        </a>
+                                    </td>
+                            
+                                    <td class="col-sm-3">2017-10-19</td>
+                                    <td class="col-sm-3">
+                                        <button class="btn btn-outline btn-info restore">撤回</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">窗口标题</h4>
+                    <small class="font-bold">
+                </div>
+                <div class="modal-body">
+                    由于网站维护，20号网站关闭
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <!-- 全局js -->
+    <script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN_JS__/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="__ADMIN_JS__/content.js?v=1.0.0"></script>
+
+    <!-- Sweet alert -->
+    <script src="__ADMIN_JS__/plugins/sweetalert/sweetalert.min.js"></script>
+    <script>
+        $(function(){
+            $(".restore").click(function(){
+                swal({
+                    title: "您确定要撤回这条通知吗",
+                    text: "撤回后将无法恢复，请谨慎操作！",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "撤回",
+                    closeOnConfirm: false
+                }, function () {
+                    swal("撤回成功！", "您已经撤回了这条信息。", "success");
+                });
+            });
+            $(".noticeView").click(function(){
+
+            });
+        })
+    </script>
+
+
+
