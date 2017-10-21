@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__ADMIN_CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN_CSS__/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN_CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/animate.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/style.css?v=4.1.0" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>
+
+
+</head>
+<body class="gray-bg">
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>版块设置</h5>
+                        <div class="ibox-tools">
+                            <a href="{:url('admin/plate/plateSet')}" class="btn btn-primary btn-xs">创建新版块</a>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="ibox-content">
+                        <div class="form-group">
+                        <div class="col-md-1">
+                             <button type="button" id="refresh_button" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> 刷新</button>
+                         </div>
+                        <form>
+                        <div class="col-sm-4">
+                            <select class="form-control m-b" name="select_id">
+                                <option selected="selected" value="0">全部课程</option>
+                                {volist name="plateListSelect" id="data"}
+                                <option value="{$data['plate_id']}">
+                                       {$data['plate_title']}
+                                </option>
+                                {/volist}
+                            </select>
+                        </div>
+                        </form>
+                        <button type="button" class="btn btn-primary btn-sm" id="select_button">查询</button>
+                    </div>  
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-1">ID</th>
+                                    <th class="col-sm-6">标题</th>
+                                    <th class="col-sm-1">排序</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+    $("#select_button").on('click',function(){
+        $('tbody').empty();
+        $.post("{:url('plateListData')}", {id:$('select').val()}, function(data){
+        $('tbody').append(data);
+    }, 'json');
+    });
+    $("#refresh_button").on('click',function(){
+        $('tbody').empty();
+        $('select').val(0);
+    });
+});
+</script>
+
+
