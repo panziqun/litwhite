@@ -1,0 +1,16 @@
+{volist name="plateListData" id="data"}
+<tr>
+    <td class="col-sm-1">{$data.plate_id}</td>
+
+    <td class="col-sm-6" style="text-indent:{$data.count*20}px;">
+        {$data.count?'| --' : ''} {$data.plate_title}
+    </td>
+
+    <td class="col-sm-1">{$data.plate_order}</td>
+    <td>
+        <button class="btn btn-outline btn-info">修改</button>
+        <button class="btn btn-outline btn-danger">删除</button>
+        <button class="btn btn-outline btn-primary">添加子版块</button>
+    </td>
+</tr>
+{/volist}
