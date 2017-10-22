@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 表单验证 jQuery Validation</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__ADMIN_CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN_CSS__/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN_CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/animate.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        
+        <div class="row" >
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>部门简介</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <p>jquery.validate.js 是一款优秀的jQuery表单验证插件。它具有如下特点：</p>
+                        <ul>
+                            <li>安装简单</li>
+                            <li>内置超过20种数据验证方法</li>
+                            <li>直列错误提示信息</li>
+                            <li>可扩展的数据验证方法</li>
+                            <li>使用内置的元数据或插件选项来指定您的验证规则</li>
+                            <li>优雅的交互设计</li>
+                        </ul>
+                        <p>官网：<a href="http://jqueryvalidation.org/" target="_blank">http://jqueryvalidation.org/</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加部门</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal m-t" id="commentForm">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">部门名称：</label>
+                                <div class="col-sm-8">
+                                    <input id="cname" name="name" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-3">
+                                    <button class="btn btn-primary" type="submit">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>部门列表</h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>部门</th>
+                                    <th>管理</th>
+                                    <th>权限</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>财务</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline btn-primary" data-toggle="modal" data-target="#updateinfo">修改</button>
+                                        <button type="button" class="btn btn-outline btn-warning">删除</button>
+                                    </td>
+                                    <td>
+										<div class="form-group ">
+                                               <div style="display:inline-block;">
+                                                   <input class="checkbox i-checks" type="checkbox" value="">订单
+                                               </div>
+                                                <div style="display:inline-block;">
+                                                   <input class="checkbox i-checks" type="checkbox" value="">用户
+                                               </div>        
+                                                 <div style="display:inline-block;">
+                                                   <input class="checkbox i-checks" type="checkbox" value="">课程
+                                               </div>
+                                        </div>
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>运营</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline btn-primary" data-toggle="modal" data-target="#updateinfo">修改</button>
+                                        <button type="button" class="btn btn-outline btn-warning">删除</button>
+                                    </td>
+                                    <td>
+                                        <div class="form-group ">
+                                               <div style="display:inline-block;">
+                                                   <input class="checkbox i-checks" type="checkbox" value="">订单
+                                               </div>
+                                                <div style="display:inline-block;">
+                                                   <input class="checkbox i-checks" type="checkbox" value="">用户
+                                               </div>        
+                                                 <div style="display:inline-block;">
+                                                   <input class="checkbox i-checks" type="checkbox" value="">课程
+                                               </div>
+                                        </div>
+                                    </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 模态窗口 管理员信息修改 -->
+    <div class="modal inmodal fade" id="updateinfo" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+                    <h4 class="modal-title" style="font-size:15px;">部门名称修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <p>部门名称：<input type="text" name="" value="财务"></p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN_JS__/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="__ADMIN_JS__/content.js?v=1.0.0"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="__ADMIN_JS__/plugins/validate/jquery.validate.min.js"></script>
+    <script src="__ADMIN_JS__/plugins/validate/messages_zh.min.js"></script>
+
+    <script src="__ADMIN_JS__/demo/form-validate-demo.js"></script>
+    <!-- iCheck -->
+    <script src="__ADMIN_JS__/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+    
+    
+
+</body>
+
+</html>
