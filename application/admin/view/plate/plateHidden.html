@@ -16,7 +16,6 @@
     <link href="__ADMIN_CSS__/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="__ADMIN_CSS__/animate.css" rel="stylesheet">
     <link href="__ADMIN_CSS__/style.css?v=4.1.0" rel="stylesheet">
-
 </head>
 <body class="gray-bg">
 
@@ -25,50 +24,57 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>版块回收站</h5>
+                        <h5>版块设置</h5>
+                        <div class="ibox-tools">
+                            <a href="{:url('admin/plate/plateSet')}" class="btn btn-primary btn-xs">创建新版块</a>
+                        </div>
                     </div>
-                    <div class="ibox-content">
 
+                    
+
+                    <div class="ibox-content">
+                        <div class="form-group">
+                        <div class="col-md-1">
+                             <button type="button" id="refresh_button" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> 刷新</button>
+                         </div>
+                        <form>
+                        <div class="col-sm-4">
+                            <select class="form-control m-b" name="select_id">
+                                {volist name="plateListSelect" id="data"}
+                                <option value="{$data['plate_id']}">
+                                       {$data['plate_title']}
+                                </option>
+                                {/volist}
+                            </select>
+                        </div>
+                        </form>
+                        <button type="button" class="btn btn-primary btn-sm" id="select_button">查询</button>
+                    </div>  
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th class="col-sm-1">ID</th>
-                                    <th class="col-sm-6">标题</th>
-                                    <th class="col-sm-1">排序</th>
+                                    <th class="col-sm-7">标题</th>
+                                    
                                     <th>操作</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
-                                <tr>
-                                    <td class="col-sm-1">1</td>
-                                    <td class="col-sm-6">PHP服务器集群</td>
-                                    <td class="col-sm-1">1</td>
+                                {volist name="plateListData" id="data"}
+                                <tr id="{$data['plate_id']}">
+                                    <td class="col-sm-1">{$data->plate_id}</td>
+                                    <td class="col-sm-7">
+                                        {$data->plate_title}
+                                    </td>
                                     <td>
-                                        <button class="btn btn-outline btn-info">恢复</button>
-                                        <button class="btn btn-outline btn-danger">删除</button>
+                                        <button class="btn btn-outline btn-info recover_button">恢复</button>
+                                        <input class="id_hidden_input" type="hidden" value="{$data->plate_id}">
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="col-sm-1">2</td>
-                                    <td class="col-sm-6">|----PHP服务器集群</td>
-                                    <td class="col-sm-1">1</td>
-                                    <td>
-                                        <button class="btn btn-outline btn-info">恢复</button>
-                                        <button class="btn btn-outline btn-danger">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-sm-1">3</td>
-                                    <td class="col-sm-6">|----PHP服务器集群</td>
-                                    <td class="col-sm-1">1</td>
-                                    <td>
-                                        <button class="btn btn-outline btn-info">恢复</button>
-                                        <button class="btn btn-outline btn-danger">删除</button>
-                                    </td>
-                                </tr>
-
-
+                                {/volist}
                             </tbody>
+                            
                         </table>
 
                     </div>
@@ -77,6 +83,42 @@
         </div>
     </div>
 </body>
+</html
+<!-- 全局js -->
+<script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>
+<script type="text/javascript">
+$(function(){
+    $("#select_button").on('click',function(){
+        $('tbody').empty();
+        $.post("{:url('plateListHiddenData')}", {}, function(data){
+        $('tbody').append(data);
+    }, 'json');
+    });
+    $("#refresh_button").on('click',function(){
+        $('tbody').empty();
+        $('select').val(0);
+    });
+    $(".recover_button").each(function(i,obj){
+        $(this).click(function(){
+            $.post("{:url('plateListRecvData')}", 
+            {id:$(this).siblings('.id_hidden_input').val()}, 
+            function(data){
+                data = JSON.parse(data);
+                console.log(data);
+                if (data.code==200) {
+                    alert(data.info);
+                    $(this).parents('tr').remove();
+                    window.location.href = "{:url('plateHidden')}";
+                } else {
+                    alert(data.info);
+                }
 
+            }, 'json');
+        }
+        );
+
+    });
+});
+</script>
 
 
