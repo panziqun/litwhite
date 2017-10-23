@@ -3,7 +3,7 @@
 
 <head>
 
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -53,14 +53,14 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">权限名称：</label>
                                 <div class="col-sm-8">
-                                    <input id="cname" name="name" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                                    <input id="cname" name="adminlimit_name" minlength="2" type="text" class="form-control limit-change" required="" aria-required="true"><span></span>
                                 </div>
                             </div>
                             
 
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-3">
-                                    <button class="btn btn-primary" type="submit">提交</button>
+                                    <button class="btn btn-primary limit-add" type="submit">提交</button>
                                 </div>
                             </div>
                         </form>
@@ -84,16 +84,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {foreach $adminlimits as $key => $value}
                                 <tr>
-                                    <td>1</td>
-                                    <td>订单</td>
-                                    <td><a data-toggle="modal" data-target="#addhtml">页面详情</a></td>
+                                    <td>{$key}</td>
+                                    <td>{$value}</td>
+                                    <td><a data-toggle="modal" data-target="#addhtml" adminlimit_id="{$key}" class="limit-html">页面详情</a></td>
                                     <td>
-                                        <button type="button" class="btn btn-outline btn-primary" data-toggle="modal" data-target="#updateinfo">修改</button>
-                                        <button type="button" class="btn btn-outline btn-warning">删除</button>
+                                        <button type="button" class="btn btn-outline btn-warning limit-del" adminlimit_id="{$key}">删除</button>
                                     </td> 
                                 </tr>
-                                
+                                {/foreach}
                             </tbody>
                         </table>
                     </div>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <p>权限名称：<input type="text" name="" value="订单"></p>
+                        <p>权限名称：<input type="text" name="" value=""></p>
                         
                     </form>
                 </div>
@@ -134,12 +134,12 @@
                 <div class="modal-body">
                     <form>
                         <p>
-                            <button type="button" class="btn btn-outline btn-primary">添加</button>
-                            <input type="" name="">
+                            <button type="button" class="btn btn-outline btn-primary html-add">添加</button>
+                            <input type="text" name="adminlimit_html">
                         </p>
-                        <div style="color:green;">
-                            <p><button type="button" class="btn btn-outline btn-warning">移除</button>已支付订单</p>
-                            <p><button type="button" class="btn btn-outline btn-warning">移除</button>已完成订单</p>       
+                        <div style="color:green;" class="limit-htmls">
+
+
                         </div>
                     </form>
                 </div>
@@ -169,6 +169,59 @@
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
+            });
+            
+            
+            //查看权限详情
+            $('.limit-html').click(function(){
+                $('.limit-htmls').empty();
+                var adminlimit_id = $(this).attr('adminlimit_id');
+                $.get('{:url("limitInfo")}',{adminlimit_id:adminlimit_id},function(data){
+                    if (data.adminlimit_html != null) {
+                        for(var i = 0; i < data.adminlimit_html.length; i++){
+                            $('.limit-htmls').append('<p class=""><button type="button" class="btn btn-outline btn-warning htmlremove">移除</button>'+data.adminlimit_html[i]+'</p>');
+                        }
+                    }
+                    //移除权限
+                    $('.htmlremove').click(function(){
+                        $.get("{:url('htmlRemove')}",{adminlimit_id:adminlimit_id,adminlimit_html:$(this).parent().text()},function(){},'json');
+                        $(this).parent().remove();
+                    });
+                    
+                },'json');
+                //添加html页面
+                $('.html-add').click(function(){
+                    $.post('{:url("limitInfo")}',{adminlimit_id:adminlimit_id,adminlimit_html:$(this).siblings('input').val()},function(){
+                    },'json');
+                    $('.limit-htmls').append('<p class=""><button type="button" class="btn btn-outline btn-warning htmlremove">移除</button>'+$(this).siblings('input').val()+'</p>');
+                });
+                
+            });
+            //判断权限是否已存在
+            $('.limit-change').blur(function(){
+                $.get('{:url("limitif")}',{adminlimit_name:$("input[name='adminlimit_name']").val()},function(data){
+                    data = JSON.parse(data);
+                    $('.limit-change + span').text(data.info);
+                    if ($("input[name='adminlimit_name']").val() == '') {
+                        $('.limit-change + span').text('');
+                    }
+                },'json');
+            });
+            //增加权限
+            $('.limit-add').click(function(){
+                if ($("input[name='adminlimit_name']").val() != '') {
+                    $.post('{:url("adminLimit")}',{adminlimit_name:$("input[name='adminlimit_name']").val()},function(){
+                    },'json');
+                }
+                window.location.href = "{:url('adminLimit')}";
+            });
+            //删除权限名称
+            $('.limit-del').click(function(){
+                var adminlimit_id = $(this).attr('adminlimit_id');
+                $.get("{:url('limitDel')}",{adminlimit_id:adminlimit_id},function(){
+
+                },'json');
+                $(this).parent().parent().remove();
             });
         });
     </script>

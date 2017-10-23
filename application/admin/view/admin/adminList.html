@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">密码：</label>
                                 <div class="col-sm-8">
-                                    <input id="cemail" type="text" class="form-control" name="adminlist_pwd" required="" aria-required="true">
+                                    <input id="cemail" type="password" class="form-control" name="adminlist_pwd" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -111,7 +111,7 @@
                                     </td>
                                     <td>
                                     	<button type="button" class="btn btn-outline btn-primary update-admin" data-toggle="modal" data-target="#updateinfo" adminlist_id="{$value['adminlist_id']}">修改</button>
-                                    	<button type="button" class="btn btn-outline btn-warning">删除</button>
+                                    	<button type="button" class="btn btn-outline btn-warning delete-admin" adminlist_id="{$value['adminlist_id']}">删除</button>
                                     </td>
                                 </tr>
                                 {/foreach}
@@ -133,8 +133,8 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <p>管理员&emsp;：<input type="text" name=""  class="update-list1" admininputid=''></p>
-                        <p>密码&emsp;&emsp;：<input type="text" name="" class="update-list2"></p>
+                        <p>管理员&emsp;：<input type="text" name=""  class="update-list1"></p>
+                        <p>密码&emsp;&emsp;：<input type="password" name="" class="update-list2"></p>
                         <p>联系方式：<input type="text" name="" class="update-list3"></p>
                     </form>
                 </div>
@@ -162,21 +162,28 @@
 </html>
 <script type="text/javascript">
     $(function(){
+        //删除管理员
+        $('.delete-admin').click(function(){
+            $.get("{:url('adminDel')}",{adminlist_id:$(this).attr('adminlist_id')},function(){
+            },'json');
+            window.location.href = "{:url('adminList')}";
+        });
         //修改
+        var adminlist_id;
         $('.update-admin').click(function(){
+            adminlist_id = $(this).attr('adminlist_id');
             $.get('{:url("adminUpdate")}',{adminlist_id:$(this).attr('adminlist_id')},function(data){
                 $('.update-list1').val(data.adminlist_name);
-                $('.update-list1').attr('admininputid',$(this).attr('adminlist_id'));
                 $('.update-list3').val(data.adminlist_phone);
                 $('input[type="hidden"]').val($(this).attr('adminlist_id'));
+                $('.adminexit').click(function(){
+                    $.post('{:url("adminUpdate")}',{adminlist_id:adminlist_id,adminlist_name:$('.update-list1').val(),adminlist_pwd:$('.update-list2').val(),adminlist_phone:$('.update-list3').val()},function(){
+                    },'json');
+                    window.location.href = '{:url("adminList")}';
+                });
             },'json');
         });
-        $('.adminexit').click(function(){
-            console.log($('.update-list1').attr('admininputid'));
-            $.post('{:url("adminUpdate")}',{adminlist_id:$('.update-list1').attr('admininputid'),adminlist_name:$('.update-list1').val(),adminlist_pwd:$('.update-list2').val(),adminlist_phone:$('.update-list3').val()},function(){
-                // window.location.href = "{:url('adminList')}";
-            },'json');
-        });
+                
         //判断用户名是否存在
         $('input[name="adminlist_name"]').blur(function(){
             if ($('input[name="adminlist_name"]').val() == '') {

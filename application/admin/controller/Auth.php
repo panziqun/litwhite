@@ -22,7 +22,7 @@ class Auth extends Controller
 	}
 	public function dologin()
 	{
-		$adminInfo = Adminlist::get(['adminlist_name'=>$this->request->param('name'), 'adminlist_pwd'=>$this->request->param('password')]);
+		$adminInfo = Adminlist::get(['adminlist_name'=>$this->request->param('name'), 'adminlist_pwd'=>md5($this->request->param('password'))]);
 		if ($adminInfo) {
 			session('adminlist_Id',$adminInfo->adminlist_id);
 			$this->success('登录成功',url('admin/index/index'));
