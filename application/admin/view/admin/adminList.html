@@ -48,11 +48,11 @@
                         <h5>添加管理员</h5>
                     </div>
                     <div class="ibox-content">
-                        <form class="form-horizontal m-t" id="commentForm" action="{:url('adminAdd')}">
+                        <form class="form-horizontal m-t" id="commentForm">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">管理员：</label>
                                 <div class="col-sm-8">
-                                    <input id="cname" name="adminlist_name" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                                    <input id="cname" name="adminlist_name" minlength="2" type="text" class="form-control" required="" aria-required="true"><span></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -69,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-3">
-                                    <button class="btn btn-primary" type="submit">提交</button>
+                                    <button class="btn btn-primary submit" type="submit">提交</button>
                                 </div>
                             </div>
                         </form>
@@ -94,40 +94,27 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {foreach $adminList as $key => $value}
                                 <tr>
-                                    <td>1</td>
-                                    <td>小白</td>
-                                    <td>1555555555</td>
+                                    <td>{$value['adminlist_id']}</td>
+                                    <td>{$value['adminlist_name']}</td>
+                                    <td>{$value['adminlist_phone']}</td>
                                     <td>
-										<select style="width:64px;">
-											<option></option>
-											<option>超管</option>
-                                            <option>运营</option>
-                                            <option>财务</option>
-											<option>业务</option>
+										<select style="width:100px;" class="roleSelect" id="{$value['adminlist_id']}">
+											<option>选择部门</option>
+                                            {foreach $adminRoles as $v}
+											<option value="{$v['adminrole_id']}">
+                                            {$v['adminrole_name']}</option>
+                                            {/foreach}
 										</select>
+                                        <span>{$value['adminrole_name']}</span>
                                     </td>
                                     <td>
-                                    	<button type="button" class="btn btn-outline btn-primary" data-toggle="modal" data-target="#updateinfo">修改</button>
+                                    	<button type="button" class="btn btn-outline btn-primary update-admin" data-toggle="modal" data-target="#updateinfo" adminlist_id="{$value['adminlist_id']}">修改</button>
                                     	<button type="button" class="btn btn-outline btn-warning">删除</button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>小白</td>
-                                    <td>1555555555</td>
-                                    <td>
-										<select style="width:64px;">
-											<option>无名</option>
-											<option></option>
-											<option></option>
-										</select>
-                                    </td>
-                                    <td>
-                                    	<button type="button" class="btn btn-outline btn-primary">修改</button>
-                                    	<button type="button" class="btn btn-outline btn-warning">删除</button>
-                                    </td>
-                                </tr>
+                                {/foreach}
                             </tbody>
                         </table>
                     </div>
@@ -146,14 +133,14 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <p>管理员&emsp;：<input type="text" name="" value="小白"></p>
-                        <p>密码&emsp;&emsp;：<input type="text" name="" value="66666"></p>
-                        <p>联系方式：<input type="text" name="" value="155383838"></p>
+                        <p>管理员&emsp;：<input type="text" name=""  class="update-list1" admininputid=''></p>
+                        <p>密码&emsp;&emsp;：<input type="text" name="" class="update-list2"></p>
+                        <p>联系方式：<input type="text" name="" class="update-list3"></p>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                    <button type="button" class="btn btn-white adminexit" data-dismiss="modal">保存</button>
                 </div>
             </div>
         </div>
@@ -171,10 +158,54 @@
     <script src="__ADMIN_JS__/plugins/validate/messages_zh.min.js"></script>
 
     <script src="__ADMIN_JS__/demo/form-validate-demo.js"></script>
-
-    
-    
-
 </body>
-
 </html>
+<script type="text/javascript">
+    $(function(){
+        //修改
+        $('.update-admin').click(function(){
+            $.get('{:url("adminUpdate")}',{adminlist_id:$(this).attr('adminlist_id')},function(data){
+                $('.update-list1').val(data.adminlist_name);
+                $('.update-list1').attr('admininputid',$(this).attr('adminlist_id'));
+                $('.update-list3').val(data.adminlist_phone);
+                $('input[type="hidden"]').val($(this).attr('adminlist_id'));
+            },'json');
+        });
+        $('.adminexit').click(function(){
+            console.log($('.update-list1').attr('admininputid'));
+            $.post('{:url("adminUpdate")}',{adminlist_id:$('.update-list1').attr('admininputid'),adminlist_name:$('.update-list1').val(),adminlist_pwd:$('.update-list2').val(),adminlist_phone:$('.update-list3').val()},function(){
+                // window.location.href = "{:url('adminList')}";
+            },'json');
+        });
+        //判断用户名是否存在
+        $('input[name="adminlist_name"]').blur(function(){
+            if ($('input[name="adminlist_name"]').val() == '') {
+                $('input[name="adminlist_name"] + span').text('');
+            }else{
+                $.get("{:url('adminAdd')}", {adminlist_name:$('input[name="adminlist_name"]').val()}, function(data){
+                    $('input[name="adminlist_name"] + span').text(data.data);
+                },'json');
+            }
+        });
+        //点击注册
+        $('.submit').click(function(){
+            if ($('input[name="adminlist_name"]').val() == '' || $('input[name="adminlist_pwd"]').val() == '' || $('input[name="adminlist_phone"]').val() == '') {
+                alert('请填写完整！');
+            }else{
+                $.post("{:url('adminAdd')}",{adminlist_name:$('input[name="adminlist_name"]').val(), adminlist_pwd:$('input[name="adminlist_pwd"]').val(),adminlist_phone:$('input[name="adminlist_phone"]').val()}, function(){
+                    window.location.href = "{:url('adminAdd')}";
+                }, 'json');
+            }
+        });
+        //部门选择ajax
+        $('.roleSelect').change(function(){
+            if ($(this).val() != '选择部门') {
+                $(this).val();
+                $(this).attr('id');
+                $.post('{:url("adminList")}',{roleSelect_adminid:$(this).attr('id'),roleSelect_roleid:$(this).val()},function(){
+                    window.location.href = "{:url('adminList')}";
+                },'json');
+            }
+        });
+    });
+</script>
