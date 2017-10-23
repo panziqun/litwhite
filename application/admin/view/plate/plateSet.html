@@ -24,33 +24,31 @@
                         <h5>版块信息修改</h5>
                     </div>
                     <div class="ibox-content">
-
-                        <form   action="/index/index/upload"    enctype="multipart/form-data"   method="post" method="get" class="form-horizontal">
+                        <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">父版块名称</label>
+                                <label class="col-sm-2 control-label">课程方向</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
-                                </div>
+                                <select class="form-control m-b" name="select_id" id="select_id">
+                                    {volist name="plateListSelect" id="data"}
+                                    <option value="{$data['plate_id']}">
+                                           {$data['plate_title']}
+                                    </option>
+                                    {/volist}
+                                </select>
+                            </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">父版块ID</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">标题</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                <label class="col-sm-2 control-label">课程标题</label>
+                                <div class="col-sm-8" id="title_div">
+                                    <input id="title_input" name="title_input" minlength="2" type="text" class="form-control" required="" aria-required="true" value="">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">排序号</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                     <input id="order_input" name="order_input" minlength="1" type="text" class="form-control" required="" aria-required="true" value="0">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -58,20 +56,22 @@
                                 <label class="col-sm-2 control-label">隐藏版块</label>
 
                                 <div class="col-sm-4">
-                                    <select class="form-control m-b" name="account">
-                                        <option>隐藏</option>
-                                        <option>显示</option>
+                                    <select class="form-control m-b" id="hidden_select">
+                                        <option value='1'>显示</option>
+                                        <option value='0'>隐藏</option> 
                                     </select>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
-                            <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-primary" type="submit">保存内容</button>
-                                <button class="btn btn-white" type="submit">取消</button>
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" id="save_btn">保存内容</button>
+                                    <button class="btn btn-white" type="submit" id="cancel_btn">取消</button>
+                                </div>
                             </div>
-                        </div>
                         </form>
+                        
+
                     </div>
                 </div>
             </div>
@@ -79,6 +79,57 @@
     </div>
 </body>
 </html>
+<!-- 全局js -->
+<script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>
+
+<script type="text/javascript">
+$(function(){
+
+    $("#save_btn").on('click',function(){
+        $.post("{:url('plateAdd')}", 
+            {
+                fid:$('#select_id').val(),
+                title:$('#title_input').val(),
+                order:$('#order_input').val(),
+                hidden:$('#hidden_select').val(),
+            }, 
+        function(data){
+            if ( data ) {
+                $('#title_div > span').remove();
+                $('#title_input').val('');
+                alert("插入成功");
+            }       
+        }, 'json');
+        return false;
+    });
+
+    $("#title_input").blur(
+        function() {
+            $.get("{:url('plateAddCheckTitle')}", 
+                {
+                    title:$('#title_input').val(),
+                }, 
+            function(data){
+                if (data['code']==200) {
+                    console.log(data['code']);
+                    $('#title_div span').remove();
+                    $('#title_div').append('<span class="help-block m-b-none"><i class="fa fa-times-circle"></i>  标题已存在</span>');
+                    $("#save_btn").attr({disabled:true});
+                } else {
+                    console.log(data['code']);
+                    $('#title_div span').remove();
+                    $('#title_div').append('<span class="help-block m-b-none">  标题可用</span>');
+                    $("#save_btn").attr({disabled:false});
+                }
+                
+            }, 'json');
+    });
+    $("#cancel_btn").on('click',function(){
+        window.location.href = "{:url('plateList')}";
+    });
+   
+});
+</script>
 
 
 
