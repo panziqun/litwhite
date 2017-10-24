@@ -5,12 +5,14 @@ use app\admin\model\Adminlist;
 use app\admin\model\Adminrole;
 use app\admin\model\AdminlistAdminrole;
 use app\admin\model\Adminlimit;
+use app\admin\model\AdminroleAdminlimit;
 class Admin extends Auth{
 	protected $is_login = ['*'];
 	protected $adminlist;
 	protected $adminrole;
 	protected $adminlist_adminrole;
 	protected $adminlimit;
+	protected $adminrole_adminlimit;
 	public function _initialize()
 	{
 		parent::_initialize();
@@ -18,6 +20,7 @@ class Admin extends Auth{
 		$this->adminrole = new Adminrole();
 		$this->adminlist_adminrole = new AdminlistAdminrole();
 		$this->adminlimit = new Adminlimit();
+		$this->adminrole_adminlimit = new AdminroleAdminlimit();
 	}
 	public function adminAdd()
 	{
@@ -95,11 +98,95 @@ class Admin extends Auth{
 		]);
 		return $this->fetch();
 	}
+
+
+
+
+
+
+
+
+
+
+
 	public function adminRole()
 	{
-
+		//查询所有部门角色
+		$adminrole = $this->adminrole->all();
+		$arr = [];
+		foreach ($adminrole as $key => $value) {
+			$arr[$key] = $value->toArray();
+			$adminrole_adminlimit = $this->adminrole_adminlimit->all(['adminrole_id'=>$arr[$key]['adminrole_id']]);
+				$arr1 = [];
+				foreach ($adminrole_adminlimit as $k => $v) {
+					$arr4 = $v->toArray();
+					$arr1[$k] = $arr4['adminlimit_id'];
+				}
+			$arr[$key]['limit'] = $arr1;
+		}
+		$this->assign('adminrole',$arr);
+		//查询所有权限
+		$adminlimit = $this->adminlimit->all();
+		$arr3 = [];
+		foreach ($adminlimit as $key => $value) {
+			$arr3[$key] = $value->toArray();
+		}
+		$this->assign('adminlimit', $adminlimit);
 		return $this->fetch();
 	}
+	public function adminRoleCheck()
+	{
+		$adminrole_name = $this->request->param('adminrole_name');
+		$adminrole = $this->adminrole->get(['adminrole_name'=>$adminrole_name]);
+		if ($adminrole) {
+			return json_encode(['info'=>'已存在']);
+		}else{
+			return json_encode(['info'=>'√']);
+		}
+	}
+	public function roleAdd()
+	{
+		$adminrole_name = $this->request->param('adminrole_name');
+		$this->adminrole->save(['adminrole_name'=>$adminrole_name]);
+	}
+	public function limitSelect()
+	{
+		$adminrole_id = $this->request->param('adminrole_id');
+		$adminlimit_id = $this->request->param('adminlimit_id');
+		$adminrole_adminlimit = $this->adminrole_adminlimit->get(['adminrole_id'=>$adminrole_id,'adminlimit_id'=>$adminlimit_id]);
+		if ($adminrole_adminlimit) {
+			$this->adminrole_adminlimit->destroy(['adminrole_id'=>$adminrole_id,'adminlimit_id'=>$adminlimit_id]);
+		}else{
+			$this->adminrole_adminlimit->save(['adminrole_id'=>$adminrole_id,'adminlimit_id'=>$adminlimit_id]);
+		}
+	}
+	public function roleDel()
+	{
+		$adminrole_id = $this->request->param('adminrole_id');
+		$this->adminrole->destroy(['adminrole_id'=>$adminrole_id]);
+		$this->adminrole_adminlimit->destroy(['adminrole_id'=>$adminrole_id]);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public function limitif(){
 		$hadlimit = $this->adminlimit->get(['adminlimit_name'=>$this->request->get('adminlimit_name')]);
 		if ($hadlimit) {

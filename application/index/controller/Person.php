@@ -3,15 +3,11 @@ namespace app\index\controller;
 
 use think\Controller;
 class Detail extends Controller{
-	public function indexIndex()
+	public function personCommit()
 	{
 		return $this->fetch();
 	}
-	public function indexList()
-	{
-		return $this->fetch();
-	}
-	public function indexSearch()
+	public function personCourse()
 	{
 		return $this->fetch();
 	}

@@ -199,9 +199,12 @@
             if ($('input[name="adminlist_name"]').val() == '' || $('input[name="adminlist_pwd"]').val() == '' || $('input[name="adminlist_phone"]').val() == '') {
                 alert('请填写完整！');
             }else{
-                $.post("{:url('adminAdd')}",{adminlist_name:$('input[name="adminlist_name"]').val(), adminlist_pwd:$('input[name="adminlist_pwd"]').val(),adminlist_phone:$('input[name="adminlist_phone"]').val()}, function(){
-                    window.location.href = "{:url('adminAdd')}";
-                }, 'json');
+                if ($('input[name="adminlist_name"] + span').text() == '√') {
+                    $.post("{:url('adminAdd')}",{adminlist_name:$('input[name="adminlist_name"]').val(), adminlist_pwd:$('input[name="adminlist_pwd"]').val(),adminlist_phone:$('input[name="adminlist_phone"]').val()}, function(){
+                        window.location.href = "{:url('adminAdd')}";
+                    }, 'json');
+                }
+                
             }
         });
         //部门选择ajax
