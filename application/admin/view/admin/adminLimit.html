@@ -209,7 +209,7 @@
             });
             //增加权限
             $('.limit-add').click(function(){
-                if ($("input[name='adminlimit_name']").val() != '') {
+                if ($("input[name='adminlimit_name']").val() != '' && $('.limit-change + span').text() == '√') {
                     $.post('{:url("adminLimit")}',{adminlimit_name:$("input[name='adminlimit_name']").val()},function(){
                     },'json');
                 }
