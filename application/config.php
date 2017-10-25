@@ -152,6 +152,7 @@ return [
         '__INDEX_FONTS__'=>'/static/index/fonts',
         '__INDEX_IMG__'=>'/static/index/images',
         '__INDEX_START__'=>'/static/index/start',
+        '__WEBSITE__'=>'http://www.litwhite.com',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -249,4 +250,20 @@ return [
         'var_page'  => 'page',
         'list_rows' => 10,
     ],
+    'captcha' => [
+        // 验证码字符集合
+        'codeSet' => '2345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY',
+        // 验证码字体大小(px)
+        'fontSize' => 17,
+        // 是否画混淆曲线
+        'useCurve' => false,
+        // 验证码图片高度
+        'imageH' => 30,
+        // 验证码图片宽度
+        'imageW' => 120,
+        // 验证码位数
+        'length' => 4,
+        // 验证成功后是否重置
+        'reset' => true
+        ],
 ];

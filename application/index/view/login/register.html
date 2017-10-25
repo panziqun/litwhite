@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 注册</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__ADMIN_CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN_CSS__/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN_CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/animate.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/style.css?v=4.1.0" rel="stylesheet">
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div class="register-one" style="display:block;">
+            <div >
+
+                <h1 class="logo-name">LIT</h1>
+
+            </div>
+            <h3>欢迎注册 小白</h3>
+            <p>创建一个小白新账户</p>
+                <div class="form-group">
+                    <input type="text" class="form-control email-phone" placeholder="请输入正确的邮箱或手机号" required="">
+                    <span style="color:red;font-size:13px;"></span>
+                </div>
+                <div class="form-group col-sm-6" style="display: inline-block;">
+                    <input type="text" class="form-control" placeholder="请输入验证码" name="cap" required="">
+                    <span style="color:red;font-size:13px;"></span>
+                </div>
+                <div class="col-sm-6">
+                    <img src="{:captcha_src()}" alt="captcha" onclick="this.src=this.src" />
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b zc" disabled="disabled">注 册</button>
+                <div class="form-group text-left">
+                    <div class="checkbox">
+                        <label class="no-padding">
+                            其他方式登录</label>&emsp;&emsp;<a><i class="fa fa-qq"></i></a>&emsp;<a><i class="fa fa-weibo"></i></a>
+                    </div>
+                </div>
+                <p class="text-muted text-center"><small>已经有账户了？</small><a href="{:url('login')}">点此登录</a>
+                </p>
+
+            
+        </div>
+        <div class="register-two" style="display:none;">
+            <div>
+
+                <h1 class="logo-name">LIT</h1>
+
+            </div>
+            <h3>欢迎注册 小白</h3>
+            <p>填写短信验证码密码完成注册</p>
+                <div class="form-group">
+                    <input type="text" class="form-control yzm" placeholder="请输入手机或者邮箱验证码" required="">
+                    <span style="color:red;font-size:13px;"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control pwd" placeholder="6-16位密码，区分大小写，不能用空格" required=""><i class="fa fa-eye"></i>
+                    <span style="color:red;font-size:13px;"></span>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b tj" disabled="disabled">提 交</button>
+                <span class="return" style="cursor:pointer;">返回修改手机号</span>
+                <div class="form-group text-left">
+                    <div class="checkbox">
+                        <label class="no-padding">
+                            其他方式登录</label>&emsp;&emsp;<a><i class="fa fa-qq"></i></a>&emsp;<a><i class="fa fa-weibo"></i></a>
+                    </div>
+                </div>
+                <p class="text-muted text-center"><small>已经有账户了？</small><a href="{:url('login')}">点此登录</a>
+                </p>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN_JS__/bootstrap.min.js?v=3.3.6"></script>
+    <!-- iCheck -->
+    <script src="__ADMIN_JS__/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            //检查手机邮箱
+            $('.email-phone').blur(function(){
+                if ($(this).val() != '') {
+                    $.get("{:url('checkEmailPhone')}",{email_phone:$(this).val()},function(data){
+                        $('.email-phone').siblings('span').text(data);
+                        var str1 = $('.email-phone').siblings('span').text();
+                        if ((str1 == '手机格式正确' || str1 == '邮箱格式正确') && $("input[name='cap']").siblings('span').text() == '验证码正确') {
+                            $('.zc').removeAttr('disabled');
+                        }
+                    },'json');
+                }
+            });
+            //检查图片验证码
+            $("input[name='cap']").blur(function(){
+                $.get("{:url('checkCap')}",{cap:$(this).val()},function(data){
+                    $("input[name='cap']").siblings('span').text(data);
+                    var str1 = $('.email-phone').siblings('span').text();
+                    if ((str1 == '手机格式正确' || str1 == '邮箱格式正确') && $("input[name='cap']").siblings('span').text() == '验证码正确') {
+                        $('.zc').removeAttr('disabled');
+                    }
+                },'json');
+            });
+            //点击注册跳到下一步并获取手机验证码以及核对
+            $('.zc').click(function(){
+                $('.register-one').hide();
+                $('.register-two').show();
+                if ($('.email-phone').siblings('span').text() == '手机格式正确') {
+                    $.get("{:url('getPhone')}",{phone_number:$('.email-phone').val()},function(data){
+                        var yzm = data;
+                        $('.yzm').blur(function(){
+                            if (yzm == $(this).val()) {
+                                $(this).siblings('span').text('验证码正确');
+                            }else{
+                                $(this).siblings('span').text('验证码错误');
+                            }
+                            if ($('.pwd').siblings('span').text() == '格式正确' && $(this).siblings('span').text() == '验证码正确') {
+                                $('.tj').removeAttr('disabled');
+                            }
+                        });
+                    },'json');
+                }else{
+                    //放邮箱验证
+                }
+            });
+            //密码格式正确 并显示提交按钮
+            $('.pwd').blur(function(){
+                if ($(this).val().length < 6 || $(this).val().length > 16 || $(this).val().indexOf(' ') >= 0) {
+                    $(this).siblings('span').text('密码格式不正确');
+                }else{
+                    $(this).siblings('span').text('格式正确');
+                }
+                if ($(this).siblings('span').text() == '格式正确' && $(".yzm").siblings('span').text() == '验证码正确') {
+                    $('.tj').removeAttr('disabled');
+                }
+            });
+            //提交用户信息
+            $('.tj').click(function(){
+                var status = '';
+                $.post("{:url('regSuccess')}",{user_phone:$('.email-phone').val(),user_pwd:$('.pwd').val()},function(data){
+                    status = data;
+                });
+                window.location.href="{:url('Index/index')}";
+            });
+            //跳回填写手机号码页面
+            $('.return').click(function(){
+                $('.register-two').hide();
+                $('.register-one').show();
+            });
+            //点击查看密码
+            $('.fa-eye').mousedown(function(){
+                $(this).prev().attr('type','text');
+            });
+            $('.fa-eye').mouseup(function(){
+                $(this).prev().attr('type','password');
+            });
+
+        });
+    </script>
+
+    
+    
+
+</body>
+
+</html>
