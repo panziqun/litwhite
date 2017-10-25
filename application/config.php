@@ -147,7 +147,11 @@ return [
         '__ADMIN_FONTS__'=>'/static/admin/fonts',
         '__ADMIN_IMG__'=>'/static/admin/img',
         '__ADMIN_START__'=>'/static/admin/start',
-        
+        '__INDEX_JS__'=>'/static/index/js',
+        '__INDEX_CSS__'=>'/static/index/css',
+        '__INDEX_FONTS__'=>'/static/index/fonts',
+        '__INDEX_IMG__'=>'/static/index/images',
+        '__INDEX_START__'=>'/static/index/start',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -243,6 +247,6 @@ return [
     'paginate'               => [
         'type'      => 'bootstrap',
         'var_page'  => 'page',
-        'list_rows' => 15,
+        'list_rows' => 10,
     ],
 ];

@@ -6,13 +6,17 @@ class Plate extends Auth{
 	protected $plate;
 	protected $is_login = ['*'];
 	/*
-	*获取plateList.html页面中select标签的信息显示
+	*初始化获取plate对象
 	*
 	*/
 	public function _initialize()
 	{
 		$this->plate = new Plate();
 	}
+	/*
+	*获取plateList.html页面中select标签的信息显示
+	*
+	*/
 	public function plateList()
 	{
 		$plateListSelect = $this->plate->getPlateListSelect();
@@ -53,6 +57,7 @@ class Plate extends Auth{
 	public function plateSet()
 	{
 		$plateListSelect = $this->plate->getPlateListSelect();
+		dump($plateListSelect);
 		$this->assign([
 			'plateListSelect'=>$plateListSelect
 		]);
@@ -116,11 +121,14 @@ class Plate extends Auth{
 	}
 	public function plateHidden()
 	{
-		$plateListData = $this->plate->getPlateListHidden();
+		
 		$plateListSelect = $this->plate->getPlateListSelect();
+		$plateListData = $this->plate->getPlateListHidden();
+		$page = $plateListData->render();
 		$this->assign([
 			'plateListSelect'=>$plateListSelect,
-			'plateListData'=>$plateListData
+			'plateListData'=>$plateListData,
+			'page'=>$page
 		]);
 		return $this->fetch();
 	}

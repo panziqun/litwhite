@@ -27,17 +27,24 @@
                         <h5>课程设置</h5>
                     </div>
                     <div class="ibox-content">
-
-                        <form   action="/index/index/upload"    enctype="multipart/form-data"   method="post" method="get" class="form-horizontal">
+                        <form action=""    enctype="multipart/form-data"   method="post" class="form-horizontal m-t" id="commentForm">
                     		<div class="form-group">
                                 <label class="col-sm-2 control-label">课程方向</label>
                                 <div class="col-sm-8">
+
                                     <select class="form-control m-b" name="account">
-                                        <option>CSS</option>
-                                        <option>PHP</option>
-                                        <option>JAVA</option>
-                                        <option>CSS</option>
-                                        <option>CSS</option>                                   
+                                        {volist name="courseListSelect" id="data"}
+                                        {if $data['plate_fid']<2}
+                                        <option disabled="true" value="{$data['plate_id']}">
+                                            {$data['plate_title']} 
+                                            <small>(主版块不可添加课程)</small>
+                                        </option>
+                                        {else}
+                                        <option value="{$data['plate_id']}">
+                                            {$data['plate_title']}
+                                        </option>
+                                        {/if}
+                                        {/volist}         
                                     </select>
                                 </div>
                             </div>
@@ -45,35 +52,42 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程标题</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input id="title_input" type="text" class="form-control" minlength="2" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程描述</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input id="describe_input" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">关键字</label>
+                                <div class="col-sm-8">
+                                    <input id="keywords_input" type="text" class="form-control" minlength="2" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程讲师</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input id="teacher_input" type="text" class="form-control" minlength="2" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程价格</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input id="rate_input" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程时长</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input id="duration_input" type="text" class="form-control" minlength="2" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -82,19 +96,19 @@
                                 <div class="col-sm-8">
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                            <input type="radio" name="courseLevel" id="grade_input" value="0" checked>
                                             初级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                            <input type="radio" name="courseLevel" id="grade_input" value="1">
                                             中级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                            <input type="radio" name="courseLevel" id="grade_input" value="2">
                                             高级
                                         </label>
                                     </div>
@@ -106,25 +120,25 @@
                                 <div class="col-sm-8">
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                            <input type="radio" name="courseOrder" id="order_input" value="0" checked>
                                             1级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                            <input type="radio" name="courseOrder" id="order_input" value="1">
                                             2级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                            <input type="radio" name="courseOrder" id="order_input" value="2">
                                             3级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                            <input type="radio" name="courseOrder" id="order_input" value="3">
                                             4级
                                         </label>
                                     </div>
@@ -136,14 +150,14 @@
                                 <div class="col-sm-8">
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                                            正常课程
+                                            <input type="radio" name="courseStatus" id="status_input" value="0" checked>
+                                            开启
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                            停止课程
+                                            <input type="radio" name="courseStatus" id="status_input" value="1">
+                                            停止
                                         </label>
                                     </div>
                                     
@@ -153,31 +167,79 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程图片</label>
                                 <div class="col-sm-8">
-                                    <input type="file" class="form-control">
+                                    <input id="img_input" type="file" class="form-control">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程URL</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control">
+                                    <input id="url_input" type="text" class="form-control" minlength="2" required="" aria-required="true">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-primary" type="submit">保存内容</button>
-                                <button class="btn btn-white" type="submit">取消</button>
+                                <button class="btn btn-primary" type="submit" id="submit_btn">保存内容</button>
+                                <button class="btn btn-white" type="submit" id="cancel_btn">取消</button>
                             </div>
                         </div>
                         </form>
                     </div>
+            
                 </div>
 
             </div>
         </div>
     </div>
 </body>
+</html>
+
+<!-- 全局js -->
+<script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>
+<script src="__ADMIN_JS__/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="__ADMIN_JS__/content.js?v=1.0.0"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="__ADMIN_JS__/plugins/validate/jquery.validate.min.js"></script>
+<script src="__ADMIN_JS__/plugins/validate/messages_zh.min.js"></script>
+
+<script src="__ADMIN_JS__/demo/form-validate-demo.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+        $('#submit_btn').on('click',function(){
+            $.post("{:url('courseInsert')}",
+                {
+                    plate_id:$('select').val(),
+                    course_title:$('#title_input').val(),
+                    course_describe:$('#describe_input').val(),
+                    course_keywords:$('#keywords_input').val(),
+                    course_teacher:$('#teacher_input').val(),
+                    course_rate:$('#rate_input').val(),
+                    course_duration:$('#duration_input').val(),
+                    course_grade:$('#grade_input').val(),
+                    course_order:$('#order_input').val(),
+                    course_status:$('#status_input').val(),
+                    course_pic:$('#img_input').val(),
+                    course_url:$('#url_input').val(),
+                },
+                function(data){
+                    data = JSON.parse(data);
+                    if ( data.code == 200 ) {
+                        alert(data.info);
+                        window.location.href = "{:url('courseList')}";
+                    } else {
+                        alert(data.info);
+                    }
+                 },
+            'json');
+            return false;
+        });
+    });
+</script>
 
 
 

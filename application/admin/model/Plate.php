@@ -16,11 +16,7 @@ class Plate extends Model
 		$result = $this->getPlateTree($plateInfo,$id);
 		return $result;
 	}
-	public function getPlateListHidden()
-	{	
-		$plateInfo = $this->onlyTrashed()->select();
-		return $plateInfo;
-	}
+	
 
 	public function getPlateListSelect()
 	{	
@@ -84,9 +80,9 @@ class Plate extends Model
 			$result = $this->destroy((int)$plateInfo['id']);
 		}
 		if ($result) {
-			return ['code'=>200,'info'=>'修改成功'];
+			return ['code'=>200,'info'=>'添加成功'];
 		} else {
-			return ['code'=>500,'info'=>'修改失败'];
+			return ['code'=>500,'info'=>'添加失败'];
 		}
 	}
 	public function plateModifyData($plateInfo)
@@ -113,11 +109,10 @@ class Plate extends Model
 	*/
 	protected function getAllPlateInfo()
 	{
-		return Db::table('lit_plate')->select();
+		return Db::table('lit_plate')->where('delete_time',NULL)->select();
 	}
 	private function getPlateTree($arr, $plate_fid = 0, $count = 0)
 	{
-		static $treeList = [];
 		foreach ($arr as $key => $val) {
 			if ( $val['plate_fid'] == $plate_fid) {
 				$val['count'] = $count;
@@ -127,6 +122,8 @@ class Plate extends Model
 		}
 		return self::$treeList;
 	}
+
+
 	/*
 	*在版块回收站中恢复plate信息
 	*
@@ -141,5 +138,54 @@ class Plate extends Model
 		} else {
 			return ['code'=>500,'info'=>'修改失败'];
 		}
+	}
+	/*
+	*在版块回收站中显示分页信息
+	*
+	*/
+	public function getPlateListHidden()
+	{	
+		$plateInfo = $this->onlyTrashed()->paginate(5);
+		return $plateInfo;
+	}
+	/*******************course版块相关数据库操作**********************/
+	/*
+	*在course版块中显示select框信息
+	*
+	*/
+	public function getCoursePlateSelect()
+	{
+		self::$treeList = [];
+		$plateInfo = $this->getCoursePlateInfo();
+		$result = $this->getCoursePlateTree($plateInfo);
+		foreach ($result as $key => $value) {
+		 	$result[$key]['plate_title'] = str_repeat(' &emsp; ', $value['count']) . '|--' . $value['plate_title'];
+		}
+		return $result;
+	}
+	/*
+	*在course版块中显示select框信息
+	*
+	*/
+	protected function getCoursePlateInfo()
+	{
+		return $this->select();
+	}
+	/*
+	*在course版块中显示select框信息
+	*
+	*/
+	protected function getCoursePlateTree($arr, $plate_fid = 0, $count = 0)
+	{
+		foreach ($arr as $key => $val) {
+			if ( $val->plate_fid == $plate_fid) {
+				self::$treeList[$key]['plate_title'] = $val->plate_title;
+				self::$treeList[$key]['plate_id'] = $val->plate_id;
+				self::$treeList[$key]['plate_fid'] = $val->plate_fid;
+				self::$treeList[$key]['count'] = $count;
+				$this->getCoursePlateTree($arr,$val->plate_id,$count+1);
+			}
+		}
+		return self::$treeList;
 	}
 }
