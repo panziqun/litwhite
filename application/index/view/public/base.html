@@ -1,13 +1,296 @@
+{block name="menu"}
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>{block name="title"}标题{/block}</title>
+    <meta charset="utf-8">
+    <title>我的订单_慕课网</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta property="qc:admins" content="77103107776157736375" />
+    <meta property="wb:webmaster" content="c4f857219bfae3cb" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+        var OP_CONFIG = {"module":"pay","page":"myorder","userout":0,"userInfo":{"uid":"3386918","nickname":"qq_\u7f04\u9ed8_83386918","head":"http:\/\/img.mukewang.com\/user\/573dc35200014e4101000100-80-80.jpg","usertype":"1","roleid":0,"phone":""}};
+            OP_CONFIG.isLogin = 1;
+        var _msg_unread = 0; 
+        var _not_unread = 0; 
+        var _cart_num = 0;
+        var requirejsTimestamp="v=201709251122";
+            </script>
+    <script type="text/javascript">
+
+eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('!4(){3 a={};3 j=0;3 5=[{e:\'o://p.u.f/p/v/L/K.r\',6:0},{e:\'o://v.u.f/J/M-P.r\',6:-0}];3 x=4(){3 c,s=d O("(^| )"+"l=([^;]*)(;|$)");9(c=m.k.N(s)){q I(c[2])}H{q y}};3 A=4(t){3 n=x();3 b=d F();b.E(b.10()+11*w*w*13);m.k="l="+t+";14="+b.T()+";Q=/;R=U.f";9(t&&t!=n){V.W.Y()}};3 D=4(i){3 7=d X();7.S=4(){15(a[i]);a[i]=y;8(i,0)};7.Z=4(){8(i,1)};a[i]=12(4(){7.z="";8(i,1)},G);7.z=5[i].e};3 8=4(C,6){j++;5[C].6=6;9(j==5.g){3 h=0;B(3 i=0;i<5.g;i++){9(5[i].6==1){h=1}}A(h)}};B(3 i=0;i<5.g;i++){D(i)}}()',62,68,'|||var|function|urls|flag|imgobj|callback|if|timer|exp|arr|new|url|com|length|error||count|cookie|IMCDNS|document|_0|http|static|return|png|reg||mukewang|img|60|getcookie|null|src|setcookie|for|index|checkCdn|setTime|Date|3000|else|unescape|images|logo|common|unknow|match|RegExp|80|path|domain|onload|toGMTString|imooc|window|location|Image|reload|onerror|getTime|24|setTimeout|1000|expires|clearTimeout'.split('|'),0,{}))
+
+</script>
+    <link rel="stylesheet" href="__INDEX_CSS__/order.css" type="text/css" />
+
 </head>
+
 <body>
-{block name="menu"}菜单{/block}
-{block name="left"}左边分栏{/block}
-{block name="main"}主内容{/block}
-{block name="right"}右边分栏{/block}
-{block name="footer"}底部{/block}
+
+
+<div id="header">
+    <div class="page-container" id="nav"  >
+        <div id="logo" class="logo"><a href="index.html" target="_self" class="hide-text" title="首页"></a></div>
+        <ul class="nav-item">         
+            <li>
+                <a href="/course/list" class="active" target="_self">课程</a>
+            </li>
+        </ul>
+
+        <div id="login-area">
+        
+        {if $Think.session.user_id}
+	        <ul class="clearfix logined">
+				<li class="shop-cart" id="shop-cart">
+			        <a href="http://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
+			            <span class="icon-shopping-cart imv2-cart  js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
+			        </a>
+			        <div class="my-cart" id="js-my-cart"></div>
+			    </li>
+				<li class='remind_warp'>
+					<i class="msg_remind"></i>
+					<a target="_blank" href='http://www.imooc.com/u/3386918/notices'>
+						<i class='imv2-notifications'></i>
+					</a>
+				</li>
+				<li class="set_btn user-card-box"  id="header-user-card">
+					<a id="header-avator" class="user-card-item" action-type="my_menu"  href="http://www.imooc.com/u/3386918/plans" target="_self">
+						<img src='__INDEX_IMG__/573dc35200014e4101000100-40-40.jpg' width='40' height='40' />
+						<i class="myspace_remind" style="display: none;"></i>
+						<span style="display: none;">动态提醒</span>
+					</a>
+					<!-- 小弹窗 -->
+					<div class="g-user-card">
+						<div class="card-inner">
+							<div class="card-top clearfix">
+								<a href='http://www.imooc.com/u/3386918' class='l'>
+									<img src="__INDEX_IMG__/573dc35200014e4101000100-100-100.jpg" alt="qq_缄默_83386918">
+								</a>
+								<div class="card-top-right-box l">
+									<a href='http://www.imooc.com/u/3386918' class="name text-ellipsis">
+										<span>qq_缄默_83386918</span>
+									</a>
+									<div class="meta">
+										<a href="http://www.imooc.com/u/3386918/experience">经验<b id="js-user-mp">6,129</b></a>
+										<a href="http://www.imooc.com/u/3386918/credit">积分<b id="js-user-credit">0</b></a>            
+									</div>
+								</div>
+							</div>
+							<div class="user-center-box">
+			                    <ul class="clearfix">
+			                        <li class="l"><a href="http://www.imooc.com/u/3386918/courses" target="_blank"><span class="user-center-icon imv2-kecheng"></span>我的课程</a></li>
+			                        <li class="l">
+			                        	<a href="http://order.imooc.com/myorder" target="_blank"><span class="user-center-icon imv2-receipt"></span>订单中心</a>
+			                        	<i id="js-usercard-coupon-icon"></i>
+			                        </li>
+			                        <li class="l"><a href="http://www.imooc.com/mall/index" target="_blank"><span class="user-center-icon imv2-score_shop"></span>积分商城</a></li>
+			                        <li class="l"><a href="http://www.imooc.com/user/setbindsns" target="_blank"><span class="user-center-icon imv2-set_1"></span>个人设置</a></li>
+			                    </ul>
+			                </div>
+							
+							<div class="card-history">
+							</div>
+							
+							<div class="card-sets clearfix">
+								<a href="/passport/user/logout?referer=http://class.imooc.com" class="l">安全退出</a>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+            {else /}
+            <ul class="header-unlogin clearfix">
+                <li class="shop-cart" id="shop-cart">
+                    <a href="http://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
+                        <span class="icon-shopping-cart imv2-cart  js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
+                    </a>
+                    <div class="my-cart" id="js-my-cart"></div>
+                </li>             
+                <li class="header-signin">
+                    <a  id="js-signin-btn" href="{:url('Login/login')}">登录</a> / <a  id="js-signup-btn" href="{:url('Login/register')}">注册</a>
+                </li>             
+            </ul>
+            {/if}
+        </div>
+        <!-- 搜索框 -->
+        <div class='search-warp clearfix' style='min-width: 32px; height: 72px;'>
+            <div class="search-area" data-search="top-banner">
+                <input class="search-input" data-suggest-trigger="suggest-trigger"      type="text" autocomplete="off">
+                <input type='hidden' class='btn_search' data-search-btn="search-btn" />
+                <ul class="search-area-result" data-suggest-result="suggest-result">
+                </ul>
+            </div>
+            <div class='showhide-search' data-show='no'><i class='icon-search'></i></div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="__INDEX_JS__/require.js"></script>
+<script src='__INDEX_JS__/jquery.min.js'></script>
+<script src="__INDEX_JS__/ssologin.js"></script>
+<script type="text/javascript" src="__INDEX_JS__/common.js"></script>
+
+
+
+
+
+
+    <script>/*RESOURCE_MAP*/</script>
+    <script data-entry="pay/myorder/index">
+    requirejs(['pay/myorder/index'], function(){});
+	</script>
+
+
+
+<div style="display: none">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?613bf05434ed4b759c19cea36f7193a0";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</div>
 </body>
 </html>
+
+{/block}
+{block name="left"}{/block}
+{block name="main"}{/block}
+{block name="right"}{/block}
+{block name="footer"}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的订单_慕课网</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta property="qc:admins" content="77103107776157736375" />
+    <meta property="wb:webmaster" content="c4f857219bfae3cb" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+        var OP_CONFIG = {"module":"pay","page":"myorder","userout":0,"userInfo":{"uid":"3386918","nickname":"qq_\u7f04\u9ed8_83386918","head":"http:\/\/img.mukewang.com\/user\/573dc35200014e4101000100-80-80.jpg","usertype":"1","roleid":0,"phone":""}};
+            OP_CONFIG.isLogin = 1;
+        var _msg_unread = 0; 
+        var _not_unread = 0; 
+        var _cart_num = 0;
+        var requirejsTimestamp="v=201709251122";
+            </script>
+    
+    
+    
+<!--imooc-->
+
+<!--/imooc-->
+
+    
+    
+
+
+    <link rel="stylesheet" href="__INDEX_CSS__/order.css" type="text/css" />
+</head>
+
+<body>
+
+   <div id="footer">
+<div class="waper">
+    <div class="footerwaper clearfix">
+        <div class="followus r">
+            <a class="followus-weixin" href="javascript:;"  target="_blank" title="微信">
+                <div class="flw-weixin-box"></div>
+            </a>
+            <a class="followus-weibo" href="http://weibo.com/u/3306361973"  target="_blank" title="新浪微博"></a>
+            <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>
+        </div>
+        <div class="footer_intro l">
+            <div class="footer_link">
+                <ul>
+                    <li><a href="http://www.imooc.com/" target="_blank">网站首页</a></li>
+                    <li><a href="http://www.imooc.com/about/cooperate" target="_blank" title="企业合作">企业合作</a></li>
+                    <li><a href="http://www.imooc.com/about/job" target="_blank">人才招聘</a></li>
+                    <li> <a href="http://www.imooc.com/about/contact" target="_blank">联系我们</a></li>
+                    <li> <a href="http://www.imooc.com/about/recruit" target="_blank">讲师招募</a></li>
+                     <li> <a href="http://class.imooc.com/user/faq" target="_blank">常见问题</a></li>
+                    <li> <a href="http://class.imooc.com/user/feedback" target="_blank">意见反馈</a></li>
+                    <li><a href="http://daxue.imooc.com/" target="_blank">慕课大学</a></li>
+                    <li> <a href="http://www.imooc.com/about/friendly" target="_blank">友情链接</a></li>
+                </ul>
+            </div>
+            <p>Copyright © 2017 imooc.com All Rights Reserved | 京ICP备 13046642号-2</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="J_GotoTop" class="elevator">
+    <a href="/user/feedback" class="elevator-msg" target="_blank">
+        <i class="imv2-feedback"></i>
+        <span class="">意见反馈</span>
+    </a>
+    <a href="http://www.imooc.com/about/faq" class="elevator-faq" target="_blank">
+        <i class="imv2-help_outline"></i>
+        <span class="">常见问题</span>
+    </a>
+    <a href="http://www.imooc.com/mobile/app" target="_blank" class="elevator-app" >
+        <i class="imv2-appdownload"></i>
+        <span class="">APP下载</span>
+        <div class="elevator-app-box"></div>
+    </a>
+    <a href="javascript:void(0)" class="elevator-weixin no-goto" id="js-elevator-weixin" >
+        <i class="imv2-weixigzh"></i>
+        <span class="">官方微信</span>
+        <div class="elevator-weixin-box"></div>
+    </a>
+    <a href="javascript:void(0)" class="elevator-top no-goto" style="display:none" id="backTop">
+        <i class="imv2-arrow2_u"></i>
+        <span class="">返回顶部</span>
+    </a>
+</div>
+
+
+<script type="text/javascript" src="__INDEX_JS__/require.js"></script>
+<script src='__INDEX_JS__/jquery.min.js'></script>
+<script src="__INDEX_JS__/ssologin.js"></script>
+<script type="text/javascript" src="__INDEX_JS__/common.js"></script>
+
+
+
+
+
+
+    <script>/*RESOURCE_MAP*/</script>
+    <script data-entry="pay/myorder/index">
+    requirejs(['pay/myorder/index'], function(){});
+    </script>
+
+
+
+<div style="display: none">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?613bf05434ed4b759c19cea36f7193a0";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</div>
+</body>
+</html>
+{/block}

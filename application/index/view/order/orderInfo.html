@@ -1,4 +1,5 @@
-﻿
+﻿{extend name='public/base' /}
+{block name="main"}
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,94 +38,11 @@
 </head>
 
 <body>
-
-<div id="header">
-    <div class="page-container" id="nav"  >
-         <div id="logo" class="logo"><a href="index.html" target="_self" class="hide-text" title="首页"></a></div>
-        
-        <ul class="nav-item">
-                        
-                        
-            <li>
-                <a href="/course/list" class="active" target="_self">课程</a>
-            </li>           
-            
-            
-        </ul>
-        <div id="login-area">
-            <ul class="clearfix logined">
-
-			<li class="shop-cart" id="shop-cart">
-		        <a href="http://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
-		            <span class="icon-shopping-cart imv2-cart  js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
-		        </a>
-		        <div class="my-cart" id="js-my-cart"></div>
-		    </li>
-			<li class='remind_warp'>
-				<i class="msg_remind"></i>
-				<a target="_blank" href='http://www.imooc.com/u/3386918/notices'>
-					<i class='imv2-notifications'></i>
-				</a>
-			</li>
-			
-			<li class="set_btn user-card-box"  id="header-user-card">
-				<a id="header-avator" class="user-card-item" action-type="my_menu"  href="http://www.imooc.com/u/3386918/plans" target="_self">
-					<img src='__INDEX_IMG__/573dc35200014e4101000100-40-40.jpg' width='40' height='40' />
-					<i class="myspace_remind" style="display: none;"></i>
-					<span style="display: none;">动态提醒</span>
-				</a>
-				<div class="g-user-card">
-					<div class="card-inner">
-						<div class="card-top clearfix">
-							<a href='http://www.imooc.com/u/3386918' class='l'>
-								<img src="__INDEX_IMG__/573dc35200014e4101000100-100-100.jpg" alt="qq_缄默_83386918">
-							</a>
-							<div class="card-top-right-box l">
-								<a href='http://www.imooc.com/u/3386918' class="name text-ellipsis">
-									<span>qq_缄默_83386918</span>
-								</a>
-							
-								<div class="meta">
-									<a href="http://www.imooc.com/u/3386918/experience">经验<b id="js-user-mp">6,129</b></a>
-									<a href="http://www.imooc.com/u/3386918/credit">积分<b id="js-user-credit">0</b></a>            
-								</div>
-							</div>
-						</div>
-						<div class="user-center-box">
-		                    <ul class="clearfix">
-		                        <li class="l"><a href="http://www.imooc.com/u/3386918/courses" target="_blank"><span class="user-center-icon imv2-kecheng"></span>我的课程</a></li>
-		                        <li class="l">
-		                        	<a href="http://order.imooc.com/myorder" target="_blank"><span class="user-center-icon imv2-receipt"></span>订单中心</a>
-		                        	<i id="js-usercard-coupon-icon"></i>
-		                        </li>
-		                        <li class="l"><a href="http://www.imooc.com/mall/index" target="_blank"><span class="user-center-icon imv2-score_shop"></span>积分商城</a></li>
-		                        <li class="l"><a href="http://www.imooc.com/user/setbindsns" target="_blank"><span class="user-center-icon imv2-set_1"></span>个人设置</a></li>
-		                    </ul>
-		                </div>
-						
-						<div class="card-history">
-													</div>
-						
-						<div class="card-sets clearfix">
-							<a href="/passport/user/logout?referer=http://class.imooc.com" class="l">安全退出</a>
-						</div>
-					</div>
-				</div>
-			</li>
-		</ul>
-        </div>
-        <div class='search-warp clearfix' style='min-width: 32px; height: 72px;'>
-            <div class="search-area" data-search="top-banner">
-                <input class="search-input" data-suggest-trigger="suggest-trigger"      type="text" autocomplete="off">
-                <input type='hidden' class='btn_search' data-search-btn="search-btn" />
-                <ul class="search-area-result" data-suggest-result="suggest-result">
-                </ul>
-            </div>
-            <div class='showhide-search' data-show='no'><i class='icon-search'></i></div>
-        </div>
-    </div>
-</div>
-
+{extend name='public/base' /}
+{block name="menu"}
+{__block__}
+{/block}
+{block name="main"}
 <div class='body-main'>
 
 
@@ -195,60 +113,6 @@
 </div>
 
 
-   <div id="footer">
-<div class="waper">
-    <div class="footerwaper clearfix">
-        <div class="followus r">
-            <a class="followus-weixin" href="javascript:;"  target="_blank" title="微信">
-                <div class="flw-weixin-box"></div>
-            </a>
-            <a class="followus-weibo" href="http://weibo.com/u/3306361973"  target="_blank" title="新浪微博"></a>
-            <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>
-        </div>
-        <div class="footer_intro l">
-            <div class="footer_link">
-                <ul>
-                    <li><a href="http://www.imooc.com/" target="_blank">网站首页</a></li>
-                    <li><a href="http://www.imooc.com/about/cooperate" target="_blank" title="企业合作">企业合作</a></li>
-                    <li><a href="http://www.imooc.com/about/job" target="_blank">人才招聘</a></li>
-                    <li> <a href="http://www.imooc.com/about/contact" target="_blank">联系我们</a></li>
-                    <li> <a href="http://www.imooc.com/about/recruit" target="_blank">讲师招募</a></li>
-                     <li> <a href="http://class.imooc.com/user/faq" target="_blank">常见问题</a></li>
-                    <li> <a href="http://class.imooc.com/user/feedback" target="_blank">意见反馈</a></li>
-                    <li><a href="http://daxue.imooc.com/" target="_blank">慕课大学</a></li>
-                    <li> <a href="http://www.imooc.com/about/friendly" target="_blank">友情链接</a></li>
-                </ul>
-            </div>
-            <p>Copyright © 2017 imooc.com All Rights Reserved | 京ICP备 13046642号-2</p>
-        </div>
-    </div>
-</div>
-</div>
-
-<div id="J_GotoTop" class="elevator">
-    <a href="/user/feedback" class="elevator-msg" target="_blank">
-        <i class="imv2-feedback"></i>
-        <span class="">意见反馈</span>
-    </a>
-    <a href="http://www.imooc.com/about/faq" class="elevator-faq" target="_blank">
-        <i class="imv2-help_outline"></i>
-        <span class="">常见问题</span>
-    </a>
-    <a href="http://www.imooc.com/mobile/app" target="_blank" class="elevator-app" >
-        <i class="imv2-appdownload"></i>
-        <span class="">APP下载</span>
-        <div class="elevator-app-box"></div>
-    </a>
-    <a href="javascript:void(0)" class="elevator-weixin no-goto" id="js-elevator-weixin" >
-        <i class="imv2-weixigzh"></i>
-        <span class="">官方微信</span>
-        <div class="elevator-weixin-box"></div>
-    </a>
-    <a href="javascript:void(0)" class="elevator-top no-goto" style="display:none" id="backTop">
-        <i class="imv2-arrow2_u"></i>
-        <span class="">返回顶部</span>
-    </a>
-</div>
 
 
 
@@ -282,3 +146,4 @@
 </div>
 </body>
 </html>
+{/block}
