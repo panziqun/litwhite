@@ -27,7 +27,7 @@
                         <h5>课程设置</h5>
                     </div>
                     <div class="ibox-content">
-                        <form action="{:url('courseInsert')}"    enctype="multipart/form-data"   method="post" class="form-horizontal m-t" id="commentForm">
+                        <form action="{:url('courseChange')}"    enctype="multipart/form-data"   method="post" class="form-horizontal m-t" id="commentForm">
                     		<div class="form-group">
                                 <label class="col-sm-2 control-label">课程方向</label>
                                 <div class="col-sm-8">
@@ -40,9 +40,17 @@
                                             <small>(主版块不可添加课程)</small>
                                         </option>
                                         {else}
-                                        <option value="{$data['plate_id']}">
-                                            {$data['plate_title']}
-                                        </option>
+		                                    {if $data['plate_id']==$courseInfo['plate_id']}
+		                                    <option selected 
+		                                    value="{$data['plate_id']}">    
+		                                           {$data['plate_title']} 
+		                                    </option>
+		                                    {else}
+		                                    <option
+		                                    value="{$data['plate_id']}">    
+		                                           {$data['plate_title']} 
+		                                    </option>
+		                                    {/if}
                                         {/if}
                                         {/volist}         
                                     </select>
@@ -52,42 +60,42 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程标题</label>
                                 <div class="col-sm-8">
-                                    <input id="title_input" name="course_title" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                    <input id="title_input" name="course_title" type="text" class="form-control" minlength="2" required="" aria-required="true" value="{$courseInfo['course_title']}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程描述</label>
                                 <div class="col-sm-8">
-                                    <input id="describe_input" name="course_describe" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                    <input id="describe_input" name="course_describe" type="text" class="form-control" minlength="2" required="" aria-required="true" value="{$courseInfo['course_describe']}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">关键字</label>
                                 <div class="col-sm-8">
-                                    <input id="keywords_input" name="course_keywords" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                    <input id="keywords_input" name="course_keywords" type="text" class="form-control" minlength="2" required="" aria-required="true" value="{$courseInfo['course_keywords']}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程讲师</label>
                                 <div class="col-sm-8">
-                                    <input id="teacher_input" name="course_teacher" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                    <input id="teacher_input" name="course_teacher" type="text" class="form-control" minlength="2" required="" aria-required="true" value="{$courseInfo['course_teacher']}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程价格</label>
                                 <div class="col-sm-8">
-                                    <input id="rate_input" name="course_rate" type="text" class="form-control" maxlength="5">
+                                    <input id="rate_input" name="course_rate" type="number" class="form-control" maxlength="10" value="{$courseInfo['course_rate']}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程时长</label>
                                 <div class="col-sm-8">
-                                    <input id="duration_input" name="course_duration" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                    <input id="duration_input" name="course_duration" type="number" class="form-control" minlength="2" required="" aria-required="true" value="{$courseInfo['course_duration']}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -96,19 +104,19 @@
                                 <div class="col-sm-8">
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_grade" id="grade_input" value="0" checked>
+                                            <input type="radio" name="course_grade" class="course_grade" id="grade_input" value="0" checked>
                                             初级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_grade" id="grade_input" value="1">
+                                            <input type="radio" name="course_grade" class="course_grade" id="grade_input" value="1">
                                             中级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_grade" id="grade_input" value="2">
+                                            <input type="radio" name="course_grade" class="course_grade" id="grade_input" value="2">
                                             高级
                                         </label>
                                     </div>
@@ -120,29 +128,30 @@
                                 <div class="col-sm-8">
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_order" id="order_input" value="0" checked>
+                                            <input class="course_order" type="radio" name="course_order" id="order_input" value="0" checked>
+                                            0级
+                                        </label>
+                                    </div>
+                                    <div class="radio col-sm-2">
+                                        <label>
+                                            <input class="course_order" type="radio" name="course_order" id="order_input" value="1">
                                             1级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_order" id="order_input" value="1">
+                                            <input class="course_order" type="radio" name="course_order" id="order_input" value="2">
                                             2级
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_order" id="order_input" value="2">
+                                            <input class="course_order" type="radio" name="course_order" id="order_input" value="3">
                                             3级
                                         </label>
                                     </div>
-                                    <div class="radio col-sm-2">
-                                        <label>
-                                            <input type="radio" name="course_order" id="order_input" value="3">
-                                            4级
-                                        </label>
-                                    </div>
                                 </div>
+                               
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
@@ -150,13 +159,13 @@
                                 <div class="col-sm-8">
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_status" id="status_input" value="0" checked>
+                                            <input class="course_status" type="radio" name="course_status" id="status_input" value="0" checked>
                                             开启
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input type="radio" name="course_status" id="status_input" value="1">
+                                            <input class="course_status" type="radio" name="course_status" id="status_input" value="1">
                                             停止
                                         </label>
                                     </div>
@@ -174,7 +183,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课程URL</label>
                                 <div class="col-sm-8">
-                                    <input id="url_input" name="course_url" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                    <input id="url_input" name="course_url" type="text" class="form-control" minlength="2" required="" aria-required="true" value="{$courseInfo['course_url']}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -182,6 +191,8 @@
                             <div class="col-sm-4 col-sm-offset-2">
                                 <button class="btn btn-primary" type="submit" id="submit_btn">保存内容</button>
                                 <button class="btn btn-white" type="submit" id="cancel_btn">取消</button>
+                                <input type="hidden" name="course_id" value="{$courseInfo['course_id']}">
+                                
                             </div>
                         </div>
                         </form>
@@ -210,6 +221,32 @@
 
 <script type="text/javascript">
     $(function(){
+
+    	$(".course_grade").each(function() {
+    		if( $(this).val()=={$courseInfo['course_grade']} ) {
+    			$(this).attr("checked","checked");
+    		}
+    	});
+    	$(".course_order").each(function() {
+    		if( $(this).val()=={$courseInfo['course_order']} ) {
+    			$(this).attr("checked","checked");
+    		}
+    	});
+    	var course_status = 0;
+    	if ({$courseInfo['delete_time']}==null) {
+    		course_status = 0;
+    	} else{
+    		course_status = 1;
+    	}
+    	console.log(course_status);
+
+    	$(".course_status").each(function() {
+    		if( $(this).val()==course_status ) {
+    			$(this).attr("checked","checked");
+    		}
+    	});
+
+
         $().on('click',function(){
             $.post("{:url('courseInsert')}",
                 {

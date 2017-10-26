@@ -32,11 +32,12 @@
                             <div class="col-sm-12">
                                 <div class="m-b-md">
                                     <a href="courseAdd.html" class="btn btn-white btn-xs pull-right">编辑信息</a>
-                                    <h2>BAT大咖助力 全面升级Android面试</h2>
+                                    <h2>{$courseInfo['course_title']}</h2>
                                 </div>
                                 <dl class="dl-horizontal">
                                     <dt>课程状态：</dt>
-                                    <dd><span class="label label-primary">进行中</span>
+                                    <dd>
+                                        <span class="label {$courseInfo['delete_time']|empty?'label-primary':'label-default'}">{$courseInfo['delete_time']|empty?'正常':'停止'}
                                     </dd>
                                 </dl>   
                             </div>
@@ -46,64 +47,87 @@
                             <div class="col-sm-5">
                                 <dl class="dl-horizontal">
                                     <dt>课程讲师：</dt>
-                                    <dd>Beaut-zihan</dd>
+                                    <dd>{$courseInfo['course_teacher']}</dd>
                                     <dt>课程方向：</dt>
                                     <dd>PHP</dd>
                                     <dt>学习人数：</dt>
-                                    <dd>162</dd>
+                                    <dd>{$courseCountInfo['course_sales']}</dd>
                                     <dt>课程排序：</dt>
-                                    <dd> 1级 </dd>
+                                    <dd> {$courseInfo['course_order']}级 </dd>
+                                    <dt>课程难度：</dt>
+                                    <dd>{$course_grade}</dd>
                                     <dt>创建时间：</dt>
-                                    <dd>2014年 2月16日 03:01</dd>
+                                    <dd>{$courseInfo['create_time']}</dd>
                                     <dt>最后更新：</dt>
-                                    <dd>2014年 11月7日 22:03</dd>
+                                    <dd>{$courseInfo['update_time']}</dd>
+                                    
                                 </dl>
                             </div>
                             <div class="col-sm-7" id="cluster_info">
                                 <dl class="dl-horizontal">
-                                    <dt>难度：</dt>
-                                    <dd>中级</dd>
-                                    <dt>时常：</dt>
-                                    <dd>27小时</dd>
-                                    <dt>评分：</dt>
-                                    <dd>10.0分</dd>
-                                    <dt>描述：</dt>
-                                    <dd>采用当前流行的前后端分离式开发技术，涉及RESTFul API基础知识和Vue项目结构分析，解决了技术开发单一的痛点，拥有超前的技术融合技能，让你在开发的领域比别人技高一筹！</dd>
+                                    
+                                    <dt>时&emsp;长：</dt>
+                                    <dd>{$courseInfo['course_duration']}</dd>
+                                    <dt>评&emsp;分：</dt>
+                                    <dd>{$courseInfo['course_start']}星</dd>
+                                    <dt>关键词：</dt>
+                                    <dd>{$courseInfo['course_keywords']}</dd>
+                                    <dt>描&emsp;述：</dt>
+                                    <dd>{$courseInfo['course_describe']}</dd>
                                 </dl>
                             </div>
                         </div>  
+                        
+                        
+
                         <div class="hr-line-dashed"></div>
                         <div class="row">
                             <div class="col-sm-5">
                                 <dl class="dl-horizontal">
                                     <dt>总访问量：</dt>
-                                    <dd>1622</dd>
+                                    <dd>{$courseCountInfo['course_hits']}</dd>
                                     <dt>本月访问量：</dt>
                                     <dd>162</dd>
                                     <dt>本周访问量：</dt>
                                     <dd>16</dd>
                                 </dl>
                                 <dl class="dl-horizontal">
-                                    <dt>总访收入金额：</dt>
-                                    <dd>1622</dd>
-                                    <dt>本月收入金额：</dt>
+                                    <dt>总收入：</dt>
+                                    <dd>{$courseCountInfo['course_sales']*$courseInfo['course_rate']}</dd>
+                                    <dt>本月收入：</dt>
                                     <dd>162</dd>
-                                    <dt>本周收入金额：</dt>
+                                    <dt>本周收入：</dt>
                                     <dd>16</dd>
+                                </dl>
+                                <dl class="dl-horizontal">
+                                    <dt>总评笔记量：</dt>
+                                    <dd>{$courseNoteInfo}</dd>
+                                    <dt>本月笔记量：</dt>
+                                    <dd>{$monthNoteCount}</dd>
+                                    <dt>本周笔记量：</dt>
+                                    <dd>{$weekNoteCount}</dd>
                                 </dl>
                             </div>
                             <div class="col-sm-7" id="cluster_info">
                                 <dl class="dl-horizontal">
-                                    <dt>总访收藏量：</dt>
-                                    <dd>1622</dd>
+                                    <dt>总评论量：</dt>
+                                    <dd>{$courseCommentInfo}</dd>
+                                    <dt>本月评论量：</dt>
+                                    <dd>{$monthCommentCount}</dd>
+                                    <dt>本周评论量：</dt>
+                                    <dd>{$weekCommentCount}</dd>
+                                </dl>
+                                <dl class="dl-horizontal">
+                                    <dt>总收藏量：</dt>
+                                    <dd>{$courseCollectInfo}</dd>
                                     <dt>本月收藏量：</dt>
-                                    <dd>162</dd>
+                                    <dd>{$monthCollectCount}</dd>
                                     <dt>本周收藏量：</dt>
-                                    <dd>16</dd>
+                                    <dd>{$weekCollectCount}</dd>
                                 </dl>
 
                                 <dl class="dl-horizontal">
-                                    <dt>总访点赞量：</dt>
+                                    <dt>总评论赞量：</dt>
                                     <dd>1622</dd>
                                     <dt>本月点赞量：</dt>
                                     <dd>162</dd>

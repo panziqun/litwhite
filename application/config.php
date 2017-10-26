@@ -142,15 +142,15 @@ return [
     
     // 视图输出字符串内容替换
     'view_replace_str'       => [
-        '__ADMIN_JS__'=>'/static/admin/js',
-        '__ADMIN_CSS__'=>'/static/admin/css',
+        '__ADMIN_JS__'   =>'/static/admin/js',
+        '__ADMIN_CSS__'  =>'/static/admin/css',
         '__ADMIN_FONTS__'=>'/static/admin/fonts',
-        '__ADMIN_IMG__'=>'/static/admin/img',
+        '__ADMIN_IMG__'  =>'/static/admin/img',
         '__ADMIN_START__'=>'/static/admin/start',
-        '__INDEX_JS__'=>'/static/index/js',
-        '__INDEX_CSS__'=>'/static/index/css',
+        '__INDEX_JS__'   =>'/static/index/js',
+        '__INDEX_CSS__'  =>'/static/index/css',
         '__INDEX_FONTS__'=>'/static/index/fonts',
-        '__INDEX_IMG__'=>'/static/index/images',
+        '__INDEX_IMG__'  =>'/static/index/images',
         '__INDEX_START__'=>'/static/index/start',
     ],
     // 默认跳转页面对应的模板文件

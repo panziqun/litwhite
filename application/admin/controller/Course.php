@@ -2,12 +2,16 @@
 namespace app\admin\controller;
 use app\admin\model\Course;
 use app\admin\model\CourseCount;
+use app\admin\model\Comment;
+use app\admin\model\Collect;
 use app\admin\model\Plate;
+use app\admin\model\Note;
 
 class Course extends Auth{
 	protected $course;
 	protected $plate;
 	protected $is_login = ['*'];
+	private $website = "http://www.litwhite.com";
 	/*
 	*初始化获取course对象
 	*
@@ -16,7 +20,10 @@ class Course extends Auth{
 	{
 		$this->course = new Course();
 		$this->CourseCount = new CourseCount();
+		$this->comment = new Comment();
+		$this->collect = new Collect();
 		$this->plate  = new Plate();
+		$this->note  = new Note();
 	}
 	/*
 	*渲染courseAdd页面
@@ -37,12 +44,109 @@ class Course extends Auth{
 	public function courseInsert()
 	{
 		$courseData = $this->request->param();
-		$courseId 	= $this->course->courseInsertData($courseData);
-		$result 	= $this->CourseCount->courseCountInsertData($courseId);
-		return json_encode($result,JSON_UNESCAPED_UNICODE);
+		$courseFile = $this->request->file('course_pic');
+		if ((!$courseData) || (!$courseFile)) {
+			$this->error('上传失败');
+		}
+		$fileInfo = $courseFile->move(ROOT_PATH . 'public' . DS .'uploads');
+		
+		if ($fileInfo) {
+			$fileURL = $this->website . '/uploads/' . dirname($fileInfo->getSaveName()) .'/' . $fileInfo->getFileName();
+			$courseId 	= $this->course->courseInsertData($courseData, $fileURL);
+			$result 	= $this->CourseCount->courseCountInsertData($courseId);
+			if ($result) {
+				$this->success('上传成功</br>' . $fileURL);
+			} else {
+				$this->error('上传失败');
+			}
+		}else {
+			$this->error($courseFile->getError());
+		}
+		//jq 上传时打开 需要返回值
+		//return json_encode($result,JSON_UNESCAPED_UNICODE);
+	}
+	public function courseModify()
+	{
+		$course_id = $this->request->param('course_id');
+		$courseInfo = $this->course->getCourseInfo($course_id);
+		$courseListSelect = $this->plate->getCoursePlateSelect();
+		$this->assign([
+			'courseListSelect'=>$courseListSelect,
+			'courseInfo'=> $courseInfo,
+		]);
+		return $this->fetch();
+	}
+	public function courseChange()
+	{
+		$courseData = $this->request->param();
+		$courseFile = $this->request->file('course_pic');
+		if (!$courseData) {
+			$this->error('上传失败');
+		}
+		if ($courseFile) {
+			$fileInfo = $courseFile->move(ROOT_PATH . 'public' . DS .'uploads');
+			$fileURL  = $this->website . '/uploads/' . dirname($fileInfo->getSaveName()) .'/' . $fileInfo->getFileName();
+		}else {
+			$fileURL = '';
+		}
+
+		$result = $this->course->courseChangeData($courseData, $fileURL);
+		if ($result) {
+			$this->success('修改成功</br>' . $fileURL);
+		} else {
+			$this->error('修改失败');
+		}
 	}
 	public function courseDetail()
-	{
+	{	
+		//获取课程course_id
+		$course_id = $this->request->param('course_id');
+		//查询lit_course获取课程基本信息
+		$courseInfo = $this->course->withTrashed()->find($course_id);
+		//通过获取器获取课程等级
+		$course_grade = $courseInfo->course_grade;
+		//查询lit_course获取课程总记信息统计
+		$courseCountInfo = $courseInfo->CourseCount;
+
+		/**************获取评论相关信息comment*****************/
+		//查询lit_comment获取课程总评论信息统计
+		$courseCommentInfo = count($courseInfo->Comment);
+		//查询lit_comment获取课程本周评论信息统计
+		$weekCommentCount = $this->comment->getWeekComment($course_id);
+		//查询lit_comment获取课程本月评论信息统计
+		$monthCommentCount = $this->comment->getMonthComment($course_id);
+		/*****************************************************/
+
+		/**************获取评论相关信息collect*****************/
+		//查询lit_Collect获取课程总收藏信息统计
+		$courseCollectInfo = count($courseInfo->Collect);
+		//查询lit_Collect获取课程本周收藏信息统计
+		$weekCollectCount = $this->collect->getWeekCollect($course_id);
+		//查询lit_Collect获取课程本月收藏信息统计
+		$monthCollectCount = $this->collect->getMonthCollect($course_id);
+		/*****************************************************/
+		
+		//查询lit_Note获取课程总收藏信息统计
+		$courseNoteInfo = count($courseInfo->Note);
+		//查询lit_Collect获取课程本周日记信息统计
+		$weekNoteCount = $this->note->getWeekNote($course_id);
+		//查询lit_Collect获取课程本月日记信息统计
+		$monthNoteCount = $this->note->getMonthNote($course_id);
+		$this->assign([
+			'courseInfo'  =>$courseInfo,
+			'course_grade'=>$course_grade,
+			'courseCountInfo'=>$courseCountInfo,
+			'courseCommentInfo'=>$courseCommentInfo,
+			'weekCommentCount'=>$weekCommentCount,
+			'monthCommentCount'=>$monthCommentCount,
+			'courseCollectInfo'=>$courseCollectInfo,
+			'weekCollectCount'=>$weekCollectCount,
+			'monthCollectCount'=>$monthCollectCount,
+			'courseNoteInfo'=>$courseNoteInfo,
+			'weekNoteCount'=>$weekNoteCount,
+			'monthNoteCount'=>$monthNoteCount,
+
+		]);
 		return $this->fetch();
 	}
 	public function courseList()
