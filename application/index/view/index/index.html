@@ -35,14 +35,16 @@
 
 <div id="header">
     <div class="page-container" id="nav"  style="background-color: #fff !important;">
-            <div id="logo" class="logo"><a href="#" target="_self" title="首页"><img title="小白" src="__INDEX_IMG__/xiaobai.png"></a></div>
+        <div id="logo" class="logo">
+        	<a href="#" target="_self" title="首页"><img title="小白" src="__INDEX_IMG__/xiaobai.png"></a>
+        </div>
         <ul class="nav-item">
-                        <li class="set-btn visible-xs-block"><a href="/user/newlogin" target="_self">登录</a> / <a href="/user/newsignup" target="_self">注册</a></li>
-                        
+            <li class="set-btn visible-xs-block">
+            	<a href="/user/newlogin" target="_self">登录</a> / <a href="/user/newsignup" target="_self">注册</a>
+            </li>  
             <li>
                 <a href="/course/list"  target="_self">课程</a>
-            </li>           
-            
+            </li>
         </ul>
         <div id="login-area">
             <ul class="header-unlogin clearfix">
@@ -53,7 +55,7 @@
                     <div class="my-cart" id="js-my-cart"></div>
                 </li>             
                 <li class="header-signin">
-                    <a  id="js-signin-btn">登录</a> / <a  id="js-signup-btn">注册</a>
+                    <a  id="js-signin-btn" href="{:url('Login/login')}">登录</a> / <a href="{:url('Login/register')}" id="js-signup-btn">注册</a>
                 </li>             
             </ul>
         </div>
