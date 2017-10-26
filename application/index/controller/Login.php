@@ -5,19 +5,20 @@ use think\Controller;
 use think\Validate;
 use myhelp\Phoneyz;
 use app\index\model\User;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use app\index\model\EmailList;
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
+// use app\index\model\EmailList;
 use think\Session;
 
 class Login extends Controller{
 	protected $user;
 	protected $mail;
+	protected $emailList;
 	public function _initialize()
 	{
 		$this->user = new User();
-		$this->mail = new PHPMailer();
-		$this->emailList = new EmailList();
+		// $this->mail = new PHPMailer();
+		// $this->emailList = new EmailList();
 	}
 	public function login()
 	{
