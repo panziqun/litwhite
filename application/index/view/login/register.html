@@ -137,6 +137,22 @@
                     },'json');
                 }else{
                     //放邮箱验证
+                    $.post("{:url('getEmail')}",{email:$('.email-phone').val()},
+                        function(data){
+                            var yzm = JSON.parse(data);
+                            $('.yzm').blur(function(){
+                                if (yzm == $(this).val()) {
+                                    $(this).siblings('span').text('验证码正确');
+                                }else{
+                                    $(this).siblings('span').text('验证码错误');
+                                }
+                                if ($('.pwd').siblings('span').text() == '格式正确' && $(this).siblings('span').text() == '验证码正确') {
+                                    $('.tj').removeAttr('disabled');
+                                }
+                            });
+                           
+                            
+                        },'json');
                 }
             });
             //密码格式正确 并显示提交按钮
@@ -152,9 +168,7 @@
             });
             //提交用户信息
             $('.tj').click(function(){
-                var status = '';
-                $.post("{:url('regSuccess')}",{user_phone:$('.email-phone').val(),user_pwd:$('.pwd').val()},function(data){
-                    status = data;
+                $.post("{:url('regSuccess')}",{user_phone:$('.email-phone').val(),user_pwd:$('.pwd').val()},function(){
                 });
                 window.location.href="{:url('Index/index')}";
             });

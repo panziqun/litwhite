@@ -5,11 +5,23 @@ use think\Controller;
 use think\Validate;
 use myhelp\Phoneyz;
 use app\index\model\User;
+
+
+// Import PHPMailer classes into the global namespace
+// These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use app\index\model\EmailList;
+
+
 class Login extends Controller{
 	protected $user;
+	protected $mail;
 	public function _initialize()
 	{
 		$this->user = new User();
+		$this->mail = new PHPMailer();
+		$this->emailList = new EmailList();
 	}
 	public function login()
 	{
@@ -84,14 +96,49 @@ class Login extends Controller{
 	public function regSuccess()
 	{
 		$user_name = 'xiaobai_' . substr(str_shuffle(md5('asdq23234asd')), 0, 7);
-		$user_phone = $this->request->param('user_phone');
 		$user_pwd = md5($this->request->param('user_pwd'));
-		$this->user->save(['user_name'=>$user_name, 'user_phone'=>$user_phone, 'user_pwd'=>$user_pwd]);
+		if (strpos($this->request->param('user_phone'), '@')) {
+			$user_email = $this->request->param('user_phone');
+			$this->user->save(['user_name'=>$user_name, 'user_email'=>$user_email, 'user_pwd'=>$user_pwd]);
+		}else{
+			$user_phone = $this->request->param('user_phone');
+			$this->user->save(['user_name'=>$user_name, 'user_phone'=>$user_phone, 'user_pwd'=>$user_pwd]);
+		}
 	}
 	//获取手机验证码并返回
 	public function getPhone()
 	{
 		return Phoneyz::getYzm($this->request->param('phone_number'));
+	}
+	//获取邮箱验证码
+	public function getEmail()
+	{
+		$email  = $this->request->param('email');
+		
+        //Server settings
+        $randNum = substr(str_shuffle('0123456789'),0,4);
+        //$this->emailList->sendEmail($email, $randNum);
+       	$this->sendEmail($email, $randNum);	
+        return json_encode($randNum,JSON_UNESCAPED_UNICODE);
+	}
+	public function sendEmail($email, $randNum)
+	{
+		//$this->mail->SMTPDebug = 2;                                 // Enable verbose debug output
+        $this->mail->isSMTP();                                      // Set mailer to use SMTP
+        $this->mail->Host = 'smtp.aliyun.com';  // Specify main and backup SMTP servers
+        $this->mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $this->mail->Charset = "UTF-8";
+        $this->mail->Username = 'hp66722667@aliyun.com';                 // SMTP username
+        $this->mail->Password = 'Hp123456';                           // SMTP password
+        //Recipients
+        $this->mail->setFrom('hp66722667@aliyun.com', 'litwhite');
+        $this->mail->addAddress($email, 'der');     // Add a recipient
+        $this->mail->addReplyTo('hp66722667@aliyun.com', 'litwhite');
+        //Content
+        $this->mail->isHTML(true);                                  // Set email format to HTML
+        $this->mail->Subject = 'Here is the YZM';
+        $this->mail->Body    = "This is the YZM message <b>$randNum!</b>";
+        $this->mail->send();
 	}
 }
 ?>
