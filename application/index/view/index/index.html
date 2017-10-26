@@ -23,7 +23,6 @@
 <meta name="baidu-site-verification" content="f81e4a13096b3a7cab15fe1d39773a4e"/>
 
 
-
 <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
 <!-- 自定义css -->
 <link rel="stylesheet" href="__INDEX_CSS__/myself.index.css" type="text/css" />
@@ -47,17 +46,78 @@
             </li>
         </ul>
         <div id="login-area">
+            {if $Think.session.user_id}
+	        <ul class="clearfix logined">
+				<li class="shop-cart" id="shop-cart">
+			        <a href="http://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
+			            <span class="icon-shopping-cart imv2-cart  js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
+			        </a>
+			        <div class="my-cart" id="js-my-cart"></div>
+			    </li>
+				<li class='remind_warp'>
+					<i class="msg_remind"></i>
+					<a target="_blank" href='http://www.imooc.com/u/3386918/notices'>
+						<i class='imv2-notifications'></i>
+					</a>
+				</li>
+				<li class="set_btn user-card-box"  id="header-user-card">
+					<a id="header-avator" class="user-card-item" action-type="my_menu"  href="http://www.imooc.com/u/3386918/plans" target="_self">
+						<img src='__INDEX_IMG__/573dc35200014e4101000100-40-40.jpg' width='40' height='40' />
+						<i class="myspace_remind" style="display: none;"></i>
+						<span style="display: none;">动态提醒</span>
+					</a>
+					<!-- 小弹窗 -->
+					<div class="g-user-card">
+						<div class="card-inner">
+							<div class="card-top clearfix">
+								<a href='http://www.imooc.com/u/3386918' class='l'>
+									<img src="" alt="qq_缄默_83386918">
+								</a>
+								<div class="card-top-right-box l">
+									<a href='http://www.imooc.com/u/3386918' class="name text-ellipsis">
+										<span>qq_缄默_83386918</span>
+									</a>
+									<div class="meta">
+										<a href="http://www.imooc.com/u/3386918/experience">经验<b id="js-user-mp">6,129</b></a>
+										<a href="http://www.imooc.com/u/3386918/credit">积分<b id="js-user-credit">0</b></a>            
+									</div>
+								</div>
+							</div>
+							<div class="user-center-box">
+			                    <ul class="clearfix">
+			                        <li class="l"><a href="http://www.imooc.com/u/3386918/courses" target="_blank"><span class="user-center-icon imv2-kecheng"></span>我的课程</a></li>
+			                        <li class="l">
+			                        	<a href="http://order.imooc.com/myorder" target="_blank"><span class="user-center-icon imv2-receipt"></span>订单中心</a>
+			                        	<i id="js-usercard-coupon-icon"></i>
+			                        </li>
+			                        <li class="l"><a href="http://www.imooc.com/mall/index" target="_blank"><span class="user-center-icon imv2-score_shop"></span>积分商城</a></li>
+			                        <li class="l"><a href="http://www.imooc.com/user/setbindsns" target="_blank"><span class="user-center-icon imv2-set_1"></span>个人设置</a></li>
+			                    </ul>
+			                </div>
+							
+							<div class="card-history">
+							</div>
+							
+							<div class="card-sets clearfix">
+								<a href="/passport/user/logout?referer=http://class.imooc.com" class="l">安全退出</a>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+            {else /}
             <ul class="header-unlogin clearfix">
                 <li class="shop-cart" id="shop-cart">
-                    <a href="cart.html" class="shop-cart-icon" target="_blank">
-                        <span class="icon-shopping-cart js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
+                    <a href="http://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
+                        <span class="icon-shopping-cart imv2-cart  js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
                     </a>
                     <div class="my-cart" id="js-my-cart"></div>
                 </li>             
                 <li class="header-signin">
-                    <a  id="js-signin-btn" href="{:url('Login/login')}">登录</a> / <a href="{:url('Login/register')}" id="js-signup-btn">注册</a>
+                    <a  id="js-signin-btn" href="{:url('Login/login')}">登录</a> / <a  id="js-signup-btn" href="{:url('Login/register')}">注册</a>
                 </li>             
             </ul>
+            {/if}
         </div>
         <div class='search-warp clearfix' style='min-width: 32px; height: 72px;'>
             <div class="search-area" data-search="top-banner">
@@ -1017,7 +1077,12 @@ $(document).ready(function(e) {
 				var heihei = $(this).data('id');
 				$(".submenu[data-id="+heihei+"]").hide();
 			});
-		
+			$('.user-card-box').mouseover(function(){
+				$(this).addClass('hover');
+			});
+			$('.user-card-box').mouseout(function(){
+				$(this).removeClass('hover');
+			});
 	});
 </script>
 <script type="text/javascript">
@@ -1029,4 +1094,3 @@ var _msg_unread = 0;
 var _not_unread = 0; 
 var _cart_num = 0;
 </script>
-

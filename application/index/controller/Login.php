@@ -5,14 +5,10 @@ use think\Controller;
 use think\Validate;
 use myhelp\Phoneyz;
 use app\index\model\User;
-
-
-// Import PHPMailer classes into the global namespace
-// These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use app\index\model\EmailList;
-
+use think\Session;
 
 class Login extends Controller{
 	protected $user;
@@ -38,6 +34,7 @@ class Login extends Controller{
 			$user = $this->user->get(['user_phone'=>$user_phone,'user_pwd'=>$user_pwd]);
 		}
 		if ($user) {
+			Session::set('user_id',$user->user_id);
 			$this->success('登录成功','Index/index');
 		}else{
 			$this->error('登录失败');
