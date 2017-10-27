@@ -3,24 +3,12 @@
 <head>
 <meta charset="utf-8">
 <title>慕课网-程序员的梦工厂</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-<meta name="renderer" content="webkit" />
-<meta property="qc:admins" content="77103107776157736375" />
-<meta property="wb:webmaster" content="c4f857219bfae3cb" />
-<meta http-equiv="Access-Control-Allow-Origin" content="*" />
-<meta http-equiv="Cache-Control" content="no-transform " />
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' *.imooc.com *.mukewang.com *.baidu.com *.sina.com.cn *.bootcss.com">
 <script type="text/javascript" src="__INDEX_JS__/jquery-1.12.3.min.js"></script>
-<link rel="dns-prefetch" href="//www.imooc.com" />
-<link rel="dns-prefetch" href="//img.imooc.com" />
-<link rel="dns-prefetch" href="//img.mukewang.com" />
 <link rel="apple-touch-icon" sizes="76x76" href="__INDEX_IMG__/common/touch-icon-ipad.png">
 <link rel="apple-touch-icon" sizes="120x120" href="__INDEX_IMG__/common/touch-icon-iphone-retina.png">
 <link rel="apple-touch-icon" sizes="152x152" href="__INDEX_IMG__/common/touch-icon-ipad-retina.png">
 <meta name="Keywords" content="" />
-<meta name="Description" content="慕课网（IMOOC）是IT技能学习平台。慕课网(IMOOC)提供了丰富的移动端开发、php开发、web前端、android开发以及html5等视频教程资源公开课。并且富有交互性及趣味性，你还可以和朋友一起编程。" />
-<meta name="360-site-verification" content="efec9ca9c0c2bf49b8f54f8ea4626ea8" />
-<meta name="baidu-site-verification" content="f81e4a13096b3a7cab15fe1d39773a4e"/>
+
 
 
 <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
@@ -294,7 +282,7 @@
 		</h3>			
 		<div class='clearfix types-content'>													{volist name="courseFree" id="course"}
 			<div class='index-card-container course-card-container container'>
-				<a target="_blank" class='course-card' href="{:url('course/courseDetail',['course_id'=>$course.course_id])}" data-track="sztj-1-1">
+				<a target="_blank" class='course-card' href="{:url('course/courseComment',['course_id'=>$course.course_id])}" data-track="sztj-1-1">
 				<div class='course-card-top hashadow'>
 					<img class="course-banner" src="{$course.course_pic}">
 					<div class="course-label">

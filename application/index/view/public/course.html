@@ -1,13 +1,17 @@
-{block name="menu"}
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>小白网</title>
-    <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
-    <link rel="stylesheet" href="__INDEX_CSS__/order.css" type="text/css" />
+<meta charset="utf-8">
+<title>{block name="title"}{$courseInfo.course_title}{/block}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="renderer" content="webkit" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
+<link rel="stylesheet" href="__INDEX_CSS__/course.css" type="text/css" />
+<link rel="stylesheet" href="__INDEX_CSS__/course.comment.css" type="text/css" />
+<link rel="stylesheet" href="__INDEX_CSS__/course.note.css" type="text/css" />
 </head>
-<body>
+<body >
 <div id="header">
     <div class="page-container" id="nav"  >
         <div id="logo" class="logo"><a href="index.html" target="_self" class="hide-text" title="首页"></a></div>
@@ -104,7 +108,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="__INDEX_JS__/jquery.min.js"></script>
 <script type="text/javascript">
    $(function(){
@@ -118,42 +121,146 @@
 </script>
 
 
+<div id="main">
+	<div class="course-infos">
+	    <div class="w pr">
+	    	<!--导航栏-->
+	        <div class="path">  
+	            <a href="/course/list">课程</a>
+	            <i class="path-split">\</i>
+	            <a href="/course/list?c=be">后端开发</a>
+	            <i class="path-split">\</i>
+	            <a href="/course/list?c=php">PHP</a>
+	            <i class="path-split">\</i>
+	            <a href="/learn/898"><span>PHP中的会话控制</span></a>
+	        </div>
+	        <!--导航栏 end-->
+	        <div class="hd clearfix">
+	            <h2 class="l">{$courseInfo.course_title}</h2>
+	        </div>
+	        <!--信息栏-->
+	        <div class="statics clearfix">
+	            <div class="moco-btn l learn-btn green-btn red-btn"> 
+	                <a href="{:url('courseVideo',['course_id'=>$courseInfo.course_id])}" class="J-learn-course">开始学习</a>
+	                <em></em>
+	                <i class="follow-action js-follow-action"></i>
+	            </div>
+	            <div class="static-item l">
+	                <span class="meta">学习人数</span>
+	                <span class="meta-value js-learn-num">{$courseInfo.courseCount.course_sales}</span>
+	            </div>
+	            <div class="static-item l">
+	                <span class="meta">难度级别</span>
+	                <span class="meta-value">{$courseInfo.course_grade}</span>
+	                <em></em>
+	            </div>
+	            <div class="static-item l">
+	                <span class="meta">课程时长</span>
+	                <span class="meta-value">{$courseInfo.course_duration}小时</span>
+	                <em></em>
+	            </div>
+	            <div class="static-item l score-btn">
+	                <span class="meta">综合评分</span>
+	                <span class="meta-value">{$courseInfo.course_start*2}</span>
+	                <em></em>              
+	                <div class="score-wrap icon-drop_up triangle">
+	                    <div class="score-box">
+	                        <a href="/coursescore/898" class="person-num">
+	                            <span class="person-num l">0人评价</span>
+	                        </a>
+	                        <a href="/coursescore/898?page=1" class="evaluation-btn r">查看评价</a>
+	                        <div class="score-detail-box">
+	                            <div class="score-static-item">
+	                                <span class="meta-value">10.0</span>
+	                                <span class="meta">内容实用</span>
+	                            </div>
+	                            <div class="score-static-item">
+	                                <span class="meta-value">10.0</span>
+	                                <span class="meta">简洁易懂</span>
+	                                <em></em>
+	                            </div>
+	                            <div class="score-static-item">
+	                                <span class="meta-value">10.0</span>
+	                                <span class="meta">逻辑清晰</span>
+	                                <em></em>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            
+	        </div>
+	        <!--信息栏 end-->
+	        <div class="extra">	            
+	            <!-- share -->
+	            <div class="share-action r bdsharebuttonbox">
+	                <a href="javascript:;" class="share wx js-share icon-share-weichat" data-cmd="weixin"></a>
 
 
+	                <a href="{:url('OauthController/qqAction')}" class="share qq js-share icon-share-qq" data-cmd="qzone"></a>
+	                <a href="javascript:;" class="share sina js-share icon-share-weibo" data-cmd="tsina"></a>
+	            </div>
+	            <!-- share end-->
+	        </div>
+	    </div>    
+	</div>
+
+	<div class="course-info-main clearfix w">
+	    <div class="content-wrap">
+	    	
+	        <!--content-->
+	        <div class="content">
+	            <!-- 课程简介 -->
+	            <div class="course-brief">
+	                <p class="auto-wrap">{$courseInfo.course_describe}</p>
+	            </div>
+	            {block name="content"}
+	            <!-- 课程简介 end -->
+	            <div class="mod-tab-menu ">
+		        	<ul class="course-menu clearfix">
+		        		<li><a class="ui-tabs-active active" id="learnOn"  href="/learn/898"><span>章节</span></a></li>
+		        		<li><a id="commentOn" class="" href="/comment/898"><span>评论</span></a></li>
+		        		<li><a id="qaOn" class="" href="/qa/898/t/1?page=1"><span>问答</span></a></li>
+		        		<li><a id="noteOn" class="" href="/note/898?sort=last&page=1"><span>笔记</span></a></li>
+		        	</ul>
+	            </div>
+	            {/block}
+	            <!-- 课程章节 end -->
+	        </div>
+	        <!--content end-->
+	        
+	        <!--右侧block-->
+	        <div class="aside r">
+	            <div class="bd">
+	                <!-- 讲师须知 -->
+	                <div class="box mb40 js-usercard-box">
+	                <h4>讲师提示</h4>
+	                    <div class="teacher-info">
+	                    <a href="/u/112353/courses?sort=publish" target="_blank" >
+	                        <img data-userid="112353" class="js-usercard-dialog" src="__INDEX_IMG__/567ca60000011fae26501720-80-80.jpg" width="80" height="80">
+	                    </a>
+	                    <span class="tit">
+	                        <a href="/u/112353/courses?sort=publish" target="_blank">{$courseInfo.course_teacher}</a><i class="icon-imooc"></i>
+	                    </span>
+	                    <span class="job">PHP开发工程师</span>
+	                    </div>
+	                    <div class="course-info-tip">
+	                        <dl class="first">
+	                            <dt>课程须知</dt>
+	                            <dd class="autowrap">{$courseInfo.course_keywords}</dd>
+	                        </dl>
+	                    </div>
+	                </div>
+	                <div class="js-recom-box"></div>
+	             </div>        
+	        </div>
+	        <!--右侧block end-->
+	    </div>
+	    <div class="clear"></div>
+	</div>
+</div>
 
 
- 
-
-
-</body>
-</html>
-
-{/block}
-{block name="left"}{/block}
-{block name="main"}{/block}
-{block name="right"}{/block}
-{block name="footer"}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>我的订单_慕课网</title>
-    
-    
-    
-    
-<!--imooc-->
-
-<!--/imooc-->
-
-    
-    
-
-
-    <link rel="stylesheet" href="__INDEX_CSS__/order.css" type="text/css" />
-</head>
-
-<body>
 
 <div id="footer">
     <div class="waper">
@@ -165,6 +272,7 @@
                 <a class="followus-weibo" href="http://weibo.com/u/3306361973"  target="_blank" title="新浪微博"></a>
                 <a class="followus-qzone" href="http://user.qzone.qq.com/1059809142/" target="_blank" title="QQ空间"></a>
             </div>
+            
             <div class="footer_intro l">
                 <div class="footer_link">
                     <ul>
@@ -181,11 +289,12 @@
                 </div>
                 <p>Copyright © 2017 imooc.com All Rights Reserved | 京ICP备 13046642号-2</p>
             </div>
+
         </div>
     </div>
 </div>
-{/block}
-{block name="J_GotoTop"}
+
+
 <div id="J_GotoTop" class="elevator">
     <a href="/user/feedback" class="elevator-msg" target="_blank">
         <i class="imv2-feedback"></i>
@@ -210,8 +319,13 @@
         <span class="">返回顶部</span>
     </a>
 </div>
-{/block}
 
+
+
+
+<div class="mask"></div>
 </body>
 </html>
-
+<!--script-->
+<script type="text/javascript" src="__INDEX_JS__/error.js"></script>
+{block name="js"}{/block}

@@ -266,4 +266,13 @@ return [
         // 验证成功后是否重置
         'reset' => true
         ],
+        // QQ 互联配置
+    'qqconnect' => [
+        'appid' => '101434960',
+        'appkey' => '961c69f0ced7b1976d7ce505611b7d04',
+        'callback' => 'http://www.litwhite.com/index/callbackcontroller/qqaction',
+        'scope' => 'get_user_info',
+        'errorReport' => true
+    ]
+
 ];
