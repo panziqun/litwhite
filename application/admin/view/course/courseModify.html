@@ -159,13 +159,13 @@
                                 <div class="col-sm-8">
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input class="course_status" type="radio" name="course_status" id="status_input" value="0" checked>
+                                            <input {if $courseInfo['delete_time']==NULL}checked{/if}class="course_status" type="radio" name="course_status" id="status_input" value="0" checked>
                                             开启
                                         </label>
                                     </div>
                                     <div class="radio col-sm-2">
                                         <label>
-                                            <input class="course_status" type="radio" name="course_status" id="status_input" value="1">
+                                            <input {if $courseInfo['delete_time']}checked{/if} class="course_status" type="radio" name="course_status" id="status_input" value="1">
                                             停止
                                         </label>
                                     </div>
@@ -221,7 +221,7 @@
 
 <script type="text/javascript">
     $(function(){
-
+    	console.log({$courseInfo['course_grade']});
     	$(".course_grade").each(function() {
     		if( $(this).val()=={$courseInfo['course_grade']} ) {
     			$(this).attr("checked","checked");
@@ -232,21 +232,6 @@
     			$(this).attr("checked","checked");
     		}
     	});
-    	var course_status = 0;
-    	if ({$courseInfo['delete_time']}==null) {
-    		course_status = 0;
-    	} else{
-    		course_status = 1;
-    	}
-    	console.log(course_status);
-
-    	$(".course_status").each(function() {
-    		if( $(this).val()==course_status ) {
-    			$(this).attr("checked","checked");
-    		}
-    	});
-
-
         $().on('click',function(){
             $.post("{:url('courseInsert')}",
                 {

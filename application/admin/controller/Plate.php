@@ -57,7 +57,6 @@ class Plate extends Auth{
 	public function plateSet()
 	{
 		$plateListSelect = $this->plate->getPlateListSelect();
-		dump($plateListSelect);
 		$this->assign([
 			'plateListSelect'=>$plateListSelect
 		]);

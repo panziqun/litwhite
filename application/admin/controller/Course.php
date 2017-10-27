@@ -91,10 +91,10 @@ class Course extends Auth{
 		}
 
 		$result = $this->course->courseChangeData($courseData, $fileURL);
-		if ($result) {
-			$this->success('修改成功</br>' . $fileURL);
+		if ($result['code']==200) {
+			$this->success( $result['info'].'</br>' . $fileURL);
 		} else {
-			$this->error('修改失败');
+			$this->error($result['info']);
 		}
 	}
 	public function courseDetail()
@@ -184,7 +184,7 @@ class Course extends Auth{
         }
         $q = $pageParam['query'];
         $q1 = $pageParam1['query1'];
-        dump($q);
+ 
  
         $list = Db::connect("db_config2")
             ->table('dede_archives')
