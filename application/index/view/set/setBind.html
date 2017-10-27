@@ -44,8 +44,7 @@
         
 <div class="page-settings">
     <div class="common-title">
-        账号绑定 <span class="title-tips">完成<b class="color-red">3/4</b></span>
-        <a href="/about/faq" class="pull-right" target="_blank"><i class="icon-ques-revert"></i>常见问题</a>
+        账号绑定 
     </div>
     <div class="line"></div>
     <div class="setting">
@@ -69,13 +68,17 @@
                 	</div>
                 	<div class="right">
                         {if $user['user_email']}
-                        <span href="javascript:void(0);" class='binding js-bindemail moco-btn moco-btn-normal'>已绑定</span>
+                        <span href="javascript:void(0);" class='binding moco-btn moco-btn-normal'>已绑定</span>
                         {else /}
                         <span href="javascript:void(0);" class='binding js-bindemail moco-btn moco-btn-normal'>立即绑定</span>
                         {/if}
                     </div>
                 </div>
-                
+                <script type="text/javascript">
+                    $(function(){
+                        // $('.js-bindemail')
+                    })
+                </script>
                 <div class="itemBox">
                     <div class="left">  
                         <i class="icon-set_phone"></i>
@@ -93,9 +96,9 @@
                     </div>
                     <div class="right">
                         {if $user['user_phone']}
-                        <span href='javascript:void(0);' class='change js-change-phone moco-btn moco-btn-normal' changeType="phone">已绑定</span> 
+                        <span href='javascript:void(0);' class='change moco-btn moco-btn-normal' changeType="phone">已绑定</span> 
                         {else /}
-                        <span href='javascript:void(0);' class='change js-change-phone moco-btn moco-btn-normal' changeType="phone">未绑定</span>
+                        <span href='javascript:void(0);' class='change js-change-phone moco-btn moco-btn-normal' changeType="phone">立即绑定</span>
                         {/if}
                     </div>
                 </div>
@@ -150,19 +153,211 @@
   </div>
 </div>
 </div>
+
+<div class="moco-modal-layer fixed phone-show" style="z-index: 917; visibility: hidden; left: 524px; top: 191px; opacity: 1; width: 488px; height: auto;">                    
+    <div class="moco-modal-title">
+        <div>
+            <span>绑定手机</span>
+            <a href="javascript:void(0)" class="moco-icon-close moco-modal-close js-modal-close"></a>
+        </div>
+    </div>                    
+    <div class="moco-modal-inner">
+        <div class="moco-modal-dialog" style="display: block;">
+            <div class="dialogBox tpl-settingPhone" style="width: 430px;">                        
+                <div class="moco-form-group">                
+                    <label for="inputEmail3" class="moco-control-label">手机号码：</label>                
+                    <div class="moco-control-input">                    
+                        <input data-callback="checkPhone" placeholder="请输入您的手机号" class="moco-form-control js-phoneNumber" data-validate="require-mobile-phone" id="">
+                        <div class="moco-control-tip errorHint color_red phone-tip"></div>                
+                    </div>            
+                </div>             
+                <div class="moco-form-group">                
+                    <label for="inputEmail3" class="moco-control-label">短信验证码：</label>                
+                    <div class="moco-control-input w200">                    
+                        <p class="js-getCode getCode pa js-timer get-phonecode">获取验证码</p>
+                        <input maxlength="4"  class="moco-form-control js-phoneCode" data-validate="require-string" data-minlength="4" id="">                    
+                        <div class="moco-control-tip errorHint color_red phonecode-tip" ></div>
+                    </div>            
+                </div>                                    
+                <div class="moco-form-group">                
+                    <label for="inputEmail3" class="moco-control-label"></label>                
+                    <div class="moco-control-input">                    
+                        <button class="moco-btn moco-btn-blue js-submit phone-submit">确定</button>                    
+                        <button class="moco-btn moco-btn-normal js-modal-close">取消</button>       
+                        <p class="js-gerror g_error"></p>
+                    </div>            
+                </div>        
+            </div>    
+        </div>
+    </div>            
+</div>
+
+<div class="moco-modal-layer fixed email-show" style="z-index: 917; visibility: hidden; left: 524px; top: 191px; opacity: 1; width: 488px; height: auto;">                    
+    <div class="moco-modal-title">
+        <div>
+            <span>绑定邮箱</span>
+            <a href="javascript:void(0)" class="moco-icon-close moco-modal-close js-modal-close"></a>
+        </div>
+    </div>                    
+    <div class="moco-modal-inner">
+        <div class="moco-modal-dialog" style="display: block;">
+            <div class="dialogBox tpl-settingPhone" style="width: 430px;">                        
+                <div class="moco-form-group">                
+                    <label for="inputEmail3" class="moco-control-label">邮箱：</label>                
+                    <div class="moco-control-input">                    
+                        <input  placeholder="请输入您的邮箱" class="moco-form-control js-email" id="">
+                        <div class="moco-control-tip errorHint color_red "></div>                
+                    </div>            
+                </div>             
+                <div class="moco-form-group">                
+                    <label for="inputEmail3" class="moco-control-label email-tip">邮箱验证码：</label>                
+                    <div class="moco-control-input w200">                    
+                        <p class="js-getCode getCode pa js-timer">获取验证码</p>                    
+                        <input maxlength="4" placeholder="" class="moco-form-control js-emailCode" data-validate="require-string" data-minlength="4" id="">                    
+                        <div class="moco-control-tip errorHint color_red emailcode-tip"></div>                
+                    </div>            
+                </div>                                    
+                <div class="moco-form-group">                
+                    <label for="inputEmail3" class="moco-control-label"></label>                
+                    <div class="moco-control-input">                    
+                        <button class="moco-btn moco-btn-blue js-submit">确定</button>                    
+                        <button class="moco-btn moco-btn-normal js-modal-close">取消</button>       
+                        <p class="js-gerror g_error"></p>
+                    </div>            
+                </div>        
+            </div>    
+        </div>
+    </div>            
+</div>
+
+<div class="moco-modal-layer fixed pwd-show" style="z-index: 905; visibility: hidden; left: 524px; top: 219px; opacity: 1; width: 488px; height: 321px;">                    
+    <div class="moco-modal-title">
+        <div><span>修改密码</span>
+            <a href="javascript:void(0)" class="moco-icon-close moco-modal-close js-modal-close"></a>
+        </div>
+    </div>                    
+    <div class="moco-modal-inner">
+        <div class="moco-modal-dialog" style="display: block;">
+            <div class="dialogBox tpl-changePwd" style="width: 430px;">                        
+            <div class="moco-form-group">                
+                <label for="inputEmail3" class="moco-control-label">输入原始密码：</label>                
+                <div class="moco-control-input">                    
+                    <input type="password" placeholder="输入密码" class="moco-form-control js-prePwd" data-validate="require-password" id="">                    
+                    <div class="moco-control-tip errorHint color_red"></div>                
+                </div>            
+            </div>            
+            <div class="moco-form-group">                
+                <label for="inputEmail3" class="moco-control-label">输入新密码：</label>                
+                <div class="moco-control-input">                    
+                    <input type="password" placeholder="6-16位密码，区分大小写，不能用空格" class="moco-form-control js-pwd" data-validate="require-password" id="">                    
+                    <div class="moco-control-tip errorHint color_red"></div>                
+                </div>            
+            </div>            
+            <div class="moco-form-group">                
+                <label for="inputEmail3" class="moco-control-label">确认新密码：</label>                
+                <div class="moco-control-input">                    
+                    <input type="password" placeholder="再次输入密码" class="moco-form-control js-surPwd" data-validate="require-password" id="">                    
+                    <div class="moco-control-tip errorHint color_red"></div>                
+                </div>            
+            </div>            
+            <div class="moco-form-group">                
+                <label for="inputEmail3" class="moco-control-label"></label>                
+                <div class="moco-control-input">                    
+                    <a href="javascript:void(0);" class="moco-btn moco-btn-blue js-submit pwd-submit">确定</a>                    
+                    <a href="javascript:void(0);" class="moco-btn moco-btn-normal js-modal-close">取消</a>                    
+                    <p class="js-gerror g_error"></p>                
+                </div>            
+            </div>                    
+            </div>    
+        </div>
+    </div>            
+</div>
+<div class="moco-modal-blackout js-moco-modal-cancel" style="z-index: 901; opacity: 0.7; width: 1519px; height: 830px; display: none;">
+</div>
 <!-- 上传头像 -->
 <script type="text/javascript">
     $(function(){
+
+        //修改密码这块
+        $('.js-prePwd').blur(function(){
+            if ($(this).val() != '') {
+                $.get("{:url('checkPrepwd')}",{user_pwd:$(this).val()},function(data){
+                    $('.js-prePwd').siblings('div').text(data);
+                },'json');
+            }else{
+                $(this).siblings('div').text('密码错误');
+            }
+        });
+        $('.js-pwd').blur(function(){
+            var pwd = $(this).val();
+            if (pwd.indexOf(' ')>=0 || pwd.length > 16 || pwd.length < 6 ) {
+                $(this).siblings('div').text('密码格式错误');
+            }else{
+                $(this).siblings('div').text('密码格式正确');
+            }
+        });
+        $('.js-surPwd').blur(function(){
+            if ($(this).val() == $('.js-pwd').val()) {
+                $(this).siblings('div').text('两次密码一致');
+            }else{
+                $(this).siblings('div').text('两次密码不一致');
+            }
+        });
+        $('.pwd-submit').click(function(){
+            if ($('.js-prePwd').siblings('div').text() == '密码正确' && $('.js-pwd').siblings('div').text() == '密码格式正确' && $('.js-surPwd').siblings('div').text() == '两次密码一致') {
+                $.post("{:url('updatePwd')}",{user_pwd:$('.js-pwd').val()},function(){
+                },'json');
+                window.location.href = "{:url('Login/login')}";
+            }
+        });
+        //更新头像这块
         $('.update-avator').click(function(){
-            $('.moco-modal-layer').css('visibility','visible');
+            $('.headi-show').css('visibility','visible');
+            $('.moco-modal-blackout').css('display','block');
+        });
+        $('.js-bindemail').click(function(){
+            $('.email-show').css('visibility','visible');
+            $('.moco-modal-blackout').css('display','block');
+        });
+        $('.js-change-phone').click(function(){
+            $('.phone-show').css('visibility','visible');
+            $('.moco-modal-blackout').css('display','block');
+        });
+        $('.js-changePWD').click(function(){
+            $('.pwd-show').css('visibility','visible');
+            $('.moco-modal-blackout').css('display','block');
         });
         $('.js-modal-close').click(function(){
             $('.moco-modal-layer').css('visibility','hidden');
+            $('.moco-modal-blackout').css('display','none');
+        });
+        $('.js-avator-save').click(function(){
+        });
+        //绑定手机号码这块
+        $('.js-phoneNumber').blur(function(){
+            $.get("{:url('Login/checkEmailPhone')}",{email_phone:$(this).val()},function(data){
+                $('.phone-tip').text(data);
+            },'json');
+        });
+        $('.get-phonecode').click(function(){
+            $.get("{:url('getPhone')}",{phone_number:$('.js-phoneNumber').val()});
+        });
+        $('.js-phoneCode').blur(function(){
+            $.get("{:url('checkPhonecode')}",{phone_code:$(this).val()},function(data){
+                $('.phonecode-tip').text(data);
+            },'json')
+        });
+        $('.phone-submit').click(function(){
+            if ($('.phone-tip').text() == '手机格式正确' && $('.phonecode-tip').text() == '验证码正确') {
+                $.post("{:url('savePhone')}",{user_phone:$('.js-phoneNumber').val()});
+                window.location.href = "{:url('setBind')}";
+            }
         });
     })
 
 </script>
-<script type="text/javascript">    
+<script type="text/javascript">
+//头像实时预览    
     function preview(file)  
     {  
         var prevDiv = document.getElementById('localImag');  
@@ -177,7 +372,7 @@
         }  
     }  
  </script> 
-<div class="moco-modal-layer fixed" style="z-index: 917; visibility: hidden; left: 525px; top: 58.5px; opacity: 1;">                    
+<div class="moco-modal-layer fixed headi-show" style="z-index: 917; visibility: hidden; left: 525px; top: 169px; opacity: 1;">                    
     <div class="moco-modal-title">
         <div><span>更换头像</span>
             <a href="javascript:void(0)" class="moco-icon-close moco-modal-close js-modal-close"></a>
@@ -187,25 +382,23 @@
                 <div class="tpl-avator">             
                     <div class="moco-form-group avator-wapper">                 
                         <div class="avator-mode" id="localImag">                       
-                            <!-- <img class="avator-img" id="pic" src="" data-portrait="" width="192" height="192" > -->
+                            <img class="avator-img" id="pic" src="__WEBSITE__/uploads/{$user['userinfo_headi']}" data-portrait="" width="192" height="192" >
 
                         </div> 
                                          
                         <div class="clearfix w140" style="position: relative;right:40px;">
-                            <form target="uploadtarget" action="{:url('headi')}" method="post" enctype="multipart/form-data" class="pull-right">                            
+                            <form action="{:url('headi')}" method="post" enctype="multipart/form-data" class="pull-right">                            
                                 <a herf="javascript:void(0)" class="avator-btn-fake" onclick="document.getElementById('upload').click();return false;">
                                     上传头像
                                  </a>               
-                                <input class="hide" type="file" title="上传头像" name="fileField" id="upload" accept="image/gif,image/jpeg,image/jpg,image/png" onchange="preview(this)">                     
-                            </form>                 
+                                <input class="hide" type="file" title="上传头像" name="image" id="upload" accept="image/gif,image/jpeg,image/jpg,image/png" onchange="preview(this)">          
                         </div>              
                     </div>              
                     <div class="moco-form-group w140">                  
                         <label for="inputEmail3" class="moco-control-label"></label>                    
                         <div class="moco-control-input">                        
-                            <a href="javascript:void(0);" class="moco-btn moco-btn-blue js-avator-save marR10">
-                                确定
-                            </a>                       
+                            <button class="moco-btn moco-btn-blue js-avator-save marR10">确定</button>
+                            </form>                     
                             <a href="javascript:void(0);" class="moco-btn moco-btn-normal js-modal-close">
                                 取消
                             </a>                        
