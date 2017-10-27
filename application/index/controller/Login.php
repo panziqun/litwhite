@@ -5,6 +5,7 @@ use think\Controller;
 use think\Validate;
 use myhelp\Phoneyz;
 use app\index\model\User;
+use app\index\model\Userinfo;
 // use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\Exception;
 // use app\index\model\EmailList;
@@ -14,9 +15,11 @@ class Login extends Controller{
 	protected $user;
 	protected $mail;
 	protected $emailList;
+	protected $userinfo;
 	public function _initialize()
 	{
 		$this->user = new User();
+		$this->userinfo = new Userinfo();
 		// $this->mail = new PHPMailer();
 		// $this->emailList = new EmailList();
 	}
@@ -35,7 +38,10 @@ class Login extends Controller{
 			$user = $this->user->get(['user_phone'=>$user_phone,'user_pwd'=>$user_pwd]);
 		}
 		if ($user) {
+			$userinfo = $this->userinfo->get(['user_id'=>$user->user_id]);
 			Session::set('user_id',$user->user_id);
+			Session::set('user_name',$user->user_name);
+			Session::set('userinfo_headi',$userinfo->userinfo_headi);
 			$this->success('登录成功','Index/index');
 		}else{
 			$this->error('登录失败');
@@ -137,6 +143,11 @@ class Login extends Controller{
         $this->mail->Subject = 'Here is the YZM';
         $this->mail->Body    = "This is the YZM message <b>$randNum!</b>";
         $this->mail->send();
+	}
+	public function loginOut()
+	{
+		Session::clear();
+		$this->redirect('Index/index');
 	}
 }
 ?>

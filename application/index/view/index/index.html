@@ -50,7 +50,7 @@
 				</li>
 				<li class="set_btn user-card-box"  id="header-user-card">
 					<a id="header-avator" class="user-card-item" action-type="my_menu"  href="http://www.imooc.com/u/3386918/plans" target="_self">
-						<img src='__INDEX_IMG__/573dc35200014e4101000100-40-40.jpg' width='40' height='40' />
+						<img src='__WEBSITE__/uploads/{$Think.session.userinfo_headi}' width='40' height='40' />
 						<i class="myspace_remind" style="display: none;"></i>
 						<span style="display: none;">动态提醒</span>
 					</a>
@@ -59,11 +59,11 @@
 						<div class="card-inner">
 							<div class="card-top clearfix">
 								<a href='http://www.imooc.com/u/3386918' class='l'>
-									<img src="" alt="qq_缄默_83386918">
+									<img src="__WEBSITE__/uploads/{$Think.session.userinfo_headi}" alt="{$Think.session.user_name}">
 								</a>
 								<div class="card-top-right-box l">
 									<a href='http://www.imooc.com/u/3386918' class="name text-ellipsis">
-										<span>qq_缄默_83386918</span>
+										<span>{$Think.session.user_name}</span>
 									</a>
 									<div class="meta">
 										<a href="http://www.imooc.com/u/3386918/experience">经验<b id="js-user-mp">6,129</b></a>
@@ -78,7 +78,7 @@
 			                        	<a href="http://order.imooc.com/myorder" target="_blank"><span class="user-center-icon imv2-receipt"></span>订单中心</a>
 			                        	<i id="js-usercard-coupon-icon"></i>
 			                        </li>
-			                        <li class="l"><a href="http://www.imooc.com/mall/index" target="_blank"><span class="user-center-icon imv2-score_shop"></span>积分商城</a></li>
+			                        <li class="l"><a href="http://www.imooc.com/mall/index" target="_blank"><span class="user-center-icon imv2-cart"></span>购物车</a></li>
 			                        <li class="l"><a href="{:url('set/setBind')}" target="_blank"><span class="user-center-icon imv2-set_1"></span>个人设置</a></li>
 			                    </ul>
 			                </div>
@@ -126,7 +126,7 @@
     </div>
     <!-- 前端开发 -->
     {volist name="bigPlateList" id="bigPlate"}
-    <div class="submenu a hide" data-id="{$bigPlate.plate_id}" >
+    <div class="submenu a hide sb" data-id="{$bigPlate.plate_id}" >
         <div class="innerBox clearfix">
             <div class="subinnerBox l">
                 <div class="cates-box">
@@ -207,7 +207,7 @@
 
     <div class="menuContent">
     	{volist name="bigPlateList" id="bigPlate"}
-        <div class="item" data-id="{$bigPlate.plate_id}">
+        <div class="item sb" data-id="{$bigPlate.plate_id}">
             <a href="/course/list?c=fe" target="_blank">
 				<span class="group">{$bigPlate.plate_title}</span>
 				<i class='icon-right2'></i>
@@ -464,30 +464,7 @@
 		</div>  
 	</div>
 </div>
-<div id="J_GotoTop" class="elevator">    
-	<a href="/user/feedback" class="elevator-msg" target="_blank">        
-		<i class="icon-feedback"></i>        
-		<span class="">意见反馈</span>    
-	</a>    
-	<a href="/about/faq" class="elevator-faq" target="_blank">        
-		<i class="icon-ques"></i>        
-		<span class="">常见问题</span>    
-	</a>    
-	<a href="http://www.imooc.com/mobile/app" target="_blank" class="elevator-app" >        
-		<i class="icon-appdownload"></i>        
-		<span class="">APP下载</span>        
-		<div class="elevator-app-box"></div>    
-	</a>    
-	<a href="javascript:void(0)" class="elevator-weixin no-goto" id="js-elevator-weixin" >        
-		<i class="icon-wxgzh"></i>        
-		<span class="">官方微信</span>        
-		<div class="elevator-weixin-box"></div>    
-	</a>    
-	<a href="javascript:void(0)" class="elevator-top no-goto" style="display:block;" id="backTop">        
-		<i class="icon-up2"></i>        
-		<span class="">返回顶部</span>   
-	</a>
-</div>
+
 </div>
 <!--script-->
 <script type="text/javascript" src="__INDEX_JS__/error.js"></script>
@@ -526,7 +503,7 @@ $(document).ready(function(e) {
 
 <script type="text/javascript">
 	$(function(){
-			$(".item").hover(function(){
+			$(".sb").hover(function(){
 				var heihei = $(this).data('id');
 				$(".submenu[data-id="+heihei+"]").show();
 			},function(){

@@ -374,7 +374,7 @@
                     $('.p-usersm-name').text('#');
                     $('.p-usersm-name').text(data.usersm_name);
                     if (data.userinfo_headi) {
-                        $('.p-userinfo-headi').attr('src',data.userinfo_headi);
+                        $('.p-userinfo-headi').attr('src','__WEBSITE__/uploads/'+data.userinfo_headi);
                     }else{
                         $('.p-userinfo-headi').attr('src','__ADMIN_IMG__/a2.jpg');
                     }
