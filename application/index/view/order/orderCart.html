@@ -7,34 +7,115 @@
     <title>购物车_慕课网</title>
     <link rel="stylesheet" href="__INDEX_CSS__/index.css" type="text/css" />
 </head>
-
 <body>
-
-
-
 <div class='body-main'>
-<div class='cart-header'>
-	<div class='cart-header-warp clearfix'>
-		<div class='cart-title left clearfix'>
-			<h1 class='left'>我的购物车</h1>
-			
+    <div class='cart-header'>
+        <div class='cart-header-warp clearfix'>
+            <div class='cart-title left clearfix'>
+                <h1 class='left'>我的购物车</h1>
+            </div>
+            <div class='right'>
+                <div class='clearfix'>
+                    <span class='left'><a class='js-myorderbtn  myorder-history' href='/myorder'>我的订单历史</a></span>
+                    <span class='left num js-order-num' style='display: none;'>0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='cart-body' id='cartBody'>
+		<!-- <p class='notdata'>购物车内空空如也</p> -->
+    <div class="cart-body-title clearfix">
+        <div class="item-1 l">
+            <i class="js-check-all check imv2-checkbox"></i>
+            <span class="c-93999f">全选</span>
+        </div>
+        <div class="item-2 l">
+            <span class="c-4d555d">课程</span>
+        </div>
+        <div class="item-3 l">
+            <span class="c-4d555d">金额</span>
+        </div>
+        <div class="item-4 l">
+            <span class="c-4d555d">操作</span>
+        </div>
+    </div>
 
-		</div>
-		<div class='right'>
-			
-	<div class='clearfix'>
-		<span class='left'><a class='js-myorderbtn  myorder-history' href='/myorder'>我的订单历史</a></span>
-		<span class='left num js-order-num' style='display: none;'>0</span>
-	</div>
-
-		</div>
-	</div>
+    <div id="js-cart-body-table" class="cart-body-table">
+        <div class="item clearfix js-item-cart js-each-112" data-type="1" data-typeid="112" data-goodsid="212" data-price="366.00">
+            <div class="item-1">
+                <i class="js-check check imv2-checkbox" data-price="366.00"></i>
+            </div>
+            <div class="item-2 clearfix">
+                <a href="http://coding.imooc.com/class/112.html" target="_blank" class="img-box l">
+                    <img src="http://img.mukewang.com/szimg/5940e2a20001045a05400300-160-90.jpg" width="160" height="90">
+                </a>
+                <dl class="l has-package">
+                    <a href="http://coding.imooc.com/class/112.html" target="_blank"><dt>以慕课网日志分析为例  进入大数据 Spark SQL 的世界</dt></a>
+                                            <!-- 组合套餐 -->
+                    <p class="package-item js-package-item" data-cid="112" data-packageid="83,13">2个组合套餐可选择</p>
+                </dl>
+            </div>
+            <div class="item-3">
+                <div class="price clearfix">
+                    <em>￥</em>
+                    <span>366.00</span>
+                </div>
+            </div>
+            <div class="item-4">
+                <i class="imv2-close js-close-cart close"></i>
+            </div>
+        </div>
+        <div class="item clearfix js-item-cart js-each-125" data-type="1" data-typeid="125" data-goodsid="279" data-price="348.00">
+            <div class="item-1">
+                <i class="js-check check imv2-checkbox" data-price="348.00"></i>
+            </div>
+            
+            <div class="item-2 clearfix">
+                <a href="http://coding.imooc.com/class/125.html" target="_blank" class="img-box l">
+                    <img src="http://img.mukewang.com/szimg/59eeba8b000114cc05400300-160-90.jpg" width="160" height="90">
+                </a>
+                <dl class="l has-package">
+                    <a href="http://coding.imooc.com/class/125.html" target="_blank"><dt>Spring Boot带前后端 渐进式开发企业级博客系统</dt></a>
+                                        <!-- 组合套餐 -->
+                    <p class="package-item js-package-item" data-cid="125" data-packageid="98,76,75">3个组合套餐可选择</p>
+                </dl>
+            </div>
+                
+            <div class="item-3">
+                <div class="price clearfix">
+                    <em>￥</em>
+                    <span>348.00</span>
+                </div>
+            </div>
+            
+            <div class="item-4">
+                <i class="imv2-close js-close-cart close"></i>
+            </div>
+        </div>
+        <div id="Anchor"></div>
+        <div class="cart-body-bot js-cart-body-bot">
+            <div class="clearfix cart-body-bot-box">
+                <div class="right">
+                    <ul class="clearfix">
+                        <li class="li-2">
+                            <div class="topdiv">总计金额：</div>
+                            <div class="price price-red clearfix">
+                                <em>￥</em>
+                                <span class="jsAltogether">714.00</span>
+                            </div>
+                        </li>
+                        <li class="li-3">
+                            <span class="btn js-go-confrim">去结算</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-<div class='cart-body' id='cartBody'>
-		<p class='notdata'>购物车内空空如也</p>
-	</div>
+
 <!-- 遮罩 -->
 <div class="block-package js-block-package"></div>
 <!-- loading -->

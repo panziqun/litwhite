@@ -60,6 +60,7 @@ class Set extends Controller{
 		}else{
 			$this->userinfo->save(['user_id'=>Session::get('user_id'),'userinfo_headi'=>$img]);
 		}
+		Session::set('userinfo_headi',$img);
 		$this->redirect('setBind');
 	}
 	//获取手机验证码
@@ -121,6 +122,7 @@ class Set extends Controller{
 			$this->userinfo->save($arr);
 		}
 		$user->save(['user_name'=>$this->request->param('user_name')]);
+		Session::set('user_name',$this->request->param('user_name'));
 		$this->redirect('setProfile');
 	}
 	public function setSm()
