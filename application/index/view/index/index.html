@@ -23,25 +23,17 @@
 <div id="header">
     <div class="page-container" id="nav"  style="background-color: #fff !important;">
         <div id="logo" class="logo">
-        	<a href="#" target="_self" title="首页"><img title="小白" src="__INDEX_IMG__/xiaobai.png"></a>
+        	<a href="{:url('Index/index')}" target="_self" title="首页"><img title="首页" src="__INDEX_IMG__/xiaobai.png"></a>
         </div>
         <ul class="nav-item">
-            <li class="set-btn visible-xs-block">
-            	<a href="/user/newlogin" target="_self">登录</a> / <a href="/user/newsignup" target="_self">注册</a>
-            </li>  
+            
             <li>
-                <a href="/course/list"  target="_self">课程</a>
+                <a href="{:url('Index/indexList')}"  target="_self">课程</a>
             </li>
         </ul>
         <div id="login-area">
             {if $Think.session.user_id}
 	        <ul class="clearfix logined">
-				<li class="shop-cart" id="shop-cart">
-			        <a href="http://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
-			            <span class="icon-shopping-cart imv2-cart  js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
-			        </a>
-			        <div class="my-cart" id="js-my-cart"></div>
-			    </li>
 				<li class='remind_warp'>
 					<i class="msg_remind"></i>
 					<a target="_blank" href='http://www.imooc.com/u/3386918/notices'>
@@ -73,12 +65,12 @@
 							</div>
 							<div class="user-center-box">
 			                    <ul class="clearfix">
-			                        <li class="l"><a href="http://www.imooc.com/u/3386918/courses" target="_blank"><span class="user-center-icon imv2-kecheng"></span>我的课程</a></li>
+			                        <li class="l"><a href="{:url('Person/personCourse')}" target="_blank"><span class="user-center-icon imv2-kecheng"></span>我的课程</a></li>
 			                        <li class="l">
-			                        	<a href="http://order.imooc.com/myorder" target="_blank"><span class="user-center-icon imv2-receipt"></span>订单中心</a>
+			                        	<a href="{:url('Order/orderInfo')}" target="_blank"><span class="user-center-icon imv2-receipt"></span>订单中心</a>
 			                        	<i id="js-usercard-coupon-icon"></i>
 			                        </li>
-			                        <li class="l"><a href="http://www.imooc.com/mall/index" target="_blank"><span class="user-center-icon imv2-cart"></span>购物车</a></li>
+			                        <li class="l"><a href="{:url('Order/orderCart')}" target="_blank"><span class="user-center-icon imv2-cart"></span>购物车</a></li>
 			                        <li class="l"><a href="{:url('set/setBind')}" target="_blank"><span class="user-center-icon imv2-set_1"></span>个人设置</a></li>
 			                    </ul>
 			                </div>
@@ -87,7 +79,7 @@
 							</div>
 							
 							<div class="card-sets clearfix">
-								<a href="/passport/user/logout?referer=http://class.imooc.com" class="l">安全退出</a>
+								<a href="{:url('Login/loginOut')}" class="l">安全退出</a>
 							</div>
 						</div>
 					</div>
@@ -95,12 +87,7 @@
 			</ul>
             {else /}
             <ul class="header-unlogin clearfix">
-                <li class="shop-cart" id="shop-cart">
-                    <a href="http://order.imooc.com/pay/cart" class="shop-cart-icon" target="_blank">
-                        <span class="icon-shopping-cart imv2-cart  js-endcart"></span><span>购物车</span><span class="shopping_icon js-cart-num" data-ordernum="0"  data-cartnum="0" style='display: none'>0</span>
-                    </a>
-                    <div class="my-cart" id="js-my-cart"></div>
-                </li>             
+                            
                 <li class="header-signin">
                     <a  id="js-signin-btn" href="{:url('Login/login')}">登录</a> / <a  id="js-signup-btn" href="{:url('Login/register')}">注册</a>
                 </li>             
