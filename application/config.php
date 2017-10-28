@@ -152,7 +152,8 @@ return [
         '__INDEX_FONTS__'=>'/static/index/fonts',
         '__INDEX_IMG__'  =>'/static/index/images',
         '__INDEX_START__'=>'/static/index/start',
-        '__WEBSITE__'=>'http://www.litwhite.com',
+        '__WEBSITE__'    =>'http://www.litwhite.com',
+        '__UPLOAD__'     =>'http://www.litwhite.com/uploads',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',

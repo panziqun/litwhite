@@ -16,77 +16,36 @@
             <div class="tool-right r"></div>
       </div>
       <ul id="js-note-container" class="mod-post">
-          <li id="1930374" class="post-row js-find-txt" courseid="895" noteId="1930374" authorid="6051410">
-          <div class="media">
-              <a href="/u/6051410/courses" target="_blank"><img src="picture/54584cd10001404b02200220-40-40.jpg" width="40" height="40"></a>
-          </div>
-          <div class="bd">
-              <div class="tit">
-                <a href="/u/6051410/courses" target="_blank">慕函数2517801</a>
-              </div>
-              <div class="js-notelist-content notelist-content mynote">
-                <pre class="autowrap">看</pre>
-                <div class="notelist-content-more">
-                  <a href="javascript:;" class="js-toggle-content">[ 查看全文 ]</a>
-                </div>
-              </div>
-              <div class="clearfix">
-                <input class="moco-btn moco-btn-green sava_btn" type="button" value="保存">
-              </div>
-             
-              <div class="footer clearfix">
-                <span title="2天前" class="l timeago">时间：2天前</span>
-                      <a href="/video/15825" class="from l">源自：1-1 基于AWS的移动应用大数据分析</a>
-                      <div class="actions r">
-                  <textarea style="display:none;">看</textarea>
-                  <a title="采集" href="javascript:;" class="Jcollect post-action "  data-mid="15825|6051410">
-                    <i>采集</i>
-                    <em>0</em>
-                  </a>
-                  <a title="赞" href="javascript:;" class="Jpraise post-action "  data-mid="15825">
-                    <span class="icon-thumb-revert"></span>
-                    <em>0</em>
-                  </a> 
-                </div>
-              </div>
-            </div>
-          </li>
-          <li id="1924313" class="post-row js-find-txt" courseid="895" noteId="1924313" authorid="6023597">
-            <div class="media">
-              <a href="/u/6023597/courses" target="_blank"><img src="picture/5333a1a90001c8d802000200-40-40.jpg" width="40" height="40"></a>
-            </div>
-            <div class="bd">
-              <div class="tit">
-                <a href="/u/6023597/courses" target="_blank">慕斯2101378</a>
-              </div>
-              <div class="js-notelist-content notelist-content mynote">
-                <pre class="autowrap">big data</pre>
-                <div class="notelist-content-more">
-                  <a href="javascript:;" class="js-toggle-content">[ 查看全文 ]</a>
-                </div>
-              </div>
-              <div class="clearfix">
-                <input class="moco-btn moco-btn-green sava_btn" type="button" value="保存">
-              </div>
 
-                      <div class="footer clearfix">
-                <span title="2017-10-18" class="l timeago">时间：2017-10-18</span>
-                      <a href="/video/15825" class="from l">源自：1-1 基于AWS的移动应用大数据分析</a>
-                      <div class="actions r">
-                  <textarea style="display:none;">big data</textarea>
-                  <a title="采集" href="javascript:;" class="Jcollect post-action "  data-mid="15825|6023597">
-                    <i>采集</i>
-                    <em>0</em>
-                  </a>
-                  <a title="赞" href="javascript:;" class="Jpraise post-action "  data-mid="15825">
-                    <span class="icon-thumb-revert"></span>
-                    <em>0</em>
-                  </a> 
-                </div>
-              </div>
-            </div>
-          </li>
       </ul>
     </div>
 </div>
+<script type="text/javascript">
+    $(function(){
+        var num = 0;
+        createLi();
+        function createLi()
+        {
+            $.get("{:url('getNoteInfo')}",
+              {course_id:{$courseInfo.course_id},limit:num},
+              function(data) {
+                  //data = JSON.parse(data);
+                  if (data) {
+                    $('#lastData').remove();
+                    $('#js-note-container').append(data);
+                  }
+                  
+              },'json');
+            num = num + 5;
+        }
+
+        $(window).scroll(function() {
+           if ($(window).scrollTop() + $(window).height() >= $('body').height()) {
+               createLi();
+           }
+        });
+       
+
+    });
+</script>
 {/block}

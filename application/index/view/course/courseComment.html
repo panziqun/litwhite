@@ -9,30 +9,44 @@
             </div><!-- 课程面板 -->
             <!--发布评论-->
             <div id="course_note">
-                    <ul class="mod-post" id="comment-list">
-                        <li class="post-row" id="504525">
-                        <div class="media">
-                            <a href="/u/5886923/courses" target="_blank"><img src="__INDEX_IMG__/567ca60000011fae26501720-80-80.jpg" width="40" height="40"></a>
+                <ul class="mod-post" id="comment-list">
+                    <li class="post-row" id="504525">
+                    <div class="media">
+                        <a href="/u/5886923/courses" target="_blank"><img src="__INDEX_IMG__/567ca60000011fae26501720-80-80.jpg" width="40" height="40"></a>
+                    </div>
+                    <div class="bd">
+                        <div class="tit">
+                            <a href="/u/5886923/courses" target="_blank">花儿儿</a>
                         </div>
-                        <div class="bd">
-                            <div class="tit">
-                                <a href="/u/5886923/courses" target="_blank">花儿儿</a>
-                            </div>
-                            <p class="cnt">讲的解决方法很实用，非常喜欢多一些这样的大牛，给我们这些小白多讲讲</p>
-                            <div class="footer clearfix">
-                                <span title="创建时间" class="l timeago">时间：2017-10-16</span>
-                                                    <a href="/video/15946" class="from">源自：1-1 披萨的故事-Microservice &amp; Severless（上）</a>
-                                                    <div class="actions r">
-                                    <a title="赞" href="javascript:;" class="js-pl-praise list-praise post-action"  data-id="504525">
-                                        <span class="icon-thumb-revert"></span>
-                                        <em>0</em>
-                                    </a>
-                                </div>
+                        <p class="cnt">讲的解决方法很实用，非常喜欢多一些这样的大牛，给我们这些小白多讲讲</p>
+                        <div class="footer clearfix">
+                            <span title="创建时间" class="l timeago">时间：2017-10-16</span>
+                            <a href="/video/15946" class="from">源自：1-1 披萨的故事-Microservice &amp; Severless（上）</a>
+                            <div class="actions r">
+                                <a title="赞" href="javascript:;" class="js-pl-praise list-praise post-action"  data-id="504525">
+                                <span class="icon-thumb-revert"></span>
+                                <em>0</em>
+                                </a>
                             </div>
                         </div>
-                        </li>
-                    </ul>
+                    </div>
+                    </li>
+                </ul>
             </div>
 </div>
-{/block}
+<script type="text/javascript">
+    $(function(){
+        createLi();
+        function createLi()
+        {
+            $.get("{:url('')}",'','','json');
+        }
 
+        $(window).scroll(function() {
+         if ($(window).scrollTop() + $(window).height() >= shortUL.height()) {
+             createLi();
+        } 
+    });
+
+</script>
+{/block}
