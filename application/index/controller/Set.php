@@ -55,11 +55,13 @@ class Set extends Controller{
 		$image = Image::open($realimg);
 		$image->thumb(125, 125)->save($realimg);
 		$userinfo = $this->userinfo->get(['user_id'=>Session::get('user_id')]);
+		$img = str_replace('\\', '/', $img);
 		if ($userinfo) {
 			$userinfo->save(['userinfo_headi'=>$img]);
 		}else{
 			$this->userinfo->save(['user_id'=>Session::get('user_id'),'userinfo_headi'=>$img]);
 		}
+		Session::set('userinfo_headi',$img);
 		$this->redirect('setBind');
 	}
 	//获取手机验证码
@@ -121,6 +123,7 @@ class Set extends Controller{
 			$this->userinfo->save($arr);
 		}
 		$user->save(['user_name'=>$this->request->param('user_name')]);
+		Session::set('user_name',$this->request->param('user_name'));
 		$this->redirect('setProfile');
 	}
 	public function setSm()

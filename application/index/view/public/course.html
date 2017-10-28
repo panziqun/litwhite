@@ -36,8 +36,36 @@
 	            <div class="moco-btn l learn-btn green-btn red-btn"> 
 	                <a href="{:url('courseVideo',['course_id'=>$courseInfo.course_id])}" class="J-learn-course">开始学习</a>
 	                <em></em>
-	                <i class="follow-action js-follow-action"></i>
+	                <i class="follow-action js-follow-action icon-star_outline" data-cid="908" data-cmd="follow" title="收藏"></i>
 	            </div>
+	            <div class="moco-btn l learn-btn green-btn red-btn"> 
+	                <a class="J-learn-course purchase" data-userid="{$Think.session.user_id}">立即购买</a>
+	                {if $shopcar == ''}
+	                <em></em>
+	                <i class="follow-action js-follow-action imv2-cart" data-cid="{$courseInfo.course_id}" data-cmd="follow" data-userid="{$Think.session.user_id}" title="加入购物车" ></i>
+	                {/if}
+	            </div>
+<script type="text/javascript">
+	$(function(){
+		$('.purchase').click(function(){
+			if ($(this).attr('data-userid') == '') {
+				window.location.href = "{:url('Login/login')}";
+			}else{
+
+			}
+		});
+		$('.imv2-cart').click(function(){
+			if ($(this).attr('data-userid') == '') {
+				window.location.href = "{:url('Login/login')}";
+			}else{
+				$.post("{:url('Order/addCart')}",{course_id:$(this).attr('data-cid')},function(){
+				},'json');
+				$('.imv2-cart').remove();
+				$('.imv2-cart').siblings('em').remove();
+			}
+		});
+	})
+</script>
 	            <div class="static-item l">
 	                <span class="meta">学习人数</span>
 	                <span class="meta-value js-learn-num">{$courseInfo.courseCount.course_sales}</span>
