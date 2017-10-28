@@ -29,7 +29,7 @@
 					</a>
 				</li>
 				<li class="set_btn user-card-box"  id="header-user-card">
-					<a id="header-avator" class="user-card-item" action-type="my_menu"  href="" target="_self">
+					<a id="header-avator" class="user-card-item" action-type="my_menu"  href="{:url('set/setBind')}" target="_self">
 						<img src='__WEBSITE__/uploads/{$Think.session.userinfo_headi}' width='40' height='40' />
 						<i class="myspace_remind" style="display: none;"></i>
 						<span style="display: none;">动态提醒</span>
@@ -38,11 +38,11 @@
 					<div class="g-user-card">
 						<div class="card-inner">
 							<div class="card-top clearfix">
-								<a href='' class='l'>
+								<a href='{:url("set/setBind")}' class='l'>
 									<img src="__WEBSITE__/uploads/{$Think.session.userinfo_headi}" alt="{$Think.session.user_name}">
 								</a>
 								<div class="card-top-right-box l">
-									<a href='' class="name text-ellipsis">
+									<a href='{:url("set/setProfile")}' class="name text-ellipsis">
 										<span>{$Think.session.user_name}</span>
 									</a>
 									<div class="meta">

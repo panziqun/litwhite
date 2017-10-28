@@ -40,6 +40,10 @@ class Order extends Controller{
 		$user_id = Session::get('user_id');
 		$this->shopcar->save(['user_id'=>$user_id,'course_id'=>$course_id]);
 	}
+	public function cartDel()
+	{
+		$this->shopcar->destroy($this->request->param('shopcar_id'));
+	}
 	public function orderInfo()
 	{
 		return $this->fetch();

@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="item-4">
-                <i class="imv2-close js-close-cart close"></i>
+                <i class="imv2-close js-close-cart close" data-shopcar-id="{$value['shopcar_id']}"></i>
             </div>
         </div>
         {/foreach}
@@ -103,7 +103,11 @@
                         $('.jsAltogether').text(allPrice);
                     }
                 });
-                $('.js-close-cart').click();
+                $('.js-close-cart').click(function(){
+                    $.post("{:url('cartDel')}",{shopcar_id:$(this).attr('data-shopcar_id')},function(){
+                        $('.js-close-cart').parent().parent().remove();
+                    },'json');
+                });
             })
         </script>
         <div id="Anchor"></div>
