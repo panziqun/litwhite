@@ -55,6 +55,7 @@ class Set extends Controller{
 		$image = Image::open($realimg);
 		$image->thumb(125, 125)->save($realimg);
 		$userinfo = $this->userinfo->get(['user_id'=>Session::get('user_id')]);
+		$img = str_replace('\\', '/', $img);
 		if ($userinfo) {
 			$userinfo->save(['userinfo_headi'=>$img]);
 		}else{
