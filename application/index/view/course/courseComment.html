@@ -34,19 +34,5 @@
                 </ul>
             </div>
 </div>
-<script type="text/javascript">
-    $(function(){
-        createLi();
-        function createLi()
-        {
-            $.get("{:url('')}",'','','json');
-        }
 
-        $(window).scroll(function() {
-         if ($(window).scrollTop() + $(window).height() >= shortUL.height()) {
-             createLi();
-        } 
-    });
-
-</script>
 {/block}

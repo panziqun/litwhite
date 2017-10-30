@@ -1,0 +1,24 @@
+{volist name="noteInfo" id="data"}
+<li id="{$data['note_id']}" class="post-row js-find-txt" courseid="{$data['user_id']}" noteId="{$data['note_id']}" authorid="****">
+	<div class="media">
+	    <a href="/u/6051410/courses" target="_blank"><img src="__UPLOAD__/{$data['userinfo_headi']}" width="40" height="40"></a>
+	</div>
+	<div class="bd">
+	  	<div class="tit">
+	    	<a href="/u/6051410/courses" target="_blank">{$data['user_name']}</a>
+	  	</div>
+	  	<div class="js-notelist-content notelist-content mynote">
+	    	<pre class="autowrap">{$data['note_content']}</pre>
+	  	</div>
+	  	<div class="footer clearfix">
+	      	<span title="2天前" class="l timeago">时间：{$data['create_time']}</span>
+	      	<div class="actions r">
+	       		<a title="赞" href="javascript:;" class="Jpraise post-action upvote" noteId="{$data['note_id']}">
+	       		<span class="icon-thumb-revert"></span>
+	       		<em>{$data['upvote_count']}</em></a> 
+	      	</div>
+	  	</div>
+	</div>
+</li>
+{/volist}
+

@@ -3,16 +3,18 @@ namespace app\index\controller;
 use app\index\model\Plate;
 use app\index\model\Course;
 use app\index\model\CourseCount;
-
 use app\index\model\Note;
 use app\index\model\NoteUpvote;
-use think\Db;
 use app\index\model\UserCourse;
 use app\index\model\Shopcar;
-
 use think\Controller;
 use think\Session;
+use think\Db;
+use traits\model\SoftDelete;
+
 class Course extends Controller{
+	use SoftDelete;
+	protected $deleteTime = 'delete_time';
 	private static $noteStart;
 	protected $plate;
 	protected $course;
@@ -25,23 +27,37 @@ class Course extends Controller{
 	{
 		$this->plate  = new Plate();
 		$this->course = new Course();
-
 		$this->note = new Note();
 		$this->noteUpvote = new NoteUpvote();
 		$this->usercourse = new UserCourse();
 		$this->shopcar = new Shopcar();
 
 	}
+	/*
+	*note页面的头部 的课程信息
+	*
+	*/
 	public function courseNote()
 	{		
 		$courseInfo = $this->getCourseDetail();
 		$shopcar = $this->getCourseCart();
+		if (session('?user_id')) {
+			$sessionUid = 1;//session user_id 存在返回1
+		} else{
+			$sessionUid = 2;//session user_id 不存在返回2
+		}
+		
 		$this->assign([
 			'courseInfo'=>$courseInfo ,
+			'sessionUid'=>$sessionUid,
 			'shopcar'=>$shopcar ,
 		]);
 		return $this->fetch();
 	}
+	/*
+	*note页面的头部 的笔记信息
+	*
+	*/
 	public function getNoteInfo()
 	{
 		$course_id = $this->request->param('course_id');
@@ -62,7 +78,7 @@ class Course extends Controller{
 		// 				->join('lit_note_upvote nu','nu.note_id = n.note_id')
 		// 				->where()
 		// 				->select();		
-		file_put_contents('sql.txt',$this->note->getLastSql(),FILE_APPEND);
+		//file_put_contents('sql.txt',$this->note->getLastSql(),FILE_APPEND);
 		if ($noteInfo) {
 			$this->assign([
 				'noteInfo'=>$noteInfo ,
@@ -71,8 +87,35 @@ class Course extends Controller{
 		} else {
 			return $this->fetch('public/lastData');
 		}
+	}
+	public function setUpvote()
+	{
 		
-		//return json_encode($noteInfo);
+		$note_id = $this->request->param('note_id');
+		$user_id = session('user_id');
+		$noteUpvoteInfo  = $this->noteUpvote
+				->withTrashed()
+				->where('note_id',$note_id)
+				->where('user_id',$user_id)
+				->find();
+
+		if ( $noteUpvoteInfo ) {
+
+			if ( $noteUpvoteInfo->delete_time ) {
+				$noteUpvoteInfo->delete_time = NULL;
+				$result = $noteUpvoteInfo->save();
+			} else {
+				$result = $this->noteUpvote::destroy($noteUpvoteInfo->note_upvote_id);
+				return json_encode(['code'=>500],JSON_UNESCAPED_UNICODE);
+			}
+		} else {
+			$this->noteUpvote->note_id = $note_id;
+			$this->noteUpvote->user_id = $user_id;
+			$result = $this->noteUpvote->save();
+		}
+		return json_encode(['code'=>200],JSON_UNESCAPED_UNICODE);
+		
+
 	}
 	public function courseComment()
 	{
@@ -84,7 +127,10 @@ class Course extends Controller{
 		]);
 		return $this->fetch();
 	}
-
+	/*
+	*获取课程信息详情
+	*
+	*/
 	protected function getCourseDetail()
 	{
 
@@ -105,9 +151,49 @@ class Course extends Controller{
 			return '';
 		}
 	}
+	/*
+	*video页面获取课程基本信息
+	*
+	*/
 	public function courseVideo()
 	{
+		$course_id = $this->request->param('course_id');
+		$courseInfo = $this->course->get($course_id);
+		$this->assign([
+			'courseInfo'=>$courseInfo,
+		]);
 		return $this->fetch();
+	}
+	public function addNote()
+	{
+		$noteInfo = $this->request->param();
+		//return json_encode($course_id);
+		$this->note->data([
+			'course_id'=>$noteInfo['course_id'],
+			'note_content'=>$noteInfo['note_content'],
+			'user_id'=>session('user_id'),
+		]);
+		$result = $this->note->save();
+		if (empty($result)) {
+			return ['code'=>500,'info'=>'笔记保存失败'];
+		} else {
+			$noteInfo = $this->note
+						->alias('n')
+						->join('lit_user u','u.user_id = n.user_id')
+						->join('lit_userinfo ui','ui.user_id = n.user_id')
+						->field('n.note_content,n.note_id,n.create_time,n.upvote_count,u.user_id,u.user_name,ui.userinfo_headi')
+						->where('n.course_id',$noteInfo['course_id'])
+						->order('n.note_id desc')
+						->limit(1)
+						->select();
+			$this->assign([
+				'noteInfo'=>$noteInfo ,
+			]);
+			//return json_encode($noteInfo,JSON_UNESCAPED_UNICODE);
+			return $this->fetch('getNoteInfo');
+		}
+
+		
 	}
 }
 ?>

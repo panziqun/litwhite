@@ -1,10 +1,12 @@
 <?php  
 namespace app\index\controller;
 use think\Controller;
+use think\Db;
 use app\index\model\Plate;
 use app\index\model\Course;
 class Index extends Controller{
 	protected $plate;
+	private static $treeList;
 	/*
 	*初始化获取plate对象
 	*
@@ -17,9 +19,16 @@ class Index extends Controller{
 	public function index()
 	{
 		//获取首页大模块列表
-		$bigPlateList = $this->plate->where('plate_fid',1)->select();
+		$bigPlateList = Db::table('lit_plate')
+							->field('plate_id,plate_fid,plate_title')
+							->where('plate_fid',1)
+							->select();
 		//获取首页小模块列表
-		$smallPlateList = $this->plate->where('plate_fid','>',1)->select();
+		$smallPlateList = Db::table('lit_plate')
+							->field('plate_id,plate_fid,plate_title')
+							->where('plate_fid','>',1)
+							->select();	
+		$homePlateList = $this->getPlateTree($bigPlateList, $smallPlateList);
 		//获取首页实战推荐模块课程
 		$courseFree	= $this->course
 					->alias('c')
@@ -45,10 +54,41 @@ class Index extends Controller{
 			'smallPlateList'=>$smallPlateList,
 			'courseFree'	=>$courseFree,
 			'courseNew'		=>$courseNew,
+			'homePlateList' =>$homePlateList,
 		]);
 
 		return $this->fetch();
 	}
+	public function getPlateTree($bigPlateList, $smallPlateList)
+	{
+		
+		foreach ($bigPlateList as $k => $val) {
+			$bigPlateList[$k]['sunId'] = '';
+			$count = 0;
+			foreach ($smallPlateList as $key => $value) {
+				if ( $val['plate_id'] == $value['plate_fid']) {
+					$bigPlateList[$k]['smallPlate'][$count]['plate_title'] = $value['plate_title'];
+					$bigPlateList[$k]['smallPlate'][$count]['plate_id'] = $value['plate_id'];
+					$bigPlateList[$k]['smallPlate'][$count]['plate_fid'] = $value['plate_fid'];
+					$bigPlateList[$k]['sunId'] .= $value['plate_id'] . ',';
+					$count++;
+				}
+			}
+		}
+		foreach ($bigPlateList as $k => $val) {
+			$bigPlateList[$k]['courseList'] = [];
+			$arr = Db::table('lit_course')
+				->join('lit_course_count','lit_course_count.course_id = lit_course.course_id')
+				->where('plate_id','in',$val['sunId'])
+				->order('lit_course.create_time desc')
+				->field('course_title,course_rate,course_grade,course_pic,course_teacher,lit_course_count.course_sales,lit_course.course_id')
+				->limit(4)
+				->select();
+				$bigPlateList[$k]['courseList'] = $arr;
+		}
+		return $bigPlateList;
+	}
+
 	public function indexList()
 	{
 		return $this->fetch();

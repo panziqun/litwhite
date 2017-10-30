@@ -10,8 +10,6 @@
 <meta name="Keywords" content="" />
 <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
 <link rel="stylesheet" href="__INDEX_CSS__/course.css" type="text/css" />
-<link rel="stylesheet" href="__INDEX_CSS__/course.comment.css" type="text/css" />
-<link rel="stylesheet" href="__INDEX_CSS__/course.note.css" type="text/css" />
 </head>
 <body >
 <div id="main">
@@ -33,11 +31,13 @@
 	        </div>
 	        <!--信息栏-->
 	        <div class="statics clearfix">
+	        	
 	            <div class="moco-btn l learn-btn green-btn red-btn"> 
 	                <a href="{:url('courseVideo',['course_id'=>$courseInfo.course_id])}" class="J-learn-course">开始学习</a>
 	                <em></em>
 	                <i class="follow-action js-follow-action icon-star_outline" data-cid="908" data-cmd="follow" title="收藏"></i>
 	            </div>
+	            
 	            <div class="moco-btn l learn-btn green-btn red-btn"> 
 	                <a class="J-learn-course purchase" data-userid="{$Think.session.user_id}">立即购买</a>
 	                {if $shopcar == ''}
@@ -45,6 +45,7 @@
 	                <i class="follow-action js-follow-action imv2-cart" data-cid="{$courseInfo.course_id}" data-cmd="follow" data-userid="{$Think.session.user_id}" title="加入购物车" ></i>
 	                {/if}
 	            </div>
+	            
 <script type="text/javascript">
 	$(function(){
 		$('.purchase').click(function(){

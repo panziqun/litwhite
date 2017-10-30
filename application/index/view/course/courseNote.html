@@ -44,8 +44,27 @@
                createLi();
            }
         });
-       
 
+        $(document).on('click', '.upvote', function() {
+              var obj = $(this);
+                if ({$sessionUid} == 1 ) {
+                  $.post("{:url('setUpvote')}",
+                  {
+                    note_id:obj.attr('noteId'),
+                  },
+                  function(data) {
+                    data = JSON.parse(data);
+                    var num = parseInt(obj.children('em').text());
+                    if (data.code == 200) {
+                        obj.children('em').text(num+1);
+                    } else {
+                        obj.children('em').text(num-1);
+                    }
+                  },'json'); 
+                } else{
+                  window.location.href = "{:url('Login/login')}";
+                }              
+          });                            
     });
 </script>
 {/block}
