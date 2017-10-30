@@ -5,7 +5,7 @@ use app\index\model\Course;
 use app\index\model\CourseCount;
 
 use app\index\model\Note;
-use app\index\model\NoteUpvote;
+// use app\index\model\NoteUpvote;
 use think\Db;
 use app\index\model\UserCourse;
 use app\index\model\Shopcar;
@@ -27,7 +27,7 @@ class Course extends Controller{
 		$this->course = new Course();
 
 		$this->note = new Note();
-		$this->noteUpvote = new NoteUpvote();
+		// $this->noteUpvote = new NoteUpvote();
 		$this->usercourse = new UserCourse();
 		$this->shopcar = new Shopcar();
 

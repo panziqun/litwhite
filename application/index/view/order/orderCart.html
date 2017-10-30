@@ -43,9 +43,9 @@
     </div>
     <div id="js-cart-body-table" class="cart-body-table">
         {foreach $shopcar as $value}
-        <div class="item clearfix js-item-cart js-each-112" data-type="1" data-typeid="112" data-goodsid="212" data-price="366.00">
+        <div class="item clearfix js-item-cart js-each-112" data-type="1" data-typeid="112" data-goodsid="212" data-price="{$value['course_rate']}">
             <div class="item-1">
-                <i class="js-check check imv2-checkbox" data-price="{$value['course_rate']}" ></i>
+                <i class="js-check check imv2-checkbox" data-price="{$value['course_rate']}" data-course-id="{$value['course_id']}" ></i>
             </div>
             <div class="item-2 clearfix">
                 <a href="{:url('course/courseComment',['course_id'=>$value['course_id']])}" target="_blank" class="img-box l">
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="item-4">
-                <i class="imv2-close js-close-cart close" data-shopcar-id="{$value['shopcar_id']}"></i>
+                <i class="imv2-close js-close-cart close" data-shopcar-id="{$value['shopcar_id']}" data-price="{$value['course_rate']}"></i>
             </div>
         </div>
         {/foreach}
@@ -104,9 +104,26 @@
                     }
                 });
                 $('.js-close-cart').click(function(){
-                    $.post("{:url('cartDel')}",{shopcar_id:$(this).attr('data-shopcar_id')},function(){
-                        $('.js-close-cart').parent().parent().remove();
+                    $.post("{:url('cartDel')}",{shopcar_id:$(this).attr('data-shopcar-id')},function(){
+                    
                     },'json');
+                    var price = parseInt($(this).attr('data-price'));
+                    price = parseInt($('.jsAltogether').text()) - price;
+                    $('.jsAltogether').text(price);
+                    $(this).parent().parent().remove();
+                });
+                $('.js-go-confrim').click(function(){
+                    if ($('.jsAltogether').text() != '0') {
+                        var arr = '';
+                        for (var i = 0; i < $('.js-check').length; i++) {
+                            if($('.js-check').eq(i).hasClass('imv2-checkbox')){
+                                arr += $('.js-check').eq(i).attr('data-course-id') + ',';
+                            }
+                        }
+                        $(this).parent().attr('href',"orderSur/course_ids/" + arr);
+                    }else{
+                        $(this).parent().attr('href',"");
+                    }
                 });
             })
         </script>
@@ -123,7 +140,7 @@
                             </div>
                         </li>
                         <li class="li-3">
-                            <span class="btn js-go-confrim">去结算</span>
+                            <a href=""><span class="btn js-go-confrim">去结算</span></a>
                         </li>
                     </ul>
                 </div>

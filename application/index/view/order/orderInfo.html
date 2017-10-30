@@ -5,44 +5,11 @@
 <head>
     <meta charset="utf-8">
     <title>我的订单_慕课网</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta property="qc:admins" content="77103107776157736375" />
-    <meta property="wb:webmaster" content="c4f857219bfae3cb" />
-    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
-    <meta name="keywords" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="" />
-    <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
-    
-    <script type="text/javascript">
-        var OP_CONFIG = {"module":"pay","page":"myorder","userout":0,"userInfo":{"uid":"3386918","nickname":"qq_\u7f04\u9ed8_83386918","head":"http:\/\/img.mukewang.com\/user\/573dc35200014e4101000100-80-80.jpg","usertype":"1","roleid":0,"phone":""}};
-            OP_CONFIG.isLogin = 1;
-        var _msg_unread = 0; 
-        var _not_unread = 0; 
-        var _cart_num = 0;
-        var requirejsTimestamp="v=201709251122";
-            </script>
-    
-    
-    
-<!--imooc-->
-
-<!--/imooc-->
-
-	
-	
-
-
     <link rel="stylesheet" href="__INDEX_CSS__/order.css" type="text/css" />
 </head>
 
 <body>
-{extend name='public/base' /}
-{block name="menu"}
-{__block__}
-{/block}
-{block name="main"}
+
 <div class='body-main'>
 
 
@@ -64,46 +31,50 @@
 
 	
 	<div class="right-container l">
-		<h1>我的订单<span>共<i>5</i>个订单</span></h1>
+		<h1>我的订单<span>共<i>{$count}</i>个订单</span></h1>
 		<div class='myOrder'>
 			<ul class="myOrder-list">
+				{foreach $orders as $value}
 				<li data-flag="1710191736352946">
 					<p class="myOrder-number">
-						订单编号：1710191736352946
-						<span class="date">2017-10-19 17:36:35</span>
+						{$value['order_id']}
+						<span class="date">{$value['create_time']}</span>
 						<a href="/user/feedback" target="_blank" class="r">我有疑问，需要反馈？</a>
 					</p>
 					<div class="myOrder-course clearfix">
 						<dl class="course-del l">
+							{foreach $value['order_course'] as $v}
 							<dd class="clearfix">
-								<a href="http://coding.imooc.com/class/144.html" class="l">
-									<img class="l" src="__INDEX_IMG__/59c9b245000143ae05400300-160-90.jpg" width="160" height="90"/>
+								<a href="{:url('course/courseComment',['course_id'=>$v['course_id']])}" class="l">
+									<img class="l" src="{$v['course_pic']}" width="160" height="90"/>
 								</a>
 								<div class="del-box l">
-									<a href="http://coding.imooc.com/class/144.html">
-										<p class="course-name">SSM到Spring Boot-从零开发校园商铺平台</p>
+									<a href="{:url('course/courseComment',['course_id'=>$v['course_id']])}">
+										<p class="course-name">{$v['course_title']}</p>
 									</a>							
 									<p class="price-btn-box clearfix">
 										<!-- 如果有优惠券 -->
-										<span class="l course-little-price">￥299.00</span>
+										<span class="l course-little-price">￥{$v['course_rate']}</span>
 									</p>
 								</div>
 							</dd>
+							{/foreach}
 						</dl>
 						<div class="course-money l pt64">
 							<div class="total-box">
 								<p class="type-price">
-									<span class="RMB">&yen;</span>299.00
+									<span class="RMB">&yen;</span>{$value['order_money']}
 								</p>
 							</div>
 						</div>
 						<div class="course-action l">
 							<p class="order-close">
-								已关闭
+								已支付
 							</p>
 						</div>
 					</div>
-				</li>			
+				</li>
+				{/foreach}			
 			</ul>
 			<!-- 是否有分页 -->
 						<!-- 是否有分页 end -->
@@ -116,34 +87,7 @@
 
 
 
-<script type="text/javascript" src="__INDEX_JS__/require.js"></script>
-<script src='__INDEX_JS__/jquery.min.js'></script>
-<script src="__INDEX_JS__/ssologin.js"></script>
-<script type="text/javascript" src="__INDEX_JS__/common.js"></script>
 
-
-
-
-
-
-    <script>/*RESOURCE_MAP*/</script>
-    <script data-entry="pay/myorder/index">
-    requirejs(['pay/myorder/index'], function(){});
-	</script>
-
-
-
-<div style="display: none">
-    <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?613bf05434ed4b759c19cea36f7193a0";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
-</div>
 </body>
 </html>
 {/block}
