@@ -95,14 +95,25 @@
             {/if}
         </div>
         <div class='search-warp clearfix' style='min-width: 32px; height: 72px;'>
-            <div class="search-area" data-search="top-banner">
-                <input class="search-input" data-suggest-trigger="suggest-trigger"      type="text" autocomplete="off">
-            </div>
-            <div class='showhide-search' data-show='no'><i class='icon-search'></i></div>
+        	<form class="keywordform" method="post" action="{:url('Index/indexSearch')}">
+	            <div class="search-area" data-search="top-banner">
+	                <input class="search-input" data-suggest-trigger="suggest-trigger"  name="keyword"    type="text" autocomplete="off">
+	            </div>
+	            <div class='showhide-search' data-show='no' disabled="disabled"><i class='icon-search'></i></div>
+            </form>
         </div>
     </div>
 </div>
-	
+<script type="text/javascript">
+	$(function(){
+		$('.showhide-search').click(function(){
+			if ($('.search-input').val() != '' && $('.search-input').val().indexOf(' ') == -1) {
+				$('.keywordform').attr('action','Index/indexSearch/' + $('.search-input').val());
+				$('.keywordform').submit();
+			}
+		});
+	});
+</script>
 
 
 <div id="main">
@@ -308,7 +319,7 @@
 		</h3>			
 		<div class='clearfix types-content'>													{volist name="courseNew" id="course"}
 			<div class='index-card-container course-card-container container'>
-				<a target="_blank" class='course-card' href="{:url('course/courseDetail',['course_id'=>$course.course_id])}" data-track="sztj-1-1">
+				<a target="_blank" class='course-card' href="{:url('course/courseComment',['course_id'=>$course.course_id])}" data-track="sztj-1-1">
 				<div class='course-card-top hashadow'>
 					<img class="course-banner" src="{$course.course_pic}">
 					<div class="course-label">

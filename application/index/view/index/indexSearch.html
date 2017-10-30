@@ -8,57 +8,10 @@
 <head>
 <meta charset="utf-8">
 <title>实打实_（课程）搜索_慕课网</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-<meta name="renderer" content="webkit" />
-<meta property="qc:admins" content="77103107776157736375" />
-<meta property="wb:webmaster" content="c4f857219bfae3cb" />
-<meta http-equiv="Access-Control-Allow-Origin" content="*" />
-<meta http-equiv="Cache-Control" content="no-transform " />
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' *.imooc.com *.mukewang.com *.baidu.com *.sina.com.cn *.bootcss.com">
-<link rel="dns-prefetch" href="//www.imooc.com" />
-<link rel="dns-prefetch" href="//img.imooc.com" />
-<link rel="dns-prefetch" href="//img.mukewang.com" />
-<link rel="apple-touch-icon" sizes="76x76" href="/static/img/common/touch-icon-ipad.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/static/img/common/touch-icon-iphone-retina.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/static/img/common/touch-icon-ipad-retina.png">
-<meta name="keywords" content="慕课网，慕课官网，MOOC，移动开发，IT技能培训，免费编程视频，php开发教程，web前端开发，在线编程学习，html5视频教程，css教程，ios开发培训，安卓开发教程" />
-
-<meta name="description" content="vue.js兼具angular.js和react.js优点，并剔除它们的缺点" />
-
-
-
-
-
-
-
 
 <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
-
-<script type="text/javascript">
-
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('!4(){3 a={};3 j=0;3 5=[{e:\'o://p.u.f/p/v/L/K.r\',6:0},{e:\'o://v.u.f/J/M-P.r\',6:-0}];3 x=4(){3 c,s=d O("(^| )"+"l=([^;]*)(;|$)");9(c=m.k.N(s)){q I(c[2])}H{q y}};3 A=4(t){3 n=x();3 b=d F();b.E(b.10()+11*w*w*13);m.k="l="+t+";14="+b.T()+";Q=/;R=U.f";9(t&&t!=n){V.W.Y()}};3 D=4(i){3 7=d X();7.S=4(){15(a[i]);a[i]=y;8(i,0)};7.Z=4(){8(i,1)};a[i]=12(4(){7.z="";8(i,1)},G);7.z=5[i].e};3 8=4(C,6){j++;5[C].6=6;9(j==5.g){3 h=0;B(3 i=0;i<5.g;i++){9(5[i].6==1){h=1}}A(h)}};B(3 i=0;i<5.g;i++){D(i)}}()',62,68,'|||var|function|urls|flag|imgobj|callback|if|timer|exp|arr|new|url|com|length|error||count|cookie|IMCDNS|document|_0|http|static|return|png|reg||mukewang|img|60|getcookie|null|src|setcookie|for|index|checkCdn|setTime|Date|3000|else|unescape|images|logo|common|unknow|match|RegExp|80|path|domain|onload|toGMTString|imooc|window|location|Image|reload|onerror|getTime|24|setTimeout|1000|expires|clearTimeout'.split('|'),0,{}))
-
-</script>
-
-
-<script type="text/javascript">
-
-var OP_CONFIG={"module":"search","page":"course"};
-var isLogin = 0;
-var is_choice = "";
-var seajsTimestamp="v=201710201038";
-var _msg_unread = 0; 
-var _not_unread = 0; 
-var _cart_num = 0;
-</script>
-
-
-
-
-	
-
-	
 <link rel="stylesheet" href="__INDEX_CSS__/search.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="__ADMIN_CSS__/bootstrap.min.css">
 </head>
 <body >
 
@@ -69,114 +22,56 @@ var _cart_num = 0;
 	<div class="search-main">
 		<div class="search-header">
 			<div class="search-form">
-				<i class="icon-search sz-search"></i>
-				<input type="text" class="search-form-ipt js-search-ipt" value="实打实" placeholder="请输入想搜索的内容">
-				<button class="search-form-btn js-search-btn">搜索</button>
-				<div class='search-history-area js-search-history'>
-				</div>
+				<form class="keywordform" method="post" action="{:url('Index/indexSearch')}">
+					<i class="icon-search sz-search"></i>
+					<input type="text" class="search-form-ipt js-search-ipt" name="keyword" value="" placeholder="请输入想搜索的内容">
+					<button class="search-form-btn js-search-btn">搜索</button>
+					<div class='search-history-area js-search-history'>
+					</div>
+				</form>
 			</div>
-			<ul class="search-hot">
-				<li><a href="/search/?words=AngularJS" target="_blank">AngularJS</a></li>
-			</ul>
+			
 		</div>
 		<div class="search-body">
 			<div class="search-classify">
 				<ul class="search-classify-list">
-					<li><a href="javascript:;" data-page="index" >全站</a></li>
-					<li><a href="javascript:;" data-page="course" class='active'>课程</a></li>
-					<li><a href="javascript:;" data-page="wenda" >猿问</a></li>
-					<li><a href="javascript:;" data-page="article" >手记</a></li>
+					<li><a data-page="course" class='active'>课程</a></li>
 				</ul>
-				<div class="search-related-classify search-related-select js-course-select">
-					<div class="search-select-list js-course-list">
-						<p class="">
-							全部
-						</p>
-						<i class="search-select-arrow icon-drop_down"></i>
-					</div>
-					<div class="search-select-content js-course-content">
-						<p class="">&nbsp;&nbsp;&nbsp;&nbsp;全部</p>
-						<p class="&type=sz">&nbsp;&nbsp;&nbsp;&nbsp;实战</p>
-						<p class="&type=zy">&nbsp;&nbsp;&nbsp;&nbsp;职业路径</p>
-						<p class="&type=mf">&nbsp;&nbsp;&nbsp;&nbsp;课程</p>
-					</div>
-				</div>
-				<span class="search-related">共找到 74 个相关内容</span>
+				
+				<span class="search-related">共找到 {$count} 个相关课程</span>
 			</div>
+			{volist name='list' id='course'}
 			<div class="course-item">
-				<a href="http://coding.imooc.com/class/74.html" target="_blank">
-					<img src="__INDEX_IMG__/582ac41a0001d3c705400300-360-202.jpg" class="course-item-img" />
+				<a href="{:url('course/courseComment',['course_id'=>$course.course_id])}" target="_blank">
+					<img src="{$course.course_pic}" class="course-item-img" />
 				</a>
 				<div class="course-item-detail">
-					<a href="http://coding.imooc.com/class/74.html" target="_blank">
-					Vue.js高仿饿了么外卖App 1.0到2.0版本完美升级
+					<a href="{:url('course/courseComment',['course_id'=>$course.course_id])}" target="_blank">
+					{$course.course_title}
 					</a>
 					<div class="course-item-classify">
-						<span>实战</span>
-						<span>讲师：ustbhuangyi</span>
-						<span>高级</span>
+						<span>讲师：{$course.course_teacher}</span>
+
+						<span>{$course.course_grade}</span>
+
 						<i class="course-study-number icon-set_sns"></i>
-						<span>4829</span>
+						<span>{$course.course_sales}</span>
 					</div>
-					<p>vue.js兼具angular.js和react.js优点，并剔除它们的缺点</p>
+					<p>{$course.course_keywords}</p>
 				</div>
 			</div>
-			<div class="page">
-				<span class="disabled_page">首页</span>
-				<span class="disabled_page">上一页</span>
-				<a href="javascript:void(0)" class="active text-page-tag">1</a>
-				<a class="text-page-tag" href="/search/course?words=%E5%AE%9E%E6%89%93%E5%AE%9E&page=2">2</a>
-				<a class="text-page-tag" href="/search/course?words=%E5%AE%9E%E6%89%93%E5%AE%9E&page=3">3</a>
-				<a href="/search/course?words=%E5%AE%9E%E6%89%93%E5%AE%9E&page=2">下一页</a>
-				<a href="/search/course?words=%E5%AE%9E%E6%89%93%E5%AE%9E&page=3">尾页</a>
+			{/volist}
+			
+			<div style="text-align:center;">
+				{$page}
+			
+				
 			</div>
 		</div>
 	</div>
 </div>
 
 
-
-
-
-	<script src="__INDEX_JS__/ssologin.js"></script>
-	<script type="text/javascript" src="__INDEX_JS__/sea.js"></script>
-	<script type="text/javascript" src="__INDEX_JS__/sea_config.js"></script>
-	<script type="text/javascript">seajs.use("/static/page/search/index");</script>
-	<script>
-		OP_CONFIG.$pager = 'course';
-		OP_CONFIG.$words = '实打实';
-	</script>
-
-
-
-
-
-
-
-<div style="display: none">
-<script type="text/javascript">
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?f0cfcccd7b1393990c78efdeebff3968";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-(function (d) {
-window.bd_cpro_rtid="rHT4P1c";
-var s = d.createElement("script");s.type = "text/javascript";s.async = true;s.src = location.protocol + "//cpro.baidu.com/cpro/ui/rt.js";
-var s0 = d.getElementsByTagName("script")[0];s0.parentNode.insertBefore(s, s0);
-})(document);
-</script>
-<script>
-(function(){
-    var bp = document.createElement('script');
-    bp.src = '//push.zhanzhang.baidu.com/push.js';
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-</div>
 </body>
 </html>
 {/block}

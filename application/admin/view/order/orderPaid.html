@@ -46,16 +46,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {foreach $order as $value}
                                 <tr class="gradeX">
-                                    <td>1710191727409858</td>
-                                    <td>hp55555</td>
-                                    <td>PHP从入门到放弃</td>
-                                    <td><a data-toggle="modal" data-target="#myModal6">订单详情</a></td>
+                                    <td>{$value['order_id']}</td>
+                                    <td>{$value['user_name']}</td>
+                                    <td style="width:200px;height:32px;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;" title="{$value['order_course']}">{$value['order_course']}</td>
+                                    <td><a data-toggle="modal" data-target="#myModal6" class="js-addr" data-order-name="{$value['order_name']}" data-order-phone="{$value['order_phone']}" data-order-address="{$value['order_address']}">收货地址</a></td>
                                     <td><a data-toggle="modal" data-target="#myModal5">物流详情</a></td>
-                                    <td class="center">299.00</td>
-                                    <td class="center">2017-10-19</td>
+                                    <td class="center">{$value['order_money']}</td>
+                                    <td class="center">{$value['create_time']}</td>
                                 </tr>
-
+                                {/foreach}
                             </tbody>
                         </table>
 
@@ -65,25 +66,24 @@
         </div>
         
     </div>
+    
     <!-- 模态窗口 订单详情 -->
     <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
-                    <h4 class="modal-title" style="font-size:15px;">编号:1710191727409858</h4>
+                    <h4 class="modal-title order_id" style="font-size:15px;"></h4>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <p>购买商品：<input type="text" name="" value="PHP从入门到放弃"></p>
-                        <p>收货人&emsp;：<input type="text" name="" value="黄鹏"></p>
-                        <p>联系方式：<input type="text" name="" value="155383838"></p>
-                        <p>收货地址：<input type="" name="" value="天丰利"></p>
-                    </form>
+                        <p>收货人&emsp;：<input type="text" name="order_name" value=""></p>
+                        <p>联系方式：<input type="text" name="order_phone" value=""></p>
+                        <p>收货地址：<input type="text" name="order_address" value=""></p>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary js-save-address" data-dismiss="modal">保存</button>
                     <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                    
                 </div>
             </div>
         </div>
@@ -129,7 +129,24 @@
 
     <!-- 自定义js -->
     <script src="__ADMIN_JS__/content.js?v=1.0.0"></script>
-
+    <script type="text/javascript">
+        $(function(){
+            $('.js-addr').click(function(){
+                var order_id = $(this).parent().siblings('td').eq(0).text();
+                var order_name = $(this).attr('data-order-name');
+                var order_address = $(this).attr('data-order-address');
+                var order_phone = $(this).attr('data-order-phone');
+                $('.order_id').text(order_id);
+                $('input[name="order_name"]').val(order_name);
+                $('input[name="order_address"]').val(order_address);
+    
+                $('input[name="order_phone"]').val(order_phone);
+            });
+            $('.js-save-address').click(function(){
+                $.post('{:url("updateAddr")}',{order_id:$('.order_id').text(),order_name:$('input[name="order_name"]').val(),order_address:$('input[name="order_address"]').val(),order_phone:$('input[name="order_phone"]').val()});
+            });
+        })
+    </script>
 
     <!-- Page-Level Scripts -->
     <script>

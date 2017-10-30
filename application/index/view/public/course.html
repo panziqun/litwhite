@@ -33,18 +33,21 @@
 	        </div>
 	        <!--信息栏-->
 	        <div class="statics clearfix">
+	        	{if $courseInfo.course_rate == '0'}
 	            <div class="moco-btn l learn-btn green-btn red-btn"> 
 	                <a href="{:url('courseVideo',['course_id'=>$courseInfo.course_id])}" class="J-learn-course">开始学习</a>
 	                <em></em>
 	                <i class="follow-action js-follow-action icon-star_outline" data-cid="908" data-cmd="follow" title="收藏"></i>
 	            </div>
+	            {else /}
 	            <div class="moco-btn l learn-btn green-btn red-btn"> 
-	                <a class="J-learn-course purchase" data-userid="{$Think.session.user_id}">立即购买</a>
+	                <a class="J-learn-course purchase" data-userid="{$Think.session.user_id}" href="{:url('Order/orderSur',['course_ids'=>$courseInfo.course_id])}">立即购买</a>
 	                {if $shopcar == ''}
 	                <em></em>
 	                <i class="follow-action js-follow-action imv2-cart" data-cid="{$courseInfo.course_id}" data-cmd="follow" data-userid="{$Think.session.user_id}" title="加入购物车" ></i>
 	                {/if}
 	            </div>
+	            {/if}
 <script type="text/javascript">
 	$(function(){
 		$('.purchase').click(function(){
@@ -84,30 +87,7 @@
 	                <span class="meta">综合评分</span>
 	                <span class="meta-value">{$courseInfo.course_start*2}</span>
 	                <em></em>              
-	                <div class="score-wrap icon-drop_up triangle">
-	                    <div class="score-box">
-	                        <a href="/coursescore/898" class="person-num">
-	                            <span class="person-num l">0人评价</span>
-	                        </a>
-	                        <a href="/coursescore/898?page=1" class="evaluation-btn r">查看评价</a>
-	                        <div class="score-detail-box">
-	                            <div class="score-static-item">
-	                                <span class="meta-value">10.0</span>
-	                                <span class="meta">内容实用</span>
-	                            </div>
-	                            <div class="score-static-item">
-	                                <span class="meta-value">10.0</span>
-	                                <span class="meta">简洁易懂</span>
-	                                <em></em>
-	                            </div>
-	                            <div class="score-static-item">
-	                                <span class="meta-value">10.0</span>
-	                                <span class="meta">逻辑清晰</span>
-	                                <em></em>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
+	                
 	            </div>
 	            
 	        </div>
@@ -116,7 +96,6 @@
 	            <!-- share -->
 	            <div class="share-action r bdsharebuttonbox">
 	                <a href="javascript:;" class="share wx js-share icon-share-weichat" data-cmd="weixin"></a>
-
 
 	                <a href="{:url('OauthController/qqAction')}" class="share qq js-share icon-share-qq" data-cmd="qzone"></a>
 	                <a href="javascript:;" class="share sina js-share icon-share-weibo" data-cmd="tsina"></a>
