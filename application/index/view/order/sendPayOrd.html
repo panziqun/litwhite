@@ -1,0 +1,17 @@
+
+<html>
+<head>
+<title>To YeePay Page</title>
+</head>
+<body onload="document.yeepay.submit();">
+<form name='yeepay' action='{$reqURL_onLine}' method='post'>
+<input type='hidden' name='p0_Cmd'					value="{$data['p0_Cmd']}">
+<input type='hidden' name='p1_MerId'				value="{$p1_MerId}">
+<input type='hidden' name='p2_Order'				value="{$data['p2_Order']}">
+<input type='hidden' name='p3_Amt'					value="{$data['p3_Amt']}">
+<input type='hidden' name='p4_Cur'					value="{$data['p4_Cur']}">
+<input type='hidden' name='p8_Url'					value="{$data['p8_Url']}">
+<input type='hidden' name='hmac'						value="{$hmac}">
+</form>
+</body>
+</html>

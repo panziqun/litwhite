@@ -1,0 +1,113 @@
+{extend name="public/base"}
+{block name="main"}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>确认订单_慕课网</title>
+    <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
+    <link rel="stylesheet" href="__INDEX_CSS__/0ef8c07f554a4878bbfec9b935e70084.css" type="text/css" />
+</head>
+<body>
+    <form method="post" action="{:url('sendPayOrd')}" targe="_blank">
+    <div class='body-main'>
+    <div class='cart-header'>
+        <div class='cart-header-warp clearfix'>
+            <div class='cart-title left clearfix'>
+                <h1 class='left'>支付订单</h1>
+            </div>
+            <div class='right'>
+            </div>
+        </div>
+    </div>
+    <div class='cart-body' id='cartBody'>
+        <div class="title-box clearfix">
+            <p class='l goods-info-title'>订单编号：{$order_id}</p>
+            <input type="hidden" name="p2_Order" value="{$order_id}">
+        </div>
+        <div class="detail-box">
+            {foreach $course as $v}
+            <ul>
+                <li class="clearfix js-item-cart js-each-101" data-type="1" data-typeid="101" data-goodsid="190">
+                    <a href="{:url('course/courseComment',['course_id'=>$v['course_id']])}" target="_blank">
+                        <img src="{$v['course_pic']}" alt="" class="l">
+                    </a>
+                    <div class="text-info-box l">
+                        <a href="{:url('course/courseComment',['course_id'=>$v['course_id']])}" target="_blank">
+                            <p class="info-title">{$v['course_title']}</p>
+                            <input type="hidden" name="order_course[]" value="{$v['course_id']}">
+                        </a>
+                    </div>
+                    <p class="info-price l"><em>￥</em><span>{$v['course_rate']}</span></p>
+                </li>
+            </ul>
+            {/foreach}
+        </div>
+        <script type="text/javascript">
+            $(function(){
+                $('.js-more-coupon-btn').click(function(){
+                    if ($('.coupon-del-box').css('display') == 'block') {
+                        $('.coupon-del-box').css('display', 'none');
+                    }else{
+                        $('.coupon-del-box').css('display', 'block');
+                    }
+                });
+            })
+        </script>
+        <div class="coupons-box">
+            <div class="coupon-title-box clearfix">
+                <p class="coupon-title l">
+                    选择收货地址
+                    <i class="imv2-arrow2_d js-more-coupon-btn js-close"></i>
+                </p>
+                <a href="{:url('set/setAddr')}" style="color:red;" target="_blank">没有地址点击添加</a>
+                {foreach $addr as $value}
+                {if $value.addr_select == 1}
+                <a class="r real-addr">{$value.addr_city}&emsp;{$value.addr_address}</a>
+                <input type="hidden" name="addr_id" value="{$value.addr_id}">
+                {/if}
+                {/foreach}
+            </div>
+            <div class="coupon-del-box"  style="display: none;">
+                {foreach $addr as $value}
+                <p class="no-coupons" style="cursor: pointer;padding:10px;" data-addr-id="{$value.addr_id}">{$value.addr_city}&emsp;{$value.addr_address}</p>
+                {/foreach}
+            </div>
+        </div>
+        <div class="pay-box clearfix">
+            <div class="goods-total-price-box clearfix">
+                <p class="r rw price-num">
+                    <em>￥</em><span id="js-actual-price">{$price}</span>
+                </p>
+                <p class="r price-text">商品总金额：</p>
+            </div>
+            <div class="pay-price-box clearfix">
+                <p class="r rw price">
+                    <em>￥</em><span id="js-pay-price">{$price}</span>
+                    <input type="hidden" name="p3_Amt" value="0.01">
+                </p>
+                <p class="r price-text">应付：</p>
+            </div>
+            <div class="pay-account-box clearfix">
+                <p class="pay-account r">购买账号：<span>{$Think.session.user_name}</span></p>
+            </div>
+            <button href="javascript:void(0);" class="r moco-btn moco-btn-red submit-btn js-pay-submit" data-type="normal" >支付订单</button>
+
+        </div>
+        
+    </div>
+
+</div>
+</form>
+<script type="text/javascript">
+    $('.no-coupons').click(function(){
+        var addr = $(this).text();
+        $('.real-addr').text(addr);
+        $('.real-addr').siblings('input').attr('value',$(this).attr('data-addr-id'));
+        $('.coupon-del-box').css('display', 'none');
+    });
+</script>
+</body>
+</html>
+{/block}

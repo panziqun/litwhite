@@ -28,7 +28,7 @@ class Course extends Controller{
 		$this->plate  = new Plate();
 		$this->course = new Course();
 		$this->note = new Note();
-		$this->noteUpvote = new NoteUpvote();
+		// $this->noteUpvote = new NoteUpvote();
 		$this->usercourse = new UserCourse();
 		$this->shopcar = new Shopcar();
 
@@ -63,22 +63,14 @@ class Course extends Controller{
 		$course_id = $this->request->param('course_id');
 		$limit = $this->request->param('limit');
 		$noteInfo = $this->note
-		//$noteInfo = Db::table('lit_note')
 						->alias('n')
 						->join('lit_user u','u.user_id = n.user_id')
 						->join('lit_userinfo ui','ui.user_id = n.user_id')
-						//->join('lit_note_upvote nu','n.note_id = nu.note_id')
 						->field('n.note_content,n.note_id,n.create_time,n.upvote_count,u.user_id,u.user_name,ui.userinfo_headi')
 						->where('n.course_id',$course_id)
 						->order('n.note_id desc')
 						->limit($limit,5)
 						->select();
-		// $noteUpvote = Db::table('lit_note')
-		// 				->alias('n')
-		// 				->join('lit_note_upvote nu','nu.note_id = n.note_id')
-		// 				->where()
-		// 				->select();		
-		//file_put_contents('sql.txt',$this->note->getLastSql(),FILE_APPEND);
 		if ($noteInfo) {
 			$this->assign([
 				'noteInfo'=>$noteInfo ,
@@ -167,7 +159,6 @@ class Course extends Controller{
 	public function addNote()
 	{
 		$noteInfo = $this->request->param();
-		//return json_encode($course_id);
 		$this->note->data([
 			'course_id'=>$noteInfo['course_id'],
 			'note_content'=>$noteInfo['note_content'],
@@ -189,7 +180,6 @@ class Course extends Controller{
 			$this->assign([
 				'noteInfo'=>$noteInfo ,
 			]);
-			//return json_encode($noteInfo,JSON_UNESCAPED_UNICODE);
 			return $this->fetch('getNoteInfo');
 		}
 
