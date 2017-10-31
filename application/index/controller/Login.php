@@ -10,21 +10,31 @@ use app\index\model\Userinfo;
 // use PHPMailer\PHPMailer\Exception;
 // use app\index\model\EmailList;
 use think\Session;
-
+use think\Cookie;
+use myhelp\SaeTOAuthV2;
+use myhelp\SaeTClientV2;
+use think\Image;
 class Login extends Controller{
+	const WB_AKEY = '3364510635';
+	const WB_SKEY = '5dd72b3f89cbc622f3f0f8d94662b89d';
+	const WB_CALLBACK_URL = 'http://www.litwhite.com/index/Login/weibo';
 	protected $user;
 	protected $mail;
 	protected $emailList;
 	protected $userinfo;
+	protected $o;
 	public function _initialize()
 	{
 		$this->user = new User();
 		$this->userinfo = new Userinfo();
+		$this->o = new SaeTOAuthV2(self::WB_AKEY , self::WB_SKEY);
 		// $this->mail = new PHPMailer();
 		// $this->emailList = new EmailList();
 	}
 	public function login()
 	{
+		$code_url = $this->o->getAuthorizeURL( self::WB_CALLBACK_URL );
+		$this->assign('code_url',$code_url);
 		return $this->fetch();
 	}
 	public function loginDeal()
@@ -46,6 +56,57 @@ class Login extends Controller{
 		}else{
 			$this->error('登录失败');
 		}
+	}
+	public function weibo()
+	{
+		if (isset($_REQUEST['code'])) {
+			$keys = array();
+			$keys['code'] = $_REQUEST['code'];
+			$keys['redirect_uri'] = self::WB_CALLBACK_URL;
+			try {
+				$token = $this->o->getAccessToken( 'code', $keys ) ;
+			} catch (OAuthException $e) {
+
+			}
+		}
+
+		if ($token) {
+			Session::set('token',$token);
+			// setcookie( 'weibojs_'.$o->client_id, http_build_query($token) );
+			Cookie::set('weibojs_'.$this->o->client_id, http_build_query($token));
+		}
+		$arr = Session::get('token');
+		$c = new SaeTClientV2( self::WB_AKEY , self::WB_SKEY , $arr['access_token'] );
+		// dump($c);
+		$ms  = $c->home_timeline(); // done
+		$uid_get = $c->get_uid();
+		$uid = $uid_get['uid'];
+		$user_message = $c->show_user_by_id( $uid);//
+		// dump($user_message);
+		//存入数据库
+		$user_weibo = $user_message['id'];
+		$user_name = $user_message['screen_name'];
+		$user = $this->user->get(['user_weibo'=>$user_weibo]);
+		if ($user) {
+			Session::set('user_id',$user->user_id);
+			Session::set('user_name',$user->user_name);
+			$user_id = $user->user_id;
+			$userinfo = $this->userinfo->get(['user_id'=>$user_id]);
+			Session::set('userinfo_headi',$userinfo->userinfo_headi);
+		}else{
+			$this->user->save(['user_weibo'=>$user_weibo,'user_name'=>$user_name]);
+			$user_id = $this->user->user_id;
+			Session::set('user_id',$user_id);
+			Session::set('user_name',$user_name);
+			$image = $user_message['profile_image_url'];
+			// $image = Image::open($image);
+			// //将图片裁剪为300x300并保存为crop.png
+			// $haha = substr(str_shuffle(md5(str_shuffle('asdasd2423'))), 0, 8);
+			// $image->save(ROOT_PATH . 'public' . DS . 'uploads/' . $haha .'.png');
+			$this->userinfo->save(['user_id'=>$user_id,'userinfo_headi'=>$image]);
+			Session::set('userinfo_headi',$image);
+		}
+		$this->redirect('index/index');
 	}
 	//检查手机或者邮箱
 	public function checkEmailPhone()
@@ -95,6 +156,8 @@ class Login extends Controller{
 	}
 	public function register()
 	{
+		$code_url = $this->o->getAuthorizeURL( self::WB_CALLBACK_URL );
+		$this->assign('code_url',$code_url);
 		return $this->fetch();
 	}
 	public function regSuccess()

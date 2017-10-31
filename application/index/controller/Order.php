@@ -78,7 +78,11 @@ class Order extends Controller{
 		$order_course = implode(',', $arr);
 		$order_money = $this->request->param('p3_Amt');
 		$addr_id = $this->request->param('addr_id');
-		$this->order->save(['order_id'=>$order_id,'user_id'=>$user_id,'order_course'=>$order_course,'order_money'=>$order_money,'addr_id'=>$addr_id]);
+		$addr = $this->addr->get($addr_id);
+		$order_name = $addr->addr_name;
+		$order_address = $addr->addr_city . $addr->addr_address;
+		$order_phone = $addr->addr_phone;
+		$this->order->save(['order_id'=>$order_id,'user_id'=>$user_id,'order_course'=>$order_course,'order_money'=>$order_money,'order_name'=>$order_name,'order_address'=>$order_address,'order_phone'=>$order_phone]);
 		foreach ($arr as $key => $value) {
 			$this->shopcar->destroy(['user_id'=>$user_id,'course_id'=>$value]);
 		}

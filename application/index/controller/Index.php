@@ -4,6 +4,7 @@ use think\Controller;
 use think\Db;
 use app\index\model\Plate;
 use app\index\model\Course;
+use think\Db;
 class Index extends Controller{
 	protected $plate;
 	protected $course;
@@ -244,6 +245,17 @@ class Index extends Controller{
 	}
 	public function indexSearch()
 	{
+		$keyword = $this->request->param('keyword');
+		$courses = $this->course
+			->alias('c')
+			->join('lit_course_count cc','c.course_id=cc.course_id')
+			->where('course_title','like',"%$keyword%")
+			->paginate(3,false,['query' => ['keyword'=>$keyword] ]);
+		$count = Db::table('lit_course')->where('course_title','like',"%$keyword%")->count('course_id');
+		$page = $courses->render();
+		$this->assign('list',$courses);
+		$this->assign('page', $page);
+		$this->assign('count',$count);
 		return $this->fetch();
 	}
 }
