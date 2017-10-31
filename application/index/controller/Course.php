@@ -10,11 +10,10 @@ use app\index\model\Shopcar;
 use think\Controller;
 use think\Session;
 use think\Db;
-use traits\model\SoftDelete;
+
 
 class Course extends Controller{
-	use SoftDelete;
-	protected $deleteTime = 'delete_time';
+	
 	private static $noteStart;
 	protected $plate;
 	protected $course;
@@ -28,7 +27,7 @@ class Course extends Controller{
 		$this->plate  = new Plate();
 		$this->course = new Course();
 		$this->note = new Note();
-		// $this->noteUpvote = new NoteUpvote();
+		$this->noteUpvote = new NoteUpvote();
 		$this->usercourse = new UserCourse();
 		$this->shopcar = new Shopcar();
 
@@ -68,6 +67,7 @@ class Course extends Controller{
 						->join('lit_userinfo ui','ui.user_id = n.user_id')
 						->field('n.note_content,n.note_id,n.create_time,n.upvote_count,u.user_id,u.user_name,ui.userinfo_headi')
 						->where('n.course_id',$course_id)
+						//->where('delete_time','=',null)
 						->order('n.note_id desc')
 						->limit($limit,5)
 						->select();
@@ -85,12 +85,12 @@ class Course extends Controller{
 		
 		$note_id = $this->request->param('note_id');
 		$user_id = session('user_id');
+
 		$noteUpvoteInfo  = $this->noteUpvote
 				->withTrashed()
 				->where('note_id',$note_id)
 				->where('user_id',$user_id)
 				->find();
-
 		if ( $noteUpvoteInfo ) {
 
 			if ( $noteUpvoteInfo->delete_time ) {
@@ -98,6 +98,8 @@ class Course extends Controller{
 				$result = $noteUpvoteInfo->save();
 			} else {
 				$result = $this->noteUpvote::destroy($noteUpvoteInfo->note_upvote_id);
+				$note =  $this->note->get($note_id);
+				$note->setDec('upvote_count',1);
 				return json_encode(['code'=>500],JSON_UNESCAPED_UNICODE);
 			}
 		} else {
@@ -105,7 +107,9 @@ class Course extends Controller{
 			$this->noteUpvote->user_id = $user_id;
 			$result = $this->noteUpvote->save();
 		}
-		return json_encode(['code'=>200],JSON_UNESCAPED_UNICODE);
+		$note =  $this->note->get($note_id);
+		$note->setInc('upvote_count',1);
+		return json_encode(['code'=>200,'info'=>$result],JSON_UNESCAPED_UNICODE);
 		
 
 	}

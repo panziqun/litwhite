@@ -10,27 +10,15 @@
 <title>
 全部课程_IT培训精品课程-慕课网
 </title>
+	<link href="__ADMIN_CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+	<link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
+	<link rel="stylesheet" href="__INDEX_CSS__/list.css" type="text/css" />
 
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="__INDEX_CSS__/list.css" type="text/css" />
+	<style type="text/css">
+		#main a{
+			text-decoration: none;
+		}
+	</style>
 </head>
 <body  id="List_courseId">
 <div id="main">
@@ -44,11 +32,13 @@
                         <div class="bd">
                             <ul class="">
                                 <li class="course-nav-item on">
-                                    <a href="/course/list">全部</a>
+                                    <a href="{:url('courseAllList')}">全部</a>
                                 </li>
+                                {volist name="bigPlateList" id="bigPlate"}
                                 <li class="course-nav-item">
-                                    <a href="/course/list?c=fe" data-ct="fe">前端开发</a>
-                                </li>                                       
+                                    <a href="{:url('index/indexBigPlateList',['plate_id'=>$bigPlate.plate_id])}" data-ct="fe">{$bigPlate['plate_title']}</a>
+                                </li>
+                                {/volist}                                       
                             </ul>
                         </div>
                     </div>
@@ -57,11 +47,14 @@
                         <div class="bd">
                             <ul class="">
                                 <li class="course-nav-item on">
-                                    <a href="/course/list?">全部</a>
+                                    <a href="{:url('courseAllList')}">全部</a>
                                 </li>
+
+                                {volist name="smallPlateList" id="smallPlate"}
                                 <li class="course-nav-item">
-                                    <a href="/course/list?c=javascript" data-id=44 data-ct=javascript>JavaScript</a>
+                                    <a href="{:url('index/indexSmallPlateList',['plate_id'=>$smallPlate.plate_id])}" data-id=44 data-ct=javascript>{$smallPlate['plate_title']}</a>
                                 </li>
+                                {/volist} 
                             </ul>
                         </div>
                     </div>
@@ -70,10 +63,16 @@
                         <div class="bd">
                             <ul class="">
                                 <li class="course-nav-item on">
-                                        <a href="/course/list?">全部</a>
+                                        <a href="{:url('courseGradeList',['plateListId'=>$plateListId,'course_grade'=>'0,1,2'])}">全部</a>
                                 </li>
                                 <li class="course-nav-item ">
-                                    <a href="/course/list?type=1">基础</a>
+                                    <a href="{:url('courseGradeList',['plateListId'=>$plateListId,'course_grade'=>0])}">初级</a>
+                                </li>
+                                <li class="course-nav-item ">
+                                    <a href="{:url('courseGradeList',['plateListId'=>$plateListId,'course_grade'=>1])}">中级</a>
+                                </li>
+                                <li class="course-nav-item ">
+                                    <a href="{:url('courseGradeList',['plateListId'=>$plateListId,'course_grade'=>2])}">高级</a>
                                 </li>
                             </ul>
                         </div>
@@ -183,53 +182,46 @@
 				</div>
 			</a>
 		</div>
+		<!--课程列表-->
+		{volist name="courseList" id="course"}
         <div class="course-card-container">
-           <a target="_blank" href="/learn/898" class="course-card">
+            <a target="_blank" 
+            {if $Think.session.user_id}
+			href="{:url('course/courseComment',['course_id'=>$course.course_id])}" 
+			{else /}
+			href="{:url('Login/login')}" 
+			{/if}
+            class="course-card">
                 <div class="course-card-top">
-                    <img class="course-banner lazy" data-original="" src="" style="display: inline;">
+                    <img class="course-banner lazy" data-original="" src="{$course['course_pic']}" style="display: inline;">
                    <div class="course-label">
-                        <label>PHP</label>
+                        <label>{$course['plate_title']}</label>
                     </div>
                 </div>
                 <div class="course-card-content">
-                    <h3 class="course-card-name">PHP中的会话控制</h3>
+                    <h3 class="course-card-name">{$course['course_title']}</h3>
                     <div class="clearfix course-card-bottom">
                         <div class="course-card-info">
-                            <span>初级</span><span><i class="icon-set_sns"></i>135</span>
+                            <span>{$course['course_grade']}</span><span><i class="icon-set_sns"></i>{$course['course_sales']}</span>
                         </div>
-                        <p class="course-card-desc">带你了解PHP中的会话控制技术。</p>
+                        <div class='course-card-price'>￥{$course['course_rate']}</div>
+                        <p class="course-card-desc">{$course['course_describe']}</p>
                     </div>
                 </div>
-           </a>
+            </a>
         </div>
+        {/volist}
+        
     </ul>
 </div>
 <div class="page">
-    <span class="disabled_page">首页</span>
-    <span class="disabled_page">上一页</span>
-    <a href="javascript:void(0)" class="active text-page-tag">1</a>
-    <a class="text-page-tag" href="/course/list?page=2">2</a>
-    <a class="text-page-tag" href="/course/list?page=3">3</a>
-    <a class="text-page-tag" href="/course/list?page=4">4</a>
-    <a class="text-page-tag" href="/course/list?page=5">5</a>
-    <a class="text-page-tag" href="/course/list?page=6">6</a>
-    <a class="text-page-tag" href="/course/list?page=7">7</a>
-    <a href="/course/list?page=2">下一页</a>
-    <a href="/course/list?page=32">尾页</a>
+    
 </div>
-</div>
+<div class="col-sm-5"></div>{$page}
 </div>
 </div>
 
-
-
-
-
-
-
-
-
-
+</div>
 
 </body>
 </html>

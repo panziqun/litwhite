@@ -3,11 +3,15 @@ namespace app\index\controller;
 use think\Controller;
 use kuange\qqconnect\QC;
 use app\index\model\User;
+use app\index\model\Userinfo;
 class Callbackcontroller extends Controller
 {
+	protected $user;
+	protected $userInfo;
 	public function _initialize()
 	{
 		$this->user = new User();
+		$this->userData = new Userinfo();
 	}
     public function qqAction()
     {
@@ -20,6 +24,8 @@ class Callbackcontroller extends Controller
         if ( $userInfo ) {
         	session('user_id',$userInfo->user_id);
         	session('user_name',$userInfo->user_name);
+        	$userData = $this->userData->where('user_id',$userInfo->user_id)->find();
+        	session('user_pic',$userData->userinfo_headi);
         } else {
         	$qc = new QC($access_token, $openid);
 			$qq_user_info = $qc->get_user_info();

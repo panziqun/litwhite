@@ -54,6 +54,7 @@
                   },
                   function(data) {
                     data = JSON.parse(data);
+                    console.log(data);
                     var num = parseInt(obj.children('em').text());
                     if (data.code == 200) {
                         obj.children('em').text(num+1);
