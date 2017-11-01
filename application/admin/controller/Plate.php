@@ -11,6 +11,7 @@ class Plate extends Auth{
 	*/
 	public function _initialize()
 	{
+		parent::_initialize();
 		$this->plate = new Plate();
 	}
 	/*

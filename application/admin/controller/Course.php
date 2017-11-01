@@ -23,6 +23,7 @@ class Course extends Auth{
 	*/
 	public function _initialize()
 	{
+		parent::_initialize();
 		$this->course = new Course();
 		$this->CourseCount = new CourseCount();
 		$this->comment = new Comment();
@@ -56,7 +57,7 @@ class Course extends Auth{
 		$fileInfo = $courseFile->move(ROOT_PATH . 'public' . DS .'uploads');
 		
 		if ($fileInfo) {
-			$fileURL = $this->website . '/uploads/' . dirname($fileInfo->getSaveName()) .'/' . $fileInfo->getFileName();
+			$fileURL = dirname($fileInfo->getSaveName()) .'/' . $fileInfo->getFileName();
 			$courseId 	= $this->course->courseInsertData($courseData, $fileURL);
 			$result 	= $this->CourseCount->courseCountInsertData($courseId);
 			if ($result) {
@@ -90,7 +91,7 @@ class Course extends Auth{
 		}
 		if ($courseFile) {
 			$fileInfo = $courseFile->move(ROOT_PATH . 'public' . DS .'uploads');
-			$fileURL  = $this->website . '/uploads/' . dirname($fileInfo->getSaveName()) .'/' . $fileInfo->getFileName();
+			$fileURL  = dirname($fileInfo->getSaveName()) .'/' . $fileInfo->getFileName();
 		}else {
 			$fileURL = '';
 		}
@@ -158,10 +159,11 @@ class Course extends Auth{
 	{
 		// $courseListData = $this->course->getCourseListSelect();
 		// $page = $courseListData->render();
+		$courseListSelect = $this->plate->getCoursePlateSelect();
 		$courseListData = $this->course->getCourseList();
 		$page = $courseListData->render();
 		$this->assign([
-			//'courseListSelect'=>$courseListSelect,
+			'courseListSelect'=>$courseListSelect,
 			'courseListData'=>$courseListData,
 			'page'=>$page
 		]);

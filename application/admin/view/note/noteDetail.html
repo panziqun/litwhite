@@ -37,25 +37,25 @@
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu m-t-xs">
-                            <li><a href="#">删除</a></li>
+                            <li><a href="{:url('noteDec',['note_id'=>$note['note_id'],'delete_time'=>$note['delete_time']])}">{$note['delete_time']|empty?'删除':'显示'}</a></li>
                         </ul>
                     </div>
                     <div class="social-avatar">
                         <a href="" class="pull-left">
-                            <img alt="image" src="__ADMIN_IMG__/a1.jpg" class="img-circle">
+                            <img alt="image" src="__UPLOAD__/{$note['userinfo_headi']}" class="img-circle">
                         </a>
                         <div class="media-body">
                             <a href="#">
-                                        尤小右
+                                        {$note['user_name']}
                                     </a>
-                            <small class="text-muted">8月18日 16:05</small>
+                            <small class="text-muted">{$note['create_time']}</small>
                         </div>
                     </div>
                     <div class="social-body">
                         <p>
-                            看到说是 React 的也是醉了，他说的是 falcor... Khan Academy 是最早在生产环境里使用 React 的公司之一
+                            {$note['note_content']}
                         </p>
-                        <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a>
+                        <a href="#" class="small"><i class="fa fa-thumbs-up"></i> {$note['upvote_count']}</a>
                     </div>
                 </div>
 

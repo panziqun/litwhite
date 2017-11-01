@@ -36,33 +36,30 @@
                                 </div>
                                 <div class="hr-line-dashed"></div>
                             </div>
-                            
+                            <form action="{:url('courseSearch')}" method="get">
                             <div class="form-group">
                                 <div class="col-md-1">
                                      <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> 刷新</button>
                                  </div>
                                 <div class="col-sm-2">
                                     <select class="form-control m-b" name="account">
-                                        <option>全部课程</option>
-                                        <option>前端开发</option>
-                                        <option>&emsp;|--PHP</option>
-                                        <option>&emsp;|--JAVA</option>
-                                        <option>&emsp;|--CSS</option>
-                                        <option>&emsp;|--JS</option>
-                                        <option>后端开发</option>
-                                        <option>移动开发</option>
-                                        <option>数据库开发</option>
+                                        {volist name="courseListSelect" id="data"}
+                                        <option value="{$data['plate_id']}">
+                                            {$data['plate_title']}
+                                        </option>
+                                        {/volist} 
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
                                     <select class="form-control m-b" name="account">
-                                        <option>全部课程</option>
-                                        <option>正常</option>
-                                        <option>停止</option>
+                                        <option value="2">全部课程</option>
+                                        <option value="0">正常</option>
+                                        <option value="1">停止</option>
                                     </select>
                                 </div>
                                 <button type="button" class="btn btn-primary btn-sm">查询</button>
-                            </div>  
+                            </div>
+                            </form>  
 
 
 
@@ -86,7 +83,7 @@
                                                 <small>购买数量： {$data.course_sales}</small>
                                             </td>
                                             <td class="project-people">
-                                                <a href="projects.html"><img alt="image" class="img-rounded" src="{$data.course_pic}" style="width: 62px"></a>
+                                                <a href="projects.html"><img alt="image" class="img-rounded" src="__UPLOAD__/{$data.course_pic}" style="width: 62px"></a>
                                             </td>
                                             <td class="project-actions">
                                                 <a href="{:url('courseDetail',['course_id'=>$data.course_id])}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>

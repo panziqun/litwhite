@@ -1,8 +1,11 @@
 <?php
 namespace app\index\model;
 use think\Model;
+use traits\model\SoftDelete;
 class Note extends Model
 {
+	use SoftDelete;
+	protected $deleteTime = 'delete_time';
 	/*
 	*根据时间戳与笔记创建时间的时间戳相差 小于86400秒(1天) 显示 n小时前
 	*如果超过86400秒(1天) 显示n天前

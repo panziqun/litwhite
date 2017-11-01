@@ -19,7 +19,6 @@
 
 </head>
 <body  id="index">
-
 <div id="header">
     <div class="page-container" id="nav"  style="background-color: #fff !important;">
         <div id="logo" class="logo">
@@ -28,7 +27,7 @@
         <ul class="nav-item">
             
             <li>
-                <a href="{:url('Index/indexList')}"  target="_self">课程</a>
+                <a target="_blank" href="{:url('courseAllList')}">课程</a>
             </li>
         </ul>
         <div id="login-area">
@@ -122,7 +121,7 @@
 <div class="g-banner pr">
     <div class="menuwrap">
     </div>
-    <!-- 前端开发 -->
+    <!-- 小版块 -->
     {volist name="homePlateList" id="plateList"}
     <div class="submenu a hide sb" data-id="{$plateList.plate_id}" >
         <div class="innerBox clearfix">
@@ -135,7 +134,7 @@
                         </div>
                         <div class="tag-box l">
                         	{volist name="plateList['smallPlate']" id="smallPlate"}
-                            <a target="_blank" href="/course/list?c=html">{$smallPlate.plate_title}</a>
+                            <a target="_blank" href="{:url('index/indexSmallPlateList',['plate_id'=>$smallPlate.plate_id])}">{$smallPlate.plate_title}</a>
                         	{/volist}
                             
                         </div>
@@ -143,7 +142,7 @@
                 </div>
             </div>
         </div>
-        
+        <!-- 小版块推荐 -->
         <div class="recomment-box">
         	{volist name="plateList['courseList']" id="courseList"}
             <div class="l banner-course-card">
@@ -154,7 +153,7 @@
 				href="{:url('Login/login')}" 
 				{/if}
 				target="_blank" title="{$courseList['course_title']}" class="clearfix">
-				    <img src="{$courseList['course_pic']}" class="l">
+				    <img src="__UPLOAD__/{$courseList['course_pic']}" class="l">
 				    <div class="l course-card">
 				        <h3 class='course-card-name'>{$courseList['course_title']}</h3>
 				        <div class='course-card-info'>
@@ -171,11 +170,11 @@
 
     </div>
     {/volist}
-
+    <!--大板块-->
     <div class="menuContent">
     	{volist name="homePlateList" id="plateList"}
         <div class="item sb" data-id="{$plateList.plate_id}">
-            <a href="/course/list?c=fe" target="_blank">
+            <a href="{:url('index/indexBigPlateList',['plate_id'=>$plateList.plate_id])}" target="_blank">
 				<span class="group">{$plateList.plate_title}</span>
 				<i class='icon-right2'></i>
             </a>
@@ -249,7 +248,7 @@
 				{/if}
 				data-track="sztj-1-1">
 				<div class='course-card-top hashadow'>
-					<img class="course-banner" src="{$course.course_pic}">
+					<img class="course-banner" src="__UPLOAD__/{$course.course_pic}">
 					<div class="course-label">
 						<label>{$course.plate_title}</label>
 					</div>
@@ -295,7 +294,7 @@
 				{/if}
 				data-track="sztj-1-1">
 				<div class='course-card-top hashadow'>
-					<img class="course-banner" src="{$course.course_pic}">
+					<img class="course-banner" src="__UPLOAD__/{$course.course_pic}">
 					<div class="course-label">
 						<label>{$course.plate_title}</label>
 					</div>

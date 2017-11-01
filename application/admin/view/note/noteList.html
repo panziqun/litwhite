@@ -70,95 +70,66 @@
 
 
 
-                        <div class="project-list">
+                            <div class="project-list">
 
-                            <table class="table table-hover">
-                            	<thead>
-                                    <tr>
-                                        <th class="col-sm-2">用户</th>
-                                        <th class="col-sm-3">内容</th>
-                                        <th class="col-sm-2">方向</th>
-                                        <th class="col-sm-1">点击量</th>
-                                        <th class="col-sm-1">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                	<tr>
-	                                    <td>
-	                                        <div class="feed-element">
-	                                            <a href="profile.html#" class="pull-left">
-	                                                <img alt="image" class="img-circle" src="__ADMIN_IMG__/a1.jpg">
-	                                            </a>
-	                                            <div class="media-body ">
-	                                                <strong>奔波儿灞</strong>
-	                                                <br>
-	                                                <small class="text-muted">54分钟前 来自 皮皮时光机</small> 
-	                                            </div>
-	                                        </div>
-	                                    </td>
-	                                    
-	                                    <td>
-	                                        <div style="height:18px;overflow:hidden;">
-	                                            老师你好老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师Q
-	                                        </div> 
-	                                        
-	                                    </td>
-	                                    <td>
-	                                        <div style="height:18px;overflow: hidden;">
-	                                            PHP
-	                                        </div> 
-	                                    </td>
-	                                    <td>
-	                                      100
-	                                    </td>
-	                                    <td>
-	                                        <p class="small">
-	                                            <a href="noteDetail.html" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
-	                                           
-	                                        </p>
-	                                    </td>
-	                                </tr>
-                                    <tr>
-	                                    <td>
-	                                        <div class="feed-element">
-	                                            <a href="profile.html#" class="pull-left">
-	                                                <img alt="image" class="img-circle" src="__ADMIN_IMG__/a1.jpg">
-	                                            </a>
-	                                            <div class="media-body ">
-	                                                <strong>奔波儿灞</strong>
-	                                                <br>
-	                                                <small class="text-muted">54分钟前 来自 皮皮时光机</small> 
-	                                            </div>
-	                                        </div>
-	                                    </td>
-	                                    
-	                                    <td>
-	                                        <div style="height:18px;overflow:hidden;">
-	                                            老师你好老师QQ多少老师QQ多少老师QQ多少老师QQ多少老师QQ多少老
-	                                        </div> 
-	                                        
-	                                    </td>
-	                                    <td>
-	                                        <div style="height:18px;overflow: hidden;">
-	                                            PHP
-	                                        </div> 
-	                                    </td>
-	                                    <td>
-	                                      100
-	                                    </td>
-	                                    <td>
-	                                        <p class="small">
-	                                            <a href="noteDetail.html" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
-	                                           
-	                                        </p>
-	                                    </td>
-	                                </tr>
-
-                                   
-                                   
+                                <table class="table table-hover">
+                            	    <thead>
+                                        <tr>
+                                            <th class="col-sm-1">状态</th>
+                                            <th class="col-sm-2">用户</th>
+                                            <th class="col-sm-2">内容</th>
+                                            <th class="col-sm-2">课程</th>
+                                            <th class="col-sm-1">赞</th>
+                                            <th class="col-sm-1">操作</th>
+                                        </tr>
+                                    </thead>
+                                     <tbody>
+                                        {volist name="note" id="data"}
+                                    	<tr>
+                                            <td class="project-status">
+                                                <span class="label {$data.delete_time|empty?'label-primary':'label-default'}">{$data.delete_time|empty?'显示':'删除'}
+                                            </td>
+    	                                    <td>
+    	                                        <div class="feed-element">
+    	                                            <a href="profile.html#" class="pull-left">
+    	                                                <img alt="image" class="img-circle" src="__UPLOAD__/{$data['userinfo_headi']}">
+    	                                            </a>
+    	                                            <div class="media-body ">
+    	                                                <strong>{$data['user_name']}</strong>
+    	                                                <br>
+    	                                                <small class="text-muted">{$data['create_time']} 来自 皮皮时光机</small> 
+    	                                            </div>
+    	                                        </div>
+    	                                    </td>
+    	                                    
+    	                                    <td>
+    	                                        <div style="height:18px;overflow:hidden;">
+    	                                            {$data['note_content']}
+    	                                        </div> 
+    	                                        
+    	                                    </td>
+    	                                    <td>
+    	                                        <div style="height:18px;overflow: hidden;">
+    	                                           {$data['course_title']}
+    	                                        </div> 
+    	                                    </td>
+    	                                    <td>
+    	                                      {$data['upvote_count']}
+    	                                    </td>
+    	                                    <td>
+    	                                        <p class="small">
+    	                                            <a href="{:url('noteDetail',['note_id'=>$data['note_id']])}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+    	                                           
+    	                                        </p>
+    	                                    </td>
+    	                                </tr>
+                                        {/volist}
+                                        
                                     </tbody>
+
                                 </table>
                             </div>
+                            <div class="col-sm-offset-3">{$page}</div>
                         </div>
                     </div>
                 </div>
