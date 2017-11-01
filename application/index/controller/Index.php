@@ -4,7 +4,6 @@ use think\Controller;
 use think\Db;
 use app\index\model\Plate;
 use app\index\model\Course;
-use think\Db;
 class Index extends Controller{
 	protected $plate;
 	protected $course;

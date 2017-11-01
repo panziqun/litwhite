@@ -154,6 +154,8 @@ return [
         '__INDEX_START__'=>'/static/index/start',
         '__WEBSITE__'    =>'http://www.litwhite.com',
         '__UPLOAD__'     =>'http://www.litwhite.com/uploads',
+        '__VIDEO_CSS__'      =>'/static/video/css',
+        '__VIDEO_JS__'      =>'/static/video/js',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -275,5 +277,4 @@ return [
         'scope' => 'get_user_info',
         'errorReport' => true
     ]
-
 ];

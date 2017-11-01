@@ -6,8 +6,8 @@ use think\Validate;
 use myhelp\Phoneyz;
 use app\index\model\User;
 use app\index\model\Userinfo;
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 // use app\index\model\EmailList;
 use think\Session;
 use think\Cookie;
@@ -28,8 +28,8 @@ class Login extends Controller{
 		$this->user = new User();
 		$this->userinfo = new Userinfo();
 		$this->o = new SaeTOAuthV2(self::WB_AKEY , self::WB_SKEY);
-		// $this->mail = new PHPMailer();
-		// $this->emailList = new EmailList();
+		$this->mail = new PHPMailer();
+		//$this->emailList = new EmailList();
 	}
 	public function login()
 	{

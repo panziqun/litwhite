@@ -189,5 +189,55 @@ class Course extends Controller{
 
 		
 	}
+	public function getdanmu()
+    {
+        header('Content-type:text/html;charset=utf8');
+        $conn = mysqli_connect("localhost", "root", "123456");
+        // var_dump($conn);
+        mysqli_select_db($conn, "volleyball");
+        mysqli_set_charset($conn,'utf8');
+        //mysqli_query("set names 'utf8'"); //
+        $request = Request::instance();
+        $video_id = $request->param('video_id');
+
+        $sql="SELECT danmu FROM danmu where video_id=$video_id";
+        $query=mysqli_query($conn, $sql);
+        //echo $danmu;
+        // var_dump($query);
+        echo "[";
+        $first=0;
+        while($row = mysqli_fetch_array($query)){
+            if ($first) {
+                echo ",";
+
+            }
+        $first=1;
+        echo "'".$row['danmu']."'";
+        }
+            echo "]";
+    }
+    
+    public function cunchudanmu()
+    {
+        header('Content-type:text/html;charset=utf8');
+        $conn = mysqli_connect("localhost", "root", "123456");
+        if (!$conn) {
+            exit('error('.mysqli_connect_errno().'):' . mysqli_connect_error());
+        }
+        // var_dump($conn);
+        mysqli_select_db($conn, "volleyball");
+        mysqli_set_charset($conn,'utf8');
+
+        $danmu=$_POST['danmu'];
+        // var_dump($danmu);
+        $request = Request::instance();
+        $video_id = $request->param('video_id');
+        dump($video_id);
+        //$sql="INSERT INTO `danmu` VALUES ('".$danmu."')";
+        $sql="INSERT INTO danmu(danmu,video_id) VALUES ('".$danmu."','".$video_id."')";
+        echo $sql;
+        $query=mysqli_query($conn, $sql);
+    }
+
 }
 ?>

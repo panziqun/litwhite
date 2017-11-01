@@ -27,7 +27,8 @@
         "topthink/think-angular": "^1.0",
         "phpmailer/phpmailer": "^6.0",
         "kuange/qqconnect": "^0.0.1",
-        "xiaosier/libweibo": "dev-master"
+        "xiaosier/libweibo": "dev-master",
+        "qiniu/php-sdk": "^7.2"
     },
     "extra": {
         "think-path": "thinkphp"

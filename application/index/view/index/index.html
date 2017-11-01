@@ -295,7 +295,7 @@
 			<div class='index-card-container course-card-container container'>
 				<a target="_blank" class='course-card' 
 				{if $Think.session.user_id}
-				href="{:url('course/Comment',['course_id'=>$course.course_id])}" 
+				href="{:url('course/courseComment',['course_id'=>$course.course_id])}" 
 				{else /}
 				href="{:url('Login/login')}" 
 				{/if}

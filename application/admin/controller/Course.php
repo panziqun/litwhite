@@ -5,7 +5,9 @@ use app\admin\model\CourseCount;
 use app\admin\model\Comment;
 use app\admin\model\Collect;
 use app\admin\model\Plate;
-use app\admin\model\Note;
+use app\admin\model\Note;    	
+use Qiniu\Auth as Authh;
+use Qiniu\Storage\UploadManager;
 
 class Course extends Auth{
 	protected $course;
@@ -165,47 +167,104 @@ class Course extends Auth{
 		return $this->fetch();
 	}
 	//已经解决，thinkphp5多表分页+多条件筛选+分页地址栏额外参数传递不丢失+联合查询时表字段相同where条件参数+php页面的URL尾部参数出现查询条件=0，分页条件接收不到值
-    public function test()
+		//     public function test()
+		//     {
+
+		//         $q = Request::instance()->except(['page', 'sub'], 'get');;
+		//         $pageParam = ['query' => []];
+		//         $pageParam1 = ['query1' => []];
+
+		//         if (isset($q["typeid"]) && $q["typeid"] !="") {
+		//             $pageParam['query']['a.typeid'] = $q["typeid"];
+		//             $pageParam1['query1']['typeid'] = $q["typeid"];
+		//         }
+		//         if (isset($q["ismake"]) && $q["ismake"] !="") {
+		//             $pageParam['query']['ismake'] = $q["ismake"];
+		//             $pageParam1['query1']['ismake'] = $q["ismake"];
+		//         }
+		//         if (isset($q["channel"]) && $q["channel"] !="") {
+		//             $pageParam['query']['channel'] = $q["channel"];
+		//             $pageParam1['query1']['channel'] = $q["channel"];
+		//         }
+		//         $q = $pageParam['query'];
+		//         $q1 = $pageParam1['query1'];
+		 
+		 
+		//         $list = Db::connect("db_config2")
+		//             ->table('dede_archives')
+		// //            ->strict(false)
+		//             ->alias("a")
+		// //            ->field("a.typeid")
+		//             ->join('dede_addonarticle af','a.id = af.aid')
+		//             ->where($q)
+		//             ->paginate(5, false, [
+		//             'type' => 'bootstrap',
+		//             'var_page' => 'page',
+		//             'query' => $q1,
+		//         ]);
+		//         $page = $list->render();
+		//         // 模板变量赋值
+		//         $this->assign('list', $list);
+		//         $this->assign('page', $page);
+		//         // 渲染模板输出
+		//         return $this->fetch();
+		//     }
+
+    public function uploadVideo()
     {
-
-        $q = Request::instance()->except(['page', 'sub'], 'get');;
-        $pageParam = ['query' => []];
-        $pageParam1 = ['query1' => []];
-
-        if (isset($q["typeid"]) && $q["typeid"] !="") {
-            $pageParam['query']['a.typeid'] = $q["typeid"];
-            $pageParam1['query1']['typeid'] = $q["typeid"];
-        }
-        if (isset($q["ismake"]) && $q["ismake"] !="") {
-            $pageParam['query']['ismake'] = $q["ismake"];
-            $pageParam1['query1']['ismake'] = $q["ismake"];
-        }
-        if (isset($q["channel"]) && $q["channel"] !="") {
-            $pageParam['query']['channel'] = $q["channel"];
-            $pageParam1['query1']['channel'] = $q["channel"];
-        }
-        $q = $pageParam['query'];
-        $q1 = $pageParam1['query1'];
- 
- 
-        $list = Db::connect("db_config2")
-            ->table('dede_archives')
-//            ->strict(false)
-            ->alias("a")
-//            ->field("a.typeid")
-            ->join('dede_addonarticle af','a.id = af.aid')
-            ->where($q)
-            ->paginate(5, false, [
-            'type' => 'bootstrap',
-            'var_page' => 'page',
-            'query' => $q1,
-        ]);
-        $page = $list->render();
-        // 模板变量赋值
-        $this->assign('list', $list);
-        $this->assign('page', $page);
-        // 渲染模板输出
-        return $this->fetch();
+    	return $this->fetch();
     }
-}
+    public function uptoken()
+    {
+    	$auth = new Authh('n7gzSmxbVb3kJGF_W4E1g7frzo5z8S_bi2PrCp_q', 'WOQSbsf1wrpZIh6-W3rL9jOaqExpcD4sZ_Srdg3i');
+		//notify url
+		//$wmImg = Qiniu\base64_urlSafeEncode('http://rwxf.qiniudn.com/logo-s.png');
+		//$pfopOps = "avthumb/m3u8/wmImage/$wmImg";	
+		$pfopOps = "avthumb/mp4/ab/128k/ar/22050/acodec/libfaac/r/30/vb/300k/vcodec/libx264/s/320x240/autoscale/1/stripmeta/0";	
+		$policy = array(
+		    'persistentOps' => $pfopOps,
+		    //'persistentNotifyUrl' => 'http://127.0.0.1/callback.php',
+		    //'persistentNotifyUrl' => 'http://172.30.251.210:8080/cb.php',
+		    //'persistentPipeline' => 'litwhite',
+		);
+
+		$upToken = $auth->uploadToken('litwhite', null, 3600, $policy);
+
+		return json_encode($upToken);
+    }
+    public function uptokenUrl()
+    {
+    	$auth = new Authh('n7gzSmxbVb3kJGF_W4E1g7frzo5z8S_bi2PrCp_q', 'WOQSbsf1wrpZIh6-W3rL9jOaqExpcD4sZ_Srdg3i');
+		//notify url
+		//$wmImg = Qiniu\base64_urlSafeEncode('http://rwxf.qiniudn.com/logo-s.png');
+		//$pfopOps = "avthumb/m3u8/wmImage/$wmImg";	
+		$pfopOps = "avthumb/mp4/ab/128k/ar/22050/acodec/libfaac/r/30/vb/300k/vcodec/libx264/s/320x240/autoscale/1/stripmeta/0";	
+		$policy = array(
+		    'persistentOps' => $pfopOps,
+		    //'persistentNotifyUrl' => 'http://127.0.0.1/callback.php',
+		    //'persistentNotifyUrl' => 'http://172.30.251.210:8080/cb.php',
+		    //'persistentPipeline' => 'litwhite',
+		);
+
+		$upToken = $auth->uploadToken('litwhite', null, 3600, $policy);
+		echo json_encode(['uptoken' => $upToken]); 
+		//return json_encode($upToken); 
+    }
+    public function video()
+    {
+    	$this->assign('domain', 'http://oyo3pxmpc.bkt.clouddn.com/');
+		$this->assign('uptokenUrl', 'uptoken');
+		$this->assign('uptoken', $this->uptoken());
+    	return $this->fetch();
+    
+	}
+	public function addVideo()
+    {
+    	$link = $this->request->param('link');
+
+    	file_put_contents('1.txt', $link);
+    	return 11111;
+    }
+
+} 
 ?>

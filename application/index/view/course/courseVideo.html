@@ -2,6 +2,8 @@
 {block name="menu"}
 {/block}
 {block name="main"}
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +19,7 @@
 <link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
 <link rel="stylesheet" href="__INDEX_CSS__/play.css" type="text/css" />
 <link rel="stylesheet" href="__INDEX_CSS__/course.comment.css" type="text/css" />
-    <link rel="stylesheet" href="__INDEX_CSS__/course.note.css" type="text/css" />
+<link rel="stylesheet" href="__INDEX_CSS__/course.note.css" type="text/css" />
 <style type="text/css">
     .list-tab-con{
         display:none;
@@ -27,6 +29,21 @@
     }
 
 </style>
+
+<link href="__VIDEO_CSS__/scojs.css" rel="stylesheet">
+<link href="__VIDEO_CSS__/colpick.css" rel="stylesheet">
+<link href="__VIDEO_CSS__/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="__VIDEO_CSS__/main.css">
+
+<script src="__VIDEO_JS__/jquery-2.1.4.min.js"></script>
+<script src="__VIDEO_JS__/jquery.shCircleLoader.js"></script>
+<script src="__VIDEO_JS__/sco.tooltip.js"></script>
+<script src="__VIDEO_JS__/colpick.js"></script>
+<script src="__VIDEO_JS__/jquery.danmu.js"></script>
+<script src="__VIDEO_JS__/danmu_main.js"></script>
+
+
+
 </head>
 <body >
 
@@ -128,26 +145,19 @@
   </div>
 </div>
 <!--播放器-->
-<div id="studyMain">
-    <div id="bgarea" class="video-con">
-        <div class="js-box-wrap">
-            <div id="J_Box" class="course-video-box">
-                <div id="video-box" class="video-wrap" style="width:100%;height:100%"></div>
-                <div class="next-box J_next-box hide">
-                    <div class="next-box-inner">
-                        <div class="course-tip-layer J-next-course" data-next-src="/video/15851">
-                                <h2>下一节课程： Cookie简介
-                                    <span class="course-duration"> (13:48)</span>
-                                </h2>
-                                <div class="J-next-auto hide next-auto"><em>3</em> 秒后播放下一节</div>
-                                <div class="J-next-btn hide next-auto btn btn-green">下一节</div>
-                                <a href="/video/15869/0" class="review-course">重新观看</a>
-                                <div id="js-ques-box"></div>                        
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<div id="danmup">
+</div>
+<div style="display: none">
+      <span class="glyphicon" aria-hidden="true">&#xe072</span>
+      <span class="glyphicon" aria-hidden="true">&#xe073</span>
+      <span class="glyphicon" aria-hidden="true">&#xe242</span>
+      <span class="glyphicon" aria-hidden="true">&#xe115</span>
+      <span class="glyphicon" aria-hidden="true">&#xe111</span>
+      <span class="glyphicon" aria-hidden="true">&#xe096</span>
+      <span class="glyphicon" aria-hidden="true">&#xe097</span>
+</div>
+
         <!--此处结构为练习题，视频，编程公用的侧栏-->
         <div class="section-list">
             <div class="operator">
@@ -155,10 +165,8 @@
                 <div class="op question"><em class="icon-addques"></em>提问</div>
             </div>
         </div>
-    </div>
-</div>
 <!--播放器end-->
-<div class="course-subcontainer clearfix">
+<div class="course-subcontainer clearfix" style="position: relative;top:30px;">
     <div class="course-left">
         <ul class="course-menu course-video-menu clearfix js-course-menu" data-ower="all" data-sort="last">
             <li class="course-menu-item">
@@ -260,6 +268,22 @@
         </div>
     </div>            
 </div>
+<script>
+      var video_id = $('#video_id').val();
+      $("#danmup").DanmuPlayer({
+        src:"http://devtest.qiniudn.com/1.mp4",
+        height: "380px", //区域的高度
+        width: "100%", //区域的宽度
+        urlToGetDanmu:'/index/video/getdanmu/video_id/' + video_id,
+        urlToPostDanmu:'/index/video/cunchudanmu/video_id/' + video_id,
+      });
+    /*  $("#danmup .danmu-div").danmu("addDanmu",[
+        { "text":"这是滚动弹幕" ,color:"white",size:1,position:0,time:2}
+        ,{ "text":"哈哈哈啊哈" ,color:"black",size:1,position:0,time:10}
+        ,{ "text":"这是顶部弹幕" ,color:"yellow" ,size:1,position:1,time:3}
+        ,{ "text":"这是底部弹幕" , color:"red" ,size:1,position:2,time:9}
+      ])*/
+</script>
 </body>
 </html>
 <script type="text/javascript" src="__INDEX_JS__/jquery.min.js"></script>
