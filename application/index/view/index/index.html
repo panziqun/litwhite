@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>慕课网-程序员的梦工厂</title>
+<title>小白网</title>
 <script type="text/javascript" src="__INDEX_JS__/jquery-1.12.3.min.js"></script>
 <link rel="apple-touch-icon" sizes="76x76" href="__INDEX_IMG__/common/touch-icon-ipad.png">
 <link rel="apple-touch-icon" sizes="120x120" href="__INDEX_IMG__/common/touch-icon-iphone-retina.png">
@@ -188,16 +188,9 @@
         <div class="banner g-banner-box" id="b04">
 
 		    <ul>
-
-		        <li><img src="__INDEX_IMG__/59df1a640001e89e09360316.jpg" alt="" width="963" height="316" ></li>
-
-		        <li><img src="__INDEX_IMG__/59edd41f00011c8409360316.jpg" alt="" width="963" height="316" ></li>
-
-		        <li><img src="__INDEX_IMG__/59df1a640001e89e09360316.jpg" alt="" width="963" height="316" ></li>
-
-		        <li><img src="__INDEX_IMG__/59e87bbe0001cf7e09360316.jpg" alt="" width="963" height="316" ></li>
-
-		        <li><img src="__INDEX_IMG__/59df1a640001e89e09360316.jpg" alt="" width="963" height="316" ></li>
+		    	{foreach $carousel as $value}
+		        <li><a href="{:url('course/courseComment',['course_id'=>$value['course_id']])}"><img src="__WEBSITE__/uploads/{$value.carousel_image}" alt="" width="963" height="316" ></a></li>
+		    	{/foreach}
 
 		    </ul>
 
@@ -296,7 +289,7 @@
 			<div class='index-card-container course-card-container container'>
 				<a target="_blank" class='course-card' 
 				{if $Think.session.user_id}
-				href="{:url('course/Comment',['course_id'=>$course.course_id])}" 
+				href="{:url('course/courseComment',['course_id'=>$course.course_id])}" 
 				{else /}
 				href="{:url('Login/login')}" 
 				{/if}

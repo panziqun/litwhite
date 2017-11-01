@@ -4,9 +4,11 @@ use think\Controller;
 use think\Db;
 use app\index\model\Plate;
 use app\index\model\Course;
-use think\Db;
+use app\index\model\Carousel;
 class Index extends Controller{
 	protected $plate;
+	protected $course;
+	protected $carousel;
 	private static $treeList;
 	/*
 	*初始化获取plate对象
@@ -16,6 +18,7 @@ class Index extends Controller{
 	{
 		$this->plate  = new Plate();
 		$this->course = new Course();
+		$this->carousel = new Carousel();
 	}
 	public function index()
 	{
@@ -57,7 +60,12 @@ class Index extends Controller{
 			'courseNew'		=>$courseNew,
 			'homePlateList' =>$homePlateList,
 		]);
-
+		//轮播图
+		$carousel = $this->carousel
+					->alias('ca')
+					->join('lit_course co', 'ca.course_title=co.course_title')
+					->select();
+		$this->assign('carousel', $carousel);
 		return $this->fetch();
 	}
 	public function getPlateTree($bigPlateList, $smallPlateList)

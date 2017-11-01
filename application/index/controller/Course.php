@@ -7,6 +7,7 @@ use app\index\model\Note;
 use app\index\model\NoteUpvote;
 use app\index\model\UserCourse;
 use app\index\model\Shopcar;
+use app\index\model\Order;
 use think\Controller;
 use think\Session;
 use think\Db;
@@ -22,6 +23,7 @@ class Course extends Controller{
 	protected $noteUpvote;
 	protected $usercourse;
 	protected $shopcar;
+	protected $order;
 
 	public function _initialize()
 	{
@@ -31,7 +33,7 @@ class Course extends Controller{
 		// $this->noteUpvote = new NoteUpvote();
 		$this->usercourse = new UserCourse();
 		$this->shopcar = new Shopcar();
-
+		$this->order = new Order();
 	}
 	/*
 	*note页面的头部 的课程信息
@@ -41,6 +43,7 @@ class Course extends Controller{
 	{		
 		$courseInfo = $this->getCourseDetail();
 		$shopcar = $this->getCourseCart();
+		$orders = $this->getOrder();
 		if (session('?user_id')) {
 			$sessionUid = 1;//session user_id 存在返回1
 		} else{
@@ -51,6 +54,7 @@ class Course extends Controller{
 			'courseInfo'=>$courseInfo ,
 			'sessionUid'=>$sessionUid,
 			'shopcar'=>$shopcar ,
+			'myorder'=>$orders,
 		]);
 		return $this->fetch();
 	}
@@ -113,9 +117,11 @@ class Course extends Controller{
 	{
 		$courseInfo = $this->getCourseDetail();
 		$shopcar = $this->getCourseCart();
+		$orders = $this->getOrder();
 		$this->assign([
 			'courseInfo'=>$courseInfo ,
 			'shopcar'=>$shopcar ,
+			'myorder'=>$orders,
 		]);
 		return $this->fetch();
 	}
@@ -127,9 +133,22 @@ class Course extends Controller{
 	{
 
 		$course_id = $this->request->param('course_id');
+		
 		$courseInfo = $this->course->get($course_id);
 		$courseInfo->CourseCount;
 		return $courseInfo;
+	}
+	protected function getOrder()
+	{
+		$orders = $this->order->all(['user_id'=>Session::get('user_id')]);
+		$array = '';
+		foreach ($orders as $key => $value) {
+			$arr = $value->toArray();
+			$str = $arr['order_course'];
+			$array .= $str . ',';
+		}
+		$array = explode(',', rtrim($array,','));
+		return $array;
 	}
 	//判断用户是否加入购物车
 	public function getCourseCart()
@@ -182,8 +201,18 @@ class Course extends Controller{
 			]);
 			return $this->fetch('getNoteInfo');
 		}
-
-		
+	}
+	//记录用户学习该课程
+	public function addUserCourse()
+	{
+		$user_id = $this->request->param('user_id');
+		$course_id = $this->request->param('course_id');
+		$usercourse = $this->usercourse->get(['user_id'=>$user_id,'course_id'=>$course_id]);
+		if ($usercourse) {
+			$usercourse->save(['update_time'=>time()]);
+		}else{
+			$this->usercourse->save(['user_id'=>$user_id,'course_id'=>$course_id]);
+		}
 	}
 }
 ?>

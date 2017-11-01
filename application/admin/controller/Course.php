@@ -1,5 +1,6 @@
 <?php  
 namespace app\admin\controller;
+
 use app\admin\model\Course;
 use app\admin\model\CourseCount;
 use app\admin\model\Comment;
@@ -10,6 +11,10 @@ use app\admin\model\Note;
 class Course extends Auth{
 	protected $course;
 	protected $plate;
+	protected $CourseCount;
+	protected $comment;
+	protected $collect;
+	protected $note;
 	protected $is_login = ['*'];
 	private $website = "http://www.litwhite.com";
 	/*
@@ -205,5 +210,10 @@ class Course extends Auth{
         // 渲染模板输出
         return $this->fetch();
     }
+    public function video()
+    {
+    	return $this->fetch();
+    }
+
 }
 ?>
