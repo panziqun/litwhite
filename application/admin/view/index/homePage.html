@@ -115,7 +115,7 @@
 <script type="text/javascript">
     $(function(){
         $('.carousel-title').blur(function(){
-            $.get("{:url('titleIf')}",{carousel_title:$(this).val()},function(data){
+            $.get("{:url('titleIf')}",{course_title:$(this).val()},function(data){
                 data = JSON.parse(data);
                 $('.carousel-title').next().text(data.info);
             },'json');

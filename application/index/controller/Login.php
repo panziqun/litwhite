@@ -20,7 +20,7 @@ class Login extends Controller{
 	const WB_CALLBACK_URL = 'http://www.litwhite.com/index/Login/weibo';
 	protected $user;
 	protected $mail;
-	protected $emailList;
+	// protected $emailList;
 	protected $userinfo;
 	protected $o;
 	public function _initialize()
@@ -30,6 +30,7 @@ class Login extends Controller{
 		$this->o = new SaeTOAuthV2(self::WB_AKEY , self::WB_SKEY);
 		$this->mail = new PHPMailer();
 		//$this->emailList = new EmailList();
+
 	}
 	public function login()
 	{

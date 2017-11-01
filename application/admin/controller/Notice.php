@@ -2,11 +2,15 @@
 namespace app\admin\controller;
 
 class Notice extends Auth{
-	function noticeAdd()
+	public function noticeAdd()
 	{
 		return $this->fetch();
 	}
-	function noticeList()
+	public function sent()
+	{
+		dump($this->request->param());
+	}
+	public function noticeList()
 	{
 		return $this->fetch();
 	}

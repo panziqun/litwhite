@@ -3,6 +3,7 @@ namespace app\admin\controller;
 
 use think\Controller;
 use app\admin\model\Adminlist;
+use think\Session;
 class Auth extends Controller
 {
 	protected $is_login = [''];
@@ -29,6 +30,11 @@ class Auth extends Controller
 		}else{
 			$this->error('登陆失败',url('admin/auth/adminLogin'));
 		}
+	}
+	public function loginOut()
+	{
+		Session::clear();
+		$this->redirect('adminLogin');
 	}
 }
 ?>

@@ -31,9 +31,9 @@
 	        </div>
 	        <!--信息栏-->
 	        <div class="statics clearfix">
-	        	{if $courseInfo.course_rate == '0'}
+	        	{if $courseInfo.course_rate == '0' || in_array($courseInfo.course_id,$myorder)}
 	            <div class="moco-btn l learn-btn green-btn red-btn"> 
-	                <a href="{:url('courseVideo',['course_id'=>$courseInfo.course_id])}" class="J-learn-course">开始学习</a>
+	                <a href="{:url('courseVideo',['course_id'=>$courseInfo.course_id])}" class="J-learn-course js-user-course" data-userid="{$Think.session.user_id}" data-courseid="{$courseInfo.course_id}">开始学习</a>
 	                <em></em>
 	                <i class="follow-action js-follow-action icon-star_outline" data-cid="908" data-cmd="follow" title="收藏"></i>
 	            </div>
@@ -64,6 +64,9 @@
 				$('.imv2-cart').remove();
 				$('.imv2-cart').siblings('em').remove();
 			}
+		});
+		$('.js-user-course').click(function(){
+			$.post("{:url('Course/addUserCourse')}",{user_id:$(this).attr('data-userid'),course_id:$(this).attr('data-courseid')});
 		});
 	})
 </script>
