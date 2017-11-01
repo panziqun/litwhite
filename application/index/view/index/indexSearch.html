@@ -43,7 +43,7 @@
 			{volist name='list' id='course'}
 			<div class="course-item">
 				<a href="{:url('course/courseComment',['course_id'=>$course.course_id])}" target="_blank">
-					<img src="{$course.course_pic}" class="course-item-img" />
+					<img src="__WEBSITE__/uploads/{$course.course_pic}" class="course-item-img" />
 				</a>
 				<div class="course-item-detail">
 					<a href="{:url('course/courseComment',['course_id'=>$course.course_id])}" target="_blank">

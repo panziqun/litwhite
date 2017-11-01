@@ -2,6 +2,11 @@
 namespace app\admin\controller;
 
 class Notice extends Auth{
+	protected $is_login = ['*'];
+	public function _initialize()
+	{
+		parent::_initialize();
+	}
 	public function noticeAdd()
 	{
 		return $this->fetch();

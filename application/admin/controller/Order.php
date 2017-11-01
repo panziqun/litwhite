@@ -6,6 +6,7 @@ use app\admin\model\User;
 use app\admin\model\Course;
 use app\admin\model\Addr;
 class Order extends Auth{
+	protected $is_login = ['*'];
 	protected $order;
 	protected $user;
 	protected $course;

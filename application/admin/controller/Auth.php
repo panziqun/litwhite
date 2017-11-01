@@ -7,6 +7,7 @@ use think\Session;
 class Auth extends Controller
 {
 	protected $is_login = [''];
+	protected $adminlimit = '';
 	public function _initialize()
 	{
 		if (!$this->checkLogin() && in_array('*', $this->is_login)) {
@@ -26,6 +27,7 @@ class Auth extends Controller
 		$adminInfo = Adminlist::get(['adminlist_name'=>$this->request->param('name'), 'adminlist_pwd'=>md5($this->request->param('password'))]);
 		if ($adminInfo) {
 			session('adminlist_Id',$adminInfo->adminlist_id);
+
 			$this->success('登录成功',url('admin/index/index'));
 		}else{
 			$this->error('登陆失败',url('admin/auth/adminLogin'));

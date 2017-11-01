@@ -57,7 +57,7 @@
 										<span>{$Think.session.user_name}</span>
 									</a>
 									<div class="meta">
-										<a href="http://www.imooc.com/u/3386918/experience">经验<b id="js-user-mp">6,129</b></a>
+										
 										<a href="http://www.imooc.com/u/3386918/credit">积分<b id="js-user-credit">0</b></a>            
 									</div>
 								</div>
@@ -107,7 +107,6 @@
 	$(function(){
 		$('.showhide-search').click(function(){
 			if ($('.search-input').val() != '' && $('.search-input').val().indexOf(' ') == -1) {
-				$('.keywordform').attr('action','Index/indexSearch/' + $('.search-input').val());
 				$('.keywordform').submit();
 			}
 		});

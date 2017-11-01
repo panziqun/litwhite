@@ -42,22 +42,22 @@
         <ul>  
                 
         <li>
-            <a href="/u/3386918/courses" class="active">
+            <a href="{:url('Person/personCourse')}" class="active">
             <i class="icon-tick"></i><span>课程</span><b class="icon-drop_right"></b>
             </a>
         </li>             
         <li>
-            <a href="/u/3386918/plans" >
+            <a href="" >
             <i class="imv2-path"></i><span>收藏</span><b class="icon-drop_right"></b>
             </a>
          </li>                             
         <li>
-            <a href="/u/3386918/bbs" >
+            <a href="" >
                 <i class="icon-yuanwen"></i><span>评论</span><b class="icon-drop_right"></b>
             </a>
         </li>           
         <li>
-            <a href="/u/3386918/articles" >
+            <a href="{:url('Person/personNote')}" >
             <i class="icon-blog"></i><span>笔记</span><b class="icon-drop_right"></b>
             </a>
         </li>             
@@ -92,7 +92,7 @@
                 	    <li class="course-one" data-courseid="898" data-uid="3386918">
                             <div class="course-list-img l">
     	                        <a href="{:url('Course/courseComment',['course_id'=>$value.course_id])}" target="_blank">
-    	                            <img width="200" height="113" alt="{$value.course_title}" src="{$value.course_pic}" />
+    	                            <img width="200" height="113" alt="{$value.course_title}" src="__WEBSITE__/uploads/{$value.course_pic}" />
     	                        </a>
                             </div>
                             <div class="course-list-cont">
