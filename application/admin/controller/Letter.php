@@ -2,15 +2,20 @@
 namespace app\admin\controller;
 
 class Letter extends Auth{
-	function letterList()
+	protected $is_login = ['*'];
+	public function _initialize()
+	{
+		parent::_initialize();
+	}
+	public function letterList()
 	{
 		return $this->fetch();
 	}
-	function letterSent()
+	public function letterSent()
 	{
 		return $this->fetch();
 	}
-	function letterView()
+	public function letterView()
 	{
 		return $this->fetch();
 	}

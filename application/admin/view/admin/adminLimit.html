@@ -191,9 +191,14 @@
                 },'json');
                 //添加html页面
                 $('.html-add').click(function(){
-                    $.post('{:url("limitInfo")}',{adminlimit_id:adminlimit_id,adminlimit_html:$(this).siblings('input').val()},function(){
-                    },'json');
-                    $('.limit-htmls').append('<p class=""><button type="button" class="btn btn-outline btn-warning htmlremove">移除</button>'+$(this).siblings('input').val()+'</p>');
+                    if ($(this).siblings('input').val() != '' && $(this).siblings('input').val().indexOf(' ') == -1) {
+                        $.post('{:url("limitInfo")}',{adminlimit_id:adminlimit_id,adminlimit_html:$(this).siblings('input').val()},function(){
+                        },'json');
+                        
+                        $('.limit-htmls').append('<p class=""><button type="button" class="btn btn-outline btn-warning htmlremove">移除</button>'+$(this).siblings('input').val()+'</p>');
+                        $(this).siblings('input').val('');
+                    }
+                    
                 });
                 
             });

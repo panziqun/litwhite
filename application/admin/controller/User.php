@@ -7,6 +7,7 @@ use app\admin\model\Userinfo;
 use app\admin\model\Addr;
 use think\Db;
 class User extends Auth{
+	protected $is_login = ['*'];
 	protected $usermodel;
 	protected $usersm;
 	protected $userinfo;

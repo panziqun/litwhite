@@ -1,0 +1,145 @@
+﻿{extend name="public/base"}
+{block name="main"}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" href="__INDEX_CSS__/moco.min.css" type="text/css" />
+<link rel="stylesheet" href="__INDEX_CSS__/layer.css" />
+<link rel="stylesheet" href="__INDEX_CSS__/a745cb75b23d44e7a0330f9958dba557.css" type="text/css" />
+</head>
+<body >
+<div id="main">
+    <div class="bg-other user-head-info">
+        <div class="user-info">
+            <h3 class="user-name clearfix">
+                <span>{$Think.session.user_name}</span>
+            </h3>
+            <p class="about-info">
+                {if $userinfo['userinfo_sex'] === 1}
+                <span class=' gender ' title=' 男 '></span>
+                {elseif $userinfo['userinfo_sex'] === 0}
+                <span class=' gender girl' title=' 女 '></span>
+                {/if}
+                <span class="u-info-learn">
+                    学习课程 <em>{$learnCount}</em>
+                </span>
+                <span class='u-info-credit'>
+                    积分<em>{$userinfo['userinfo_score']}</em>
+                </span>
+            </p>
+            <p class="user-desc">{$userinfo['userinfo_signature']}</p>
+            
+        </div><!-- .user-info end -->
+    </div><!-- .big-pic end -->
+<div class="wrap">
+    <div class="slider">
+        <div class="user-pic" data-is-fans="" data-is-follows="">
+            <div class="user-pic-bg"></div><!--user-pic-big end-->
+            <img class='img' src="__WEBSITE__/uploads/{$userinfo['userinfo_headi']}" alt=""/>
+        </div>
+        <ul>  
+                
+        <li>
+            <a href="{:url('Person/personCourse')}">
+            <i class="icon-tick"></i><span>课程</span><b class="icon-drop_right"></b>
+            </a>
+        </li>             
+        <li>
+            <a href="" >
+            <i class="imv2-path"></i><span>收藏</span><b class="icon-drop_right"></b>
+            </a>
+         </li>                             
+        <li>
+            <a href="" >
+                <i class="icon-yuanwen"></i><span>评论</span><b class="icon-drop_right"></b>
+            </a>
+        </li>           
+        <li>
+            <a href="{:url('Person/personNote')}" class="active">
+            <i class="icon-blog"></i><span>笔记</span><b class="icon-drop_right"></b>
+            </a>
+        </li>             
+        
+        </ul>
+    </div><!-- .slider end --> 
+   
+
+<div class="u-container">
+    <div class="nav clearfix">
+        <a href="javascript:;" data-type='0' class="active js-domain">全部</a>
+        <p class='fr'>共<span class='js-total'>0</span>条笔记</p>
+    </div>
+    <div class='search-container' id='searchContainer'>
+        <div class='year-search'>
+            <p>全部笔记中包含关键字“<span class='g1'></span>”共<span class='g2'>0</span>条</p>
+            <p class='p2'>全部笔记共<span class='g2'>0</span>条</p>
+        </div>
+        <div id='searchlist' class='searchlist'></div>
+    </div>
+    <div class="container" id="container">
+        <div class="year-search"></div>
+
+        <div id="notelist"> 
+            {foreach $notes as $v}
+            <div class="item js-item clearfix">              
+                <div class="item-left clearfix">                  
+                    <i class="imv2-kecheng"></i>              
+                </div>          
+                <div class="item-right">              
+                    <!--<div class='item-left-line'></div>-->                       
+                    <a target="_blank" href="{:url('Course/courseComment',['course_id'=>$v['course_id']])}" class="item-title">
+                        {$v['course_title']}         
+                    </a>                           
+                    <div class="item-minfo clearfix">                                       
+                                 
+                    </div>                  
+                    <div class="item-content">                          
+                        <p class="item-p1">
+                            {$v['note_content']}                              
+                        </p>                      
+                    </div>                                                                         
+                    <div class="item-bottom clearfix">
+                        <a href="javascript:;" class="likes js-likes clearfix disabled">                 
+                            <i class="imv2-thumb_up"></i>                 
+                            <span class="">{$v['upvote_count']}</span>             
+                        </a>                          
+                                                             
+                        <span class="ctime">{$v['create_time']}</span>                          
+                        <!-- 删除 -->             
+                        <a href="javascript:;" class="delete js-delete clearfix" data-note-id="{$v['note_id']}">                 
+                            <i class="imv2-delete"></i>                 
+                            <span>删除</span>             
+                        </a>                                       
+                                            
+                    </div>     
+                </div> 
+            </div>
+            {/foreach}
+
+        </div>
+        <div class="paginationwrap">
+            <div id="pagination" class="pagination clearfix"></div>
+        </div>
+    </div>
+</div><!-- .container end -->
+
+
+
+</div><!-- .wrap end-->
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.js-delete').click(function(){
+            $.post("{:url('Person/noteDel')}",{note_id:$(this).attr('data-note-id')});
+            $(this).parent().parent().parent().remove();
+        });
+    })
+</script>
+
+
+</body>
+</html>
+{/block}
