@@ -51,7 +51,7 @@
 <div id="header" class="course-detail-header">
   <div class="cd-inner clearfix">
       <ul class="l">
-        <li class="nv nv-goback"><a href="/learn/898" class="revert l"><i class="icon icon-left"></i></a></li>
+        <li class="nv nv-goback"><a href="{:url('index/index/index')}" class="revert l"><i class="icon icon-left"></i></a></li>
         <li class="nv nv-menu">
           <a href="javascript:;" class="chaptername J-chaptername"  data-id="15869" style="cursor:text;"><span>{$courseInfo['course_title']}</span></a>
         </li>
@@ -147,6 +147,13 @@
 <!--播放器-->
 
 <div id="danmup">
+    <!--此处结构为练习题，视频，编程公用的侧栏-->
+    <div class="section-list">
+        <div class="operator">
+            <div class="op notes"><em class="icon-note"></em>笔记</div>
+            <div class="op question"><em class="icon-addques"></em>提问</div>
+        </div>
+    </div>
 </div>
 <div style="display: none">
       <span class="glyphicon" aria-hidden="true">&#xe072</span>
@@ -156,15 +163,10 @@
       <span class="glyphicon" aria-hidden="true">&#xe111</span>
       <span class="glyphicon" aria-hidden="true">&#xe096</span>
       <span class="glyphicon" aria-hidden="true">&#xe097</span>
+
 </div>
 
-        <!--此处结构为练习题，视频，编程公用的侧栏-->
-        <div class="section-list">
-            <div class="operator">
-                <div class="op notes"><em class="icon-note"></em>笔记</div>
-                <div class="op question"><em class="icon-addques"></em>提问</div>
-            </div>
-        </div>
+
 <!--播放器end-->
 <div class="course-subcontainer clearfix" style="position: relative;top:30px;">
     <div class="course-left">
@@ -247,7 +249,7 @@
 </div>
 
 <div id="video_mark" class="video_mark" style="display:none;"></div>
-<div class="moco-modal-layer fixed" style="z-index: 904; visibility: hidden; left: 313px; top: 203px; opacity: 1;">                    
+<div class="moco-modal-layer fixed" style="z-index: 1100; visibility: hidden; left: 313px; top: 203px; opacity: 1;">                    
     <div class="moco-modal-title">
         <div class="moco-modal-draggable"><span>笔记</span>
             <a href="javascript:void(0)" class="moco-icon-close moco-modal-close js-modal-close" id="close_note"></a>
@@ -269,13 +271,13 @@
     </div>            
 </div>
 <script>
-      var video_id = $('#video_id').val();
+      var video_id = {$courseInfo['video_id']};
       $("#danmup").DanmuPlayer({
-        src:"http://devtest.qiniudn.com/1.mp4",
+        src:"{$courseInfo['course_url']}",
         height: "380px", //区域的高度
         width: "100%", //区域的宽度
-        urlToGetDanmu:'/index/video/getdanmu/video_id/' + video_id,
-        urlToPostDanmu:'/index/video/cunchudanmu/video_id/' + video_id,
+        urlToGetDanmu:'/index/course/getdanmu/video_id/' + video_id,
+        urlToPostDanmu:'/index/course/savedanmu/video_id/' + video_id,
       });
     /*  $("#danmup .danmu-div").danmu("addDanmu",[
         { "text":"这是滚动弹幕" ,color:"white",size:1,position:0,time:2}
@@ -380,6 +382,4 @@
     });
 </script>
 {/block}
-{block name="footer"}
-{__block__}
-{/block}
+

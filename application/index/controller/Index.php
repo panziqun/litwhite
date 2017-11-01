@@ -67,6 +67,7 @@ class Index extends Controller{
 					->alias('ca')
 					->join('lit_course co', 'ca.course_title=co.course_title')
 					->select();
+		file_put_contents('sql.txt', $this->carousel->getLastSql());
 		$this->assign('carousel', $carousel);
 		return $this->fetch();
 	}

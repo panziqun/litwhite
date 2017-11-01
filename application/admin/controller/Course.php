@@ -7,6 +7,7 @@ use app\admin\model\Comment;
 use app\admin\model\Collect;
 use app\admin\model\Plate;
 use app\admin\model\Note;    	
+use app\admin\model\Video;    	
 use Qiniu\Auth as Authh;
 use Qiniu\Storage\UploadManager;
 
@@ -32,6 +33,8 @@ class Course extends Auth{
 		$this->collect = new Collect();
 		$this->plate  = new Plate();
 		$this->note  = new Note();
+		$this->video = new Video();
+		$this->auth = new Authh('n7gzSmxbVb3kJGF_W4E1g7frzo5z8S_bi2PrCp_q', 'WOQSbsf1wrpZIh6-W3rL9jOaqExpcD4sZ_Srdg3i');
 	}
 	/*
 	*渲染courseAdd页面
@@ -221,7 +224,6 @@ class Course extends Auth{
     }
     public function uptoken()
     {
-    	$auth = new Authh('n7gzSmxbVb3kJGF_W4E1g7frzo5z8S_bi2PrCp_q', 'WOQSbsf1wrpZIh6-W3rL9jOaqExpcD4sZ_Srdg3i');
 		//notify url
 		//$wmImg = Qiniu\base64_urlSafeEncode('http://rwxf.qiniudn.com/logo-s.png');
 		//$pfopOps = "avthumb/m3u8/wmImage/$wmImg";	
@@ -233,13 +235,12 @@ class Course extends Auth{
 		    //'persistentPipeline' => 'litwhite',
 		);
 
-		$upToken = $auth->uploadToken('litwhite', null, 3600, $policy);
-
+		$upToken = $this->auth->uploadToken('litwhite', null, 3600, $policy);
 		return json_encode($upToken);
     }
     public function uptokenUrl()
     {
-    	$auth = new Authh('n7gzSmxbVb3kJGF_W4E1g7frzo5z8S_bi2PrCp_q', 'WOQSbsf1wrpZIh6-W3rL9jOaqExpcD4sZ_Srdg3i');
+    	
 		//notify url
 		//$wmImg = Qiniu\base64_urlSafeEncode('http://rwxf.qiniudn.com/logo-s.png');
 		//$pfopOps = "avthumb/m3u8/wmImage/$wmImg";	
@@ -251,25 +252,49 @@ class Course extends Auth{
 		    //'persistentPipeline' => 'litwhite',
 		);
 
-		$upToken = $auth->uploadToken('litwhite', null, 3600, $policy);
-		echo json_encode(['uptoken' => $upToken]); 
-		//return json_encode($upToken); 
+		$upToken = $this->auth->uploadToken('litwhite', null, 3600, $policy);
+		echo json_encode(['uptoken' => $upToken]);
     }
     public function video()
     {
+    	$videos = $this->video->paginate(2);
+    	$page = $videos->render();
     	$this->assign('domain', 'http://oyo3pxmpc.bkt.clouddn.com/');
 		$this->assign('uptokenUrl', 'uptoken');
+		$this->assign('videos', $videos);
+		$this->assign('page', $page);
 		$this->assign('uptoken', $this->uptoken());
     	return $this->fetch();
     
 	}
-	public function addVideo()
+	public function videoInsert()
     {
-    	$link = $this->request->param('link');
-
-    	file_put_contents('1.txt', $link);
-    	return 11111;
+    	$video = $this->request->param();
+    	$this->video->data([
+    		'video_link'=>$video['video_link'],
+    		'video_fname'=>$video['video_fname'],
+    		'video_bucket'=>$video['video_bucket'],
+    		'video_size'=>$video['video_size'],
+    	]);
+    	$result = $this->video->save();
+    	if ($result) {
+    		$this->success('上传成功' . $this->video->video_id);
+    	} else {
+    		$this->error('上传失败');
+    	}
     }
+    public function videoList()
+    {
+    	$videos = $this->video->paginate(2);
+    	$page = $videos->render();
+    	$this->assign('domain', 'http://oyo3pxmpc.bkt.clouddn.com/');
+		$this->assign('uptokenUrl', 'uptoken');
+		$this->assign('videos', $videos);
+		$this->assign('page', $page);
+		$this->assign('uptoken', $this->uptoken());
+    	return $this->fetch();
+    
+	}
 
 }
 ?>

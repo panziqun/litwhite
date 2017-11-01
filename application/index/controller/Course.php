@@ -8,6 +8,7 @@ use app\index\model\NoteUpvote;
 use app\index\model\UserCourse;
 use app\index\model\Shopcar;
 use app\index\model\Order;
+use app\index\model\Danmu;
 use think\Controller;
 use think\Session;
 use think\Db;
@@ -23,6 +24,8 @@ class Course extends Controller{
 	protected $usercourse;
 	protected $shopcar;
 	protected $order;
+	protected $danmu;
+
 
 	public function _initialize()
 	{
@@ -33,6 +36,7 @@ class Course extends Controller{
 		$this->usercourse = new UserCourse();
 		$this->shopcar = new Shopcar();
 		$this->order = new Order();
+		$this->danmu = new Danmu();
 	}
 	/*
 	*note页面的头部 的课程信息
@@ -221,51 +225,36 @@ class Course extends Controller{
 	public function getdanmu()
     {
         header('Content-type:text/html;charset=utf8');
-        $conn = mysqli_connect("localhost", "root", "123456");
-        // var_dump($conn);
-        mysqli_select_db($conn, "volleyball");
-        mysqli_set_charset($conn,'utf8');
-        //mysqli_query("set names 'utf8'"); //
-        $request = Request::instance();
-        $video_id = $request->param('video_id');
-
-        $sql="SELECT danmu FROM danmu where video_id=$video_id";
-        $query=mysqli_query($conn, $sql);
-        //echo $danmu;
-        // var_dump($query);
+        $video_id = $this->request->param('video_id');
+        $danmu = Db::table('lit_danmu')
+        		->where('video_id',$video_id)
+        		->select();
+        
         echo "[";
         $first=0;
-        while($row = mysqli_fetch_array($query)){
+
+        foreach($danmu as $k=>$v){
             if ($first) {
                 echo ",";
 
             }
-        $first=1;
-        echo "'".$row['danmu']."'";
+        	$first=1;
+        	echo "'".$v['danmu']."'";
         }
+
             echo "]";
     }
     
-    public function cunchudanmu()
+    public function savedanmu()
     {
-        header('Content-type:text/html;charset=utf8');
-        $conn = mysqli_connect("localhost", "root", "123456");
-        if (!$conn) {
-            exit('error('.mysqli_connect_errno().'):' . mysqli_connect_error());
-        }
-        // var_dump($conn);
-        mysqli_select_db($conn, "volleyball");
-        mysqli_set_charset($conn,'utf8');
-
-        $danmu=$_POST['danmu'];
-        // var_dump($danmu);
-        $request = Request::instance();
-        $video_id = $request->param('video_id');
-        dump($video_id);
-        //$sql="INSERT INTO `danmu` VALUES ('".$danmu."')";
-        $sql="INSERT INTO danmu(danmu,video_id) VALUES ('".$danmu."','".$video_id."')";
-        echo $sql;
-        $query=mysqli_query($conn, $sql);
+        //header('Content-type:text/html;charset=utf8');
+        $video_id = $this->request->param('video_id');
+        $danmu = $this->request->param('danmu');
+        $this->danmu->data([
+        	'danmu'=>$danmu,
+        	'video_id'=>$video_id,
+        ]);
+        $this->danmu->save();
     }
 
 }

@@ -2,11 +2,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>七牛 - 视频Demo</title>
+    <title>视频上传</title>
     <link href="__ADMIN_CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link rel="stylesheet" href="__ADMIN_CSS__/styles/main.css">
     <link rel="stylesheet" href="__ADMIN_CSS__/styles/highlight.css">
-
+    <link href="__ADMIN_CSS__/animate.css" rel="stylesheet">
+    <link href="__ADMIN_CSS__/style.css?v=4.1.0" rel="stylesheet">
     <link href="__ADMIN_JS__/js/videojs/dist/video-js/video-js.css" rel="stylesheet">
     <script type="text/javascript" src="__ADMIN_JS__/js/videojs/dist/video-js/video.js"></script>
     <script type="text/javascript" src="__ADMIN_JS__/js/videojs-contrib-media-sources/src/videojs-media-sources.js"></script>
@@ -20,7 +21,7 @@
     <div class="container">
         <div class="text-left col-md-12 ">
             <h1 class="text-left col-md-12 ">
-            七牛云存储 - 视频Demo
+            视频上传
             </h1>
             <input type="hidden" id="domain" value="{$domain}">
             <input type="hidden" id="uptoken_url" value="{$uptokenUrl}">
@@ -43,30 +44,13 @@
                 <table class="table table-striped table-hover text-left" style="margin-top:40px;">
                     <thead>
                         <tr>
-                            <th class="col-md-4">Filename</th>
-                            <th class="col-md-2">Size</th>
-                            <th class="col-md-6">Detail</th>
+                            <th class="col-md-4">视频名称</th>
+                            <th class="col-md-2">视频大小</th>
+                            <th class="col-md-6">视频详情</th>
                         </tr>
                     </thead>
                     <tbody id="fsUploadProgress">
-                        <tr style="opacity: 1;" class="progressContainer" id="o_19q7e3s7s1na6ote1u6t165sjpt9">
-                            <td class="progressName">1.mp4
-                                <div class="Wrapper">
-                                    <input data-url="http://devtest.qiniudn.com/1.mp4" class="origin-video btn  btn-primary play-btn" value="播放原视频" type="button">
-                                    <input data-url="http://devtest.qiniudn.com/0JmbiheSQfkOB1X6h40wCvDb0YY%3D%2FlolDkdQ10vxTTlQMDruPvj1VzNUi" class="btn btn-info play-btn" value="播放转码后视频" type="button">
-                                </div>
-                            </td>
-                            <td class="progressFileSize">28.8 MB</td>
-                            <td>
-                                <div class="info">
-                                    <div class="">
-                                        <div><strong>Link:</strong><a href="http://devtest.qiniudn.com/1.mp4" target="_blank"> http://devtest.qiniudn.com/1.mp4</a></div>
-                                        <div class="hash"><strong>Hash:</strong>lolDkdQ10vxTTlQMDruPvj1VzNUi</div>
-                                        <div class="process-status"><strong>转码状态:</strong><a href="http://api.qiniu.com/status/get/prefop?id=z0.55a59a867823de5a49cd2e60" target="_blank">处理成功</a></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -92,6 +76,60 @@
                         <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>视频添加入数据库</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="{:url('videoInsert')}"    enctype="multipart/form-data"   method="post" class="form-horizontal m-t" id="commentForm">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">视频标题</label>
+                                <div class="col-sm-8">
+                                    <input id="fname_input" name="video_fname" type="text" class="form-control" minlength="2" maxlength="50" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">视频BUCKET</label>
+                                <div class="col-sm-8">
+                                    <input id="bucket_input" name="video_bucket" type="text" class="form-control" minlength="2" maxlength="50" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">视频大小</label>
+                                <div class="col-sm-8">
+                                    <input id="size_input" name="video_size" type="text" class="form-control" minlength="2" maxlength="50">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">视频LINK</label>
+                                <div class="col-sm-8">
+                                    <input id="link_input" name="video_link" type="text" class="form-control" minlength="2" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" type="submit" id="submit_btn">保存内容</button>
+                                <button class="btn btn-white" type="submit" id="cancel_btn">取消</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+            
+                </div>
+
             </div>
         </div>
     </div>

@@ -25,7 +25,7 @@ class Callbackcontroller extends Controller
         	session('user_id',$userInfo->user_id);
         	session('user_name',$userInfo->user_name);
         	$userData = $this->userData->where('user_id',$userInfo->user_id)->find();
-        	session('user_pic',$userData->userinfo_headi);
+        	session('userinfo_headi',$userData->userinfo_headi);
         } else {
         	$qc = new QC($access_token, $openid);
 			$qq_user_info = $qc->get_user_info();
@@ -36,6 +36,7 @@ class Callbackcontroller extends Controller
 			$userData = $$this->user->get($user_id);
 			session('user_id',$user_id);
 			session('user_name',$userData->user_name);
+			session('userinfo_headi',$userData->userinfo_headi);
         }
         $this->success('登录成功', url('/'));
 

@@ -63,7 +63,9 @@ class Course extends Model
 			'course_order'=>$courseData['course_order'],
 			'course_url'=>$courseData['course_url'],
 			'plate_id'=>$courseData['plate_id'],
+			'video_id'=>$courseData['video_id'],
 			'course_pic'=>$fileURL,
+
 		]);
 		$result = $this->save();
 		if (((int)$courseData['course_status']==1)) {
@@ -86,6 +88,7 @@ class Course extends Model
 			'course_order'	 =>$courseData['course_order'],
 			'course_url'	 =>$courseData['course_url'],
 			'plate_id'	     =>$courseData['plate_id'],
+			'video_id'	     =>$courseData['video_id'],
 		]);
 		$result = $course->save();
 		if ($fileURL) {
