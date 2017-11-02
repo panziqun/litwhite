@@ -75,7 +75,7 @@ class Course extends Model
 	}
 	public function courseChangeData($courseData, $fileURL)
 	{
-		dump($courseData['course_id']);
+		
 		$course = $this->withTrashed()->find($courseData['course_id']);
 		$course->data([
 			'course_title'	 =>$courseData['course_title'],

@@ -188,4 +188,10 @@ class Plate extends Model
 		}
 		return self::$treeList;
 	}
+	public function getPlateIdByInpu($plate_id)
+	{
+		self::$treeList = [];
+		$plateInfo = $this->getCoursePlateInfo();
+		$this->plateIdByInput($plateInfo, $plate_id);
+	}
 }

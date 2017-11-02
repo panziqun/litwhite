@@ -295,6 +295,17 @@ class Course extends Auth{
     	return $this->fetch();
     
 	}
+	public function courseSearchByInput()
+	{
+		$inputInfo = $this->request->param();
+		$plateIdArr = $this->plate->select();
+
+		$plateIdArr = $this->plate->getPlateIdByInpu($inputInfo['plate_id']);
+
+		dump($inputInfo[]);
+		return $this->fetch('uploadVideo111');
+	}
+
 
 }
 ?>
