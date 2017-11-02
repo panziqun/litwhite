@@ -9,6 +9,7 @@ use app\admin\model\Plate;
 use app\admin\model\Note;    	
 use app\admin\model\Video; 
 use think\Db;   	
+use think\Session;	
 use Qiniu\Auth as Authh;
 use Qiniu\Storage\UploadManager;
 use PHPExcel_IOFactory;
@@ -47,6 +48,9 @@ class Course extends Auth{
 	*/
 	public function courseAdd()
 	{	
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '添加课程') === false) {
+			$this->error('没有权限');
+		}
 		$courseListSelect = $this->plate->getCoursePlateSelect();
 		$this->assign([
 			'courseListSelect'=>$courseListSelect,
@@ -177,6 +181,9 @@ class Course extends Auth{
 	}
 	public function courseList()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '课程列表') === false) {
+			$this->error('没有权限');
+		}
 		// $courseListData = $this->course->getCourseListSelect();
 		// $page = $courseListData->render();
 		$courseListSelect = $this->plate->getCoursePlateSelect();
@@ -191,50 +198,6 @@ class Course extends Auth{
 		]);
 		return $this->fetch();
 	}
-	//已经解决，thinkphp5多表分页+多条件筛选+分页地址栏额外参数传递不丢失+联合查询时表字段相同where条件参数+php页面的URL尾部参数出现查询条件=0，分页条件接收不到值
-		//     public function test()
-		//     {
-
-		//         $q = Request::instance()->except(['page', 'sub'], 'get');;
-		//         $pageParam = ['query' => []];
-		//         $pageParam1 = ['query1' => []];
-
-		//         if (isset($q["typeid"]) && $q["typeid"] !="") {
-		//             $pageParam['query']['a.typeid'] = $q["typeid"];
-		//             $pageParam1['query1']['typeid'] = $q["typeid"];
-		//         }
-		//         if (isset($q["ismake"]) && $q["ismake"] !="") {
-		//             $pageParam['query']['ismake'] = $q["ismake"];
-		//             $pageParam1['query1']['ismake'] = $q["ismake"];
-		//         }
-		//         if (isset($q["channel"]) && $q["channel"] !="") {
-		//             $pageParam['query']['channel'] = $q["channel"];
-		//             $pageParam1['query1']['channel'] = $q["channel"];
-		//         }
-		//         $q = $pageParam['query'];
-		//         $q1 = $pageParam1['query1'];
-		 
-		 
-		//         $list = Db::connect("db_config2")
-		//             ->table('dede_archives')
-		// //            ->strict(false)
-		//             ->alias("a")
-		// //            ->field("a.typeid")
-		//             ->join('dede_addonarticle af','a.id = af.aid')
-		//             ->where($q)
-		//             ->paginate(5, false, [
-		//             'type' => 'bootstrap',
-		//             'var_page' => 'page',
-		//             'query' => $q1,
-		//         ]);
-		//         $page = $list->render();
-		//         // 模板变量赋值
-		//         $this->assign('list', $list);
-		//         $this->assign('page', $page);
-		//         // 渲染模板输出
-		//         return $this->fetch();
-		//     }
-
     public function uploadVideo()
     {
     	return $this->fetch();
@@ -274,6 +237,9 @@ class Course extends Auth{
     }
     public function video()
     {
+    	if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '添加视频') === false) {
+			$this->error('没有权限');
+		}
     	$videos = $this->video->paginate(2);
     	$page = $videos->render();
     	$this->assign('domain', 'http://oyo3pxmpc.bkt.clouddn.com/');
@@ -302,6 +268,9 @@ class Course extends Auth{
     }
     public function videoList()
     {
+    	if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '视频列表') === false) {
+			$this->error('没有权限');
+		}
     	$videos = $this->video->paginate(2);
     	$page = $videos->render();
     	$this->assign('domain', 'http://oyo3pxmpc.bkt.clouddn.com/');
@@ -406,11 +375,6 @@ class Course extends Auth{
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="课程信息表(' . date('Ymd-His') . ').xlsx"');
 		header('Cache-Control: max-age=0');
-		// $PHPWriter = PHPExcel_IOFactory::createWriter($PHPExcel,'Excel5');
-		// ob_end_clean();//清除缓冲区,避免乱码
-		// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		// header('Content-Disposition: attachment;filename="课程信息表(' . date('Ymd-His') . ').xls"');
-		// header('Cache-Control: max-age=0');
 		$PHPWriter->save("php://output");
 	}
 

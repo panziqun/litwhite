@@ -19,6 +19,7 @@ class Course extends Controller{
 	private static $noteStart;
 	protected $plate;
 	protected $course;
+	protected $coursecount;
 	protected $note;
 	protected $noteUpvote;
 	protected $usercourse;
@@ -31,6 +32,7 @@ class Course extends Controller{
 	{
 		$this->plate  = new Plate();
 		$this->course = new Course();
+		$this->coursecount = new CourseCount();
 		$this->note = new Note();
 		$this->noteUpvote = new NoteUpvote();
 		$this->usercourse = new UserCourse();
@@ -221,6 +223,8 @@ class Course extends Controller{
 		}else{
 			$this->usercourse->save(['user_id'=>$user_id,'course_id'=>$course_id]);
 		}
+		//每个课程的学习人数加一
+		$this->coursecount->where("course_id=$course_id")->setInc('course_sales',1);
 	}
 	public function getdanmu()
     {

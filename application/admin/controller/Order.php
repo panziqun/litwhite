@@ -5,6 +5,7 @@ use app\admin\model\Order;
 use app\admin\model\User;
 use app\admin\model\Course;
 use app\admin\model\Addr;
+use think\Session;
 class Order extends Auth{
 	protected $is_login = ['*'];
 	protected $order;
@@ -21,6 +22,9 @@ class Order extends Auth{
 	}
 	public function orderPaid()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '已支付订单') === false) {
+			$this->error('没有权限');
+		}
 		$orders = $this->order->all();
 		$array = [];
 		foreach ($orders as $key => $value) {

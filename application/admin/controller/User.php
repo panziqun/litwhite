@@ -5,6 +5,7 @@ use app\admin\model\User as UserModel;
 use app\admin\model\Usersm;
 use app\admin\model\Userinfo;
 use app\admin\model\Addr;
+use think\Session;
 use think\Db;
 class User extends Auth{
 	protected $is_login = ['*'];
@@ -22,6 +23,9 @@ class User extends Auth{
 	}
 	public function clients()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '用户列表') === false) {
+			$this->error('没有权限');
+		}
 		//所有用户
 		if ($this->request->param()) {
 			$user_name = $this->request->param('user_name');
@@ -100,6 +104,9 @@ class User extends Auth{
 	//获取用户黑名单
 	public function clientsHidden()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '黑名单') === false) {
+			$this->error('没有权限');
+		}
 		if ($this->request->param()) {
 			$user_name = $this->request->param('user_name');
 			$delUser = $this->usermodel->onlyTrashed()->where('user_name','like',"%$user_name%")->paginate(10);

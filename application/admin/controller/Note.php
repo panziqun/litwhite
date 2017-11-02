@@ -1,7 +1,8 @@
 <?php  
 namespace app\admin\controller;
-use app\admin\model\Note;
 
+use app\admin\model\Note;
+use think\Session;
 class Note extends Auth{
 	protected $note;
 	protected $is_login = ['*'];
@@ -13,6 +14,9 @@ class Note extends Auth{
 	}
 	public function noteList()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '笔记管理') === false) {
+			$this->error('没有权限');
+		}
 		$note = $this->note
 			->withTrashed()
 			->alias('n')
