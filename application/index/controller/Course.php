@@ -1,7 +1,7 @@
 <?php  
 namespace app\index\controller;
 use app\index\model\Plate;
-use app\index\model\Course;
+use app\index\model\Course as CourseModel;
 use app\index\model\CourseCount;
 use app\index\model\Note;
 use app\index\model\NoteUpvote;
@@ -31,7 +31,7 @@ class Course extends Controller{
 	public function _initialize()
 	{
 		$this->plate  = new Plate();
-		$this->course = new Course();
+		$this->course = new CourseModel();
 		$this->coursecount = new CourseCount();
 		$this->note = new Note();
 		$this->noteUpvote = new NoteUpvote();

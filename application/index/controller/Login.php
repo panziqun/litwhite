@@ -17,7 +17,7 @@ use think\Image;
 class Login extends Controller{
 	const WB_AKEY = '3364510635';
 	const WB_SKEY = '5dd72b3f89cbc622f3f0f8d94662b89d';
-	const WB_CALLBACK_URL = 'http://www.litwhite.com/index/Login/weibo';
+	const WB_CALLBACK_URL = 'http://lit.panziphp.top/index/Login/weibo';
 	protected $user;
 	protected $mail;
 	// protected $emailList;

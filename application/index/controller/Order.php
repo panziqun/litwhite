@@ -5,7 +5,7 @@ use think\Controller;
 use app\index\model\Shopcar;
 use app\index\model\Course;
 use app\index\model\Addr;
-use app\index\model\Order;
+use app\index\model\Order as OrderModel;
 use think\Session;
 use think\Db;
 class Order extends Controller{
@@ -19,7 +19,7 @@ class Order extends Controller{
 		$this->shopcar = new Shopcar();
 		$this->course = new Course();
 		$this->addr = new Addr();
-		$this->order = new Order();
+		$this->order = new OrderModel();
 	}
 	public function orderCart()
 	{
@@ -68,7 +68,7 @@ class Order extends Controller{
 		$this->assign(['course'=>$array,'price'=>$price]);
 		$this->assign('addr',$addr);
 		$this->assign('order_id',"XB" . date("ymd_His") . rand(10, 99));
-		return $this->fetch('orderSur');
+		return $this->fetch('ordersur');
 	}
 	public function sendPayOrd()
 	{	
