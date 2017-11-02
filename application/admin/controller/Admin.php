@@ -6,6 +6,7 @@ use app\admin\model\Adminrole;
 use app\admin\model\AdminlistAdminrole;
 use app\admin\model\Adminlimit;
 use app\admin\model\AdminroleAdminlimit;
+use think\Session;
 class Admin extends Auth{
 	protected $is_login = ['*'];
 	protected $adminlist;
@@ -58,6 +59,9 @@ class Admin extends Auth{
 	}
 	public function adminList()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '管理列表') === false) {
+			$this->error('没有权限');
+		}
 		//部门实时替换
 		if ($this->request->post()) {
 			$roleSelect_adminid = $this->request->post('roleSelect_adminid');
@@ -96,6 +100,7 @@ class Admin extends Auth{
 			'adminRoles'=>$adminRoles,
 			'adminList'=>$adminList
 		]);
+		dump(Session::get('adminhtml'));
 		return $this->fetch();
 	}
 
@@ -111,6 +116,9 @@ class Admin extends Auth{
 
 	public function adminRole()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '部门管理') === false) {
+			$this->error('没有权限');
+		}
 		//查询所有部门角色
 		$adminrole = $this->adminrole->all();
 		$arr = [];
@@ -167,26 +175,6 @@ class Admin extends Auth{
 		$this->adminrole_adminlimit->destroy(['adminrole_id'=>$adminrole_id]);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	public function limitif(){
 		$hadlimit = $this->adminlimit->get(['adminlimit_name'=>$this->request->get('adminlimit_name')]);
 		if ($hadlimit) {
@@ -197,6 +185,9 @@ class Admin extends Auth{
 	}
 	public function adminLimit()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '权限管理') === false) {
+			$this->error('没有权限');
+		}
 		if ($this->request->post()) {
 			$this->adminlimit->save(['adminlimit_name'=>$this->request->post('adminlimit_name')]);
 		}

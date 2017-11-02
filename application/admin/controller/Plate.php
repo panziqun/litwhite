@@ -1,7 +1,8 @@
 <?php  
 namespace app\admin\controller;
-use app\admin\model\Plate;
 
+use app\admin\model\Plate;
+use think\Session;
 class Plate extends Auth{
 	protected $plate;
 	protected $is_login = ['*'];
@@ -20,6 +21,9 @@ class Plate extends Auth{
 	*/
 	public function plateList()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '板块列表') === false) {
+			$this->error('没有权限');
+		}
 		$plateListSelect = $this->plate->getPlateListSelect();
 		$this->assign([
 			'plateListSelect'=>$plateListSelect
@@ -121,7 +125,9 @@ class Plate extends Auth{
 	}
 	public function plateHidden()
 	{
-		
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '板块隐藏') === false) {
+			$this->error('没有权限');
+		}
 		$plateListSelect = $this->plate->getPlateListSelect();
 		$plateListData = $this->plate->getPlateListHidden();
 		$page = $plateListData->render();

@@ -7,7 +7,8 @@ use app\admin\model\Comment;
 use app\admin\model\Collect;
 use app\admin\model\Plate;
 use app\admin\model\Note;    	
-use app\admin\model\Video;    	
+use app\admin\model\Video;
+use think\Session;	
 use Qiniu\Auth as Authh;
 use Qiniu\Storage\UploadManager;
 
@@ -42,6 +43,9 @@ class Course extends Auth{
 	*/
 	public function courseAdd()
 	{	
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '添加课程') === false) {
+			$this->error('没有权限');
+		}
 		$courseListSelect = $this->plate->getCoursePlateSelect();
 		$this->assign([
 			'courseListSelect'=>$courseListSelect,
@@ -162,6 +166,9 @@ class Course extends Auth{
 	}
 	public function courseList()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '课程列表') === false) {
+			$this->error('没有权限');
+		}
 		// $courseListData = $this->course->getCourseListSelect();
 		// $page = $courseListData->render();
 		$courseListSelect = $this->plate->getCoursePlateSelect();
@@ -257,6 +264,9 @@ class Course extends Auth{
     }
     public function video()
     {
+    	if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '添加视频') === false) {
+			$this->error('没有权限');
+		}
     	$videos = $this->video->paginate(2);
     	$page = $videos->render();
     	$this->assign('domain', 'http://oyo3pxmpc.bkt.clouddn.com/');
@@ -285,6 +295,9 @@ class Course extends Auth{
     }
     public function videoList()
     {
+    	if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '视频列表') === false) {
+			$this->error('没有权限');
+		}
     	$videos = $this->video->paginate(2);
     	$page = $videos->render();
     	$this->assign('domain', 'http://oyo3pxmpc.bkt.clouddn.com/');

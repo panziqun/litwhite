@@ -3,6 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Course;
 use app\admin\model\Carousel;
+use think\Session;
 class Index extends Auth{
 	protected $is_login = ['*'];
 	protected $course;
@@ -24,6 +25,9 @@ class Index extends Auth{
 	//加载轮播页面
 	public function homePage()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '首页轮播') === false) {
+			$this->error('没有权限');
+		}
 		$carousel = $this->carousel->all();
 		$arr = [];
 		foreach ($carousel as $key => $value) {
@@ -78,6 +82,9 @@ class Index extends Auth{
 	}
 	public function webSet()
 	{
+		if (Session::get('admin_html') != 'super' && strpos(Session::get('admin_html'), '站点管理') === false) {
+			$this->error('没有权限');
+		}
 		return $this->fetch();
 	}
 }
