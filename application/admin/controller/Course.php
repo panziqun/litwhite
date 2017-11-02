@@ -7,9 +7,12 @@ use app\admin\model\Comment;
 use app\admin\model\Collect;
 use app\admin\model\Plate;
 use app\admin\model\Note;    	
-use app\admin\model\Video;    	
+use app\admin\model\Video; 
+use think\Db;   	
 use Qiniu\Auth as Authh;
 use Qiniu\Storage\UploadManager;
+use PHPExcel_IOFactory;
+use PHPExcel;
 
 class Course extends Auth{
 	protected $course;
@@ -18,6 +21,8 @@ class Course extends Auth{
 	protected $comment;
 	protected $collect;
 	protected $note;
+	protected $PHPExcel;
+
 	protected $is_login = ['*'];
 	private $website = "http://www.litwhite.com";
 	/*
@@ -27,14 +32,14 @@ class Course extends Auth{
 	public function _initialize()
 	{
 		parent::_initialize();
-		$this->course = new Course();
+		$this->course 	   = new Course();
 		$this->CourseCount = new CourseCount();
-		$this->comment = new Comment();
-		$this->collect = new Collect();
-		$this->plate  = new Plate();
-		$this->note  = new Note();
-		$this->video = new Video();
-		$this->auth = new Authh('n7gzSmxbVb3kJGF_W4E1g7frzo5z8S_bi2PrCp_q', 'WOQSbsf1wrpZIh6-W3rL9jOaqExpcD4sZ_Srdg3i');
+		$this->comment 	   = new Comment();
+		$this->collect 	   = new Collect();
+		$this->plate  	   = new Plate();
+		$this->note  	   = new Note();
+		$this->video 	   = new Video();
+		$this->auth 	   = new Authh('n7gzSmxbVb3kJGF_W4E1g7frzo5z8S_bi2PrCp_q', 'WOQSbsf1wrpZIh6-W3rL9jOaqExpcD4sZ_Srdg3i');
 	}
 	/*
 	*渲染courseAdd页面
@@ -114,6 +119,14 @@ class Course extends Auth{
 		$course_id = $this->request->param('course_id');
 		//查询lit_course获取课程基本信息
 		$courseInfo = $this->course->withTrashed()->find($course_id);
+		/**************获取课程方向*****************/
+		$plate_title = $this->course
+						->withTrashed()
+						->alias('c')
+						->join('lit_plate p','p.plate_id = c.plate_id')
+						->where('c.course_id',$course_id)
+						->field('p.plate_title')
+						->find();
 		//通过获取器获取课程等级
 		$course_grade = $courseInfo->course_grade;
 		//查询lit_course获取课程总记信息统计
@@ -143,20 +156,22 @@ class Course extends Auth{
 		$weekNoteCount = $this->note->getWeekNote($course_id);
 		//查询lit_Collect获取课程本月日记信息统计
 		$monthNoteCount = $this->note->getMonthNote($course_id);
+
 		$this->assign([
-			'courseInfo'  =>$courseInfo,
-			'course_grade'=>$course_grade,
-			'courseCountInfo'=>$courseCountInfo,
+			'courseInfo'  	   =>$courseInfo,
+			'course_grade'	   =>$course_grade,
+			'courseCountInfo'  =>$courseCountInfo,
 			'courseCommentInfo'=>$courseCommentInfo,
-			'weekCommentCount'=>$weekCommentCount,
+			'weekCommentCount' =>$weekCommentCount,
 			'monthCommentCount'=>$monthCommentCount,
 			'courseCollectInfo'=>$courseCollectInfo,
-			'weekCollectCount'=>$weekCollectCount,
+			'weekCollectCount' =>$weekCollectCount,
 			'monthCollectCount'=>$monthCollectCount,
-			'courseNoteInfo'=>$courseNoteInfo,
-			'weekNoteCount'=>$weekNoteCount,
-			'monthNoteCount'=>$monthNoteCount,
-
+			'courseNoteInfo'   =>$courseNoteInfo,
+			'weekNoteCount'	   =>$weekNoteCount,
+			'monthNoteCount'   =>$monthNoteCount,
+			'course_id'		   =>$course_id,
+			'plate_title'      =>$plate_title['plate_title'],
 		]);
 		return $this->fetch();
 	}
@@ -170,7 +185,9 @@ class Course extends Auth{
 		$this->assign([
 			'courseListSelect'=>$courseListSelect,
 			'courseListData'=>$courseListData,
-			'page'=>$page
+			'page'=>$page,
+			'plate_id'=>1,
+			'course_status'=>2,
 		]);
 		return $this->fetch();
 	}
@@ -297,13 +314,104 @@ class Course extends Auth{
 	}
 	public function courseSearchByInput()
 	{
-		$inputInfo = $this->request->param();
+		$courseListSelect = $this->plate->getCoursePlateSelect();
+		$plate_id = $this->request->param('plate_id');
+		$course_status = $this->request->param('course_status');
 		$plateIdArr = $this->plate->select();
+		$plateIdArr = $this->plate->getPlateIdByInpu($plate_id);
 
-		$plateIdArr = $this->plate->getPlateIdByInpu($inputInfo['plate_id']);
+		if ($course_status==2) {
+			$courseListData = Db::table('lit_course')
+	            ->alias("course")
+	            ->join('lit_plate plate','course.plate_id = plate.plate_id')
+	            ->join('lit_course_count count','count.course_id = course.course_id')
+	            ->where('course.plate_id','in',$plateIdArr)
+	            ->field("course.course_id,course_pic,course_title,plate_title,course.create_time create_time,course.delete_time,course_sales")
+	            ->paginate(5,false,['query'=>['plate_id'=>$plate_id,'course_status'=>$course_status]]);
+		} else if ($course_status==0) {
+			$courseListData =$this->course
+	            ->alias("course")
+	            ->join('lit_plate plate','course.plate_id = plate.plate_id')
+	            ->join('lit_course_count count','count.course_id = course.course_id')
+	            ->where('course.plate_id','in',$plateIdArr)
+	            ->field("course.course_id,course_pic,course_title,plate_title,course.create_time create_time,course.delete_time,course_sales")
+	            ->paginate(5,false,['query'=>['plate_id'=>$plate_id,'course_status'=>$course_status]]);
+		} else if ($course_status==1) {
+			$courseListData =$this->course
+				->onlyTrashed()
+	            ->alias("course")
+	            ->join('lit_plate plate','course.plate_id = plate.plate_id')
+	            ->join('lit_course_count count','count.course_id = course.course_id')
+	            ->where('course.plate_id','in',$plateIdArr)
+	            ->field("course.course_id,course_pic,course_title,plate_title,course.create_time create_time,course.delete_time,course_sales")
+	            ->paginate(5,false,['query'=>['plate_id'=>$plate_id,'course_status'=>$course_status]]);
+		}
+		
+		
 
-		dump($inputInfo[]);
-		return $this->fetch('uploadVideo111');
+		$page = $courseListData->render();
+		$this->assign([
+			'courseListSelect' => $courseListSelect,
+			'courseListData'   => $courseListData,
+			'course_status'    => $course_status,
+			'plate_id'		   => $plate_id,
+			'page'			   => $page,
+		]);
+
+		//dump($plateIdArr);
+		return $this->fetch('courseList');
+	}
+
+	public function courseExcel()
+	{
+		//获取课程course_id
+		$course_id = $this->request->param('course_id');
+		//查询lit_course获取课程基本信息
+		$courseInfo = $this->course->withTrashed()->find($course_id);
+		/**************获取课程方向*****************/
+		$plate_title = $this->course
+						->withTrashed()
+						->alias('c')
+						->join('lit_plate p','p.plate_id = c.plate_id')
+						->where('c.course_id',$course_id)
+						->field('p.plate_title')
+						->find();
+		//通过获取器获取课程等级
+		$course_grade = $courseInfo->course_grade;
+		//查询lit_course获取课程总记信息统计
+		$courseCountInfo = $courseInfo->CourseCount;
+
+		$PHPExcel = new PHPExcel();
+		$PHPSheet = $PHPExcel->getActiveSheet();
+		$PHPSheet->setTitle('demo');
+		$PHPSheet->setCellValue('A1','课程ID')
+				 ->setCellValue('B1','课程名称')
+				 ->setCellValue('C1','课程方向')
+				 ->setCellValue('D1','学习人数')
+				 ->setCellValue('E1','课程时长')
+				 ->setCellValue('F1','课程评分')
+				 ->setCellValue('G1','创建时间');
+
+		$PHPSheet->setCellValue('A2',$course_id)
+				 ->setCellValue('B2',$courseInfo['course_title'])
+				 ->setCellValue('C2',$plate_title['plate_title'])
+				 ->setCellValue('D2',$courseCountInfo['course_sales'])
+				 ->setCellValue('E2',$courseInfo['course_duration'])
+				 ->setCellValue('F2',$courseInfo['course_start'])
+				 ->setCellValue('G2',$courseInfo['create_time']);
+				
+
+		$PHPWriter = PHPExcel_IOFactory::createWriter($PHPExcel,'Excel2007');
+		ob_end_clean();//清除缓冲区,避免乱码
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="课程信息表(' . date('Ymd-His') . ').xlsx"');
+		header('Cache-Control: max-age=0');
+		// $PHPWriter = PHPExcel_IOFactory::createWriter($PHPExcel,'Excel5');
+		// ob_end_clean();//清除缓冲区,避免乱码
+		// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		// header('Content-Disposition: attachment;filename="课程信息表(' . date('Ymd-His') . ').xls"');
+		// header('Cache-Control: max-age=0');
+		$PHPWriter->save("php://output");
 	}
 
 

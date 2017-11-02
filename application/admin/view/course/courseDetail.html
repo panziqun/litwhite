@@ -31,13 +31,13 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="m-b-md">
-                                    <a href="courseAdd.html" class="btn btn-white btn-xs pull-right">编辑信息</a>
-                                    <h2>{$courseInfo['course_title']}</h2>
+                                    <a href="{:url('courseExcel',['course_id'=>$course_id])}" id="courseExcel" class="btn btn-white btn-xs pull-right">导出信息</a>
+                                    <h2 id="course_title">{$courseInfo['course_title']}</h2>
                                 </div>
                                 <dl class="dl-horizontal">
                                     <dt>课程状态：</dt>
                                     <dd>
-                                        <span class="label {$courseInfo['delete_time']|empty?'label-primary':'label-default'}">{$courseInfo['delete_time']|empty?'正常':'停止'}
+                                        <span id="course_status" class="label {$courseInfo['delete_time']|empty?'label-primary':'label-default'}">{$courseInfo['delete_time']|empty?'正常':'停止'}</span>
                                     </dd>
                                 </dl>   
                             </div>
@@ -47,19 +47,19 @@
                             <div class="col-sm-5">
                                 <dl class="dl-horizontal">
                                     <dt>课程讲师：</dt>
-                                    <dd>{$courseInfo['course_teacher']}</dd>
+                                    <dd id="course_teacher">{$courseInfo['course_teacher']}</dd>
                                     <dt>课程方向：</dt>
-                                    <dd>PHP</dd>
+                                    <dd id="plate_title">{$plate_title}</dd>
                                     <dt>学习人数：</dt>
-                                    <dd>{$courseCountInfo['course_sales']}</dd>
+                                    <dd id="course_sales">{$courseCountInfo['course_sales']}</dd>
                                     <dt>课程排序：</dt>
-                                    <dd> {$courseInfo['course_order']}级 </dd>
+                                    <dd id="course_order"> {$courseInfo['course_order']}级 </dd>
                                     <dt>课程难度：</dt>
-                                    <dd>{$course_grade}</dd>
+                                    <dd id="course_grade">{$course_grade}</dd>
                                     <dt>创建时间：</dt>
-                                    <dd>{$courseInfo['create_time']}</dd>
+                                    <dd id="create_time">{$courseInfo['create_time']}</dd>
                                     <dt>最后更新：</dt>
-                                    <dd>{$courseInfo['update_time']}</dd>
+                                    <dd id="update_time">{$courseInfo['update_time']}</dd>
                                     
                                 </dl>
                             </div>
@@ -219,6 +219,7 @@
                 }, 2000);
             }
         }
+        
     </script>
 
     <!-- 全局js -->

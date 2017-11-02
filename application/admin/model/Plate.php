@@ -9,6 +9,7 @@ class Plate extends Model
 	use SoftDelete;
 	protected $deleteTime = 'delete_time';
 	protected static $treeList = [];
+	protected static $PlateIdList = '';
 	public function getPlateList($id = 0)
 	{	
 		self::$treeList = [];
@@ -190,8 +191,19 @@ class Plate extends Model
 	}
 	public function getPlateIdByInpu($plate_id)
 	{
-		self::$treeList = [];
+		self::$PlateIdList = '';
 		$plateInfo = $this->getCoursePlateInfo();
-		$this->plateIdByInput($plateInfo, $plate_id);
+		$plateIdStr = $this->plateIdByInput($plateInfo, $plate_id) .','. $plate_id;
+		return trim($plateIdStr,',');
+	}
+	public function plateIdByInput($plateInfo, $plate_id)
+	{
+		foreach ($plateInfo as $key => $value) {
+			if ( $plate_id == $value['plate_fid'] ) {
+				self::$PlateIdList =  self::$PlateIdList . ',' . $value['plate_id'];
+				$this->plateIdByInput($plateInfo, $value['plate_id']);
+			}
+		}
+		return self::$PlateIdList;
 	}
 }

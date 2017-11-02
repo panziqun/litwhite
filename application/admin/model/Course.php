@@ -35,13 +35,14 @@ class Course extends Model
   //       $q = $pageParam['query'];
   //       $q1 = $pageParam1['query1'];
   //       dump($q);
- 
-        $list = Db::table('lit_course')
-            ->alias("course")
-            ->join('lit_plate plate','course.plate_id = plate.plate_id')
-            ->join('lit_course_count count','count.course_id = course.course_id')
-            ->field("course.course_id,course_pic,course_title,plate_title,course.create_time create_time,course.delete_time,course_sales")
-            ->paginate(5);
+ 		
+ 			$list = Db::table('lit_course')
+	            ->alias("course")
+	            ->join('lit_plate plate','course.plate_id = plate.plate_id')
+	            ->join('lit_course_count count','count.course_id = course.course_id')
+	            ->field("course.course_id,course_pic,course_title,plate_title,course.create_time create_time,course.delete_time,course_sales")
+	            ->paginate(5);
+ 		
         // $page = $list->render();
         // 模板变量赋值
         // $this->assign('list', $list);

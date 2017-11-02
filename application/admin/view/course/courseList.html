@@ -44,17 +44,25 @@
                                 <div class="col-sm-2">
                                     <select class="form-control m-b" name="plate_id">
                                         {volist name="courseListSelect" id="data"}
-                                        <option value="{$data['plate_id']}">
-                                            {$data['plate_title']}
-                                        </option>
-                                        {/volist} 
+                                            {if $data['plate_id']==$plate_id}
+                                            <option selected 
+                                            value="{$data['plate_id']}">    
+                                                   {$data['plate_title']} 
+                                            </option>
+                                            {else}
+                                            <option
+                                            value="{$data['plate_id']}">    
+                                                   {$data['plate_title']} 
+                                            </option>
+                                            {/if}
+                                        {/volist}         
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
                                     <select class="form-control m-b" name="course_status">
-                                        <option value="2">全部课程</option>
-                                        <option value="0">正常</option>
-                                        <option value="1">停止</option>
+                                        <option value="2" {$course_status==2?'selected':''}>全部课程</option>
+                                        <option value="0" {$course_status==0?'selected':''}>正常</option>
+                                        <option value="1" {$course_status==1?'selected':''}>停止</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-sm">查询</button>
